@@ -4,5 +4,5 @@
 # Webpack output
 /dist/*
 
-# Test
-/simple_test/*
+# NPM
+/package-lock.json
