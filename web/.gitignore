@@ -3,3 +3,6 @@
 
 # Webpack output
 /dist/*
+
+# Test
+/simple_test/*

@@ -1,0 +1,9 @@
+# Gradle output
+build/*
+.gradle/*
+
+# Idea
+.idea
+*.iws
+*.iml
+*.ipr

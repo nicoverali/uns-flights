@@ -1,0 +1,48 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+group 'uns'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    runtimeOnly "org.openjfx:javafx-media:$javafx.version:win"
+    runtimeOnly "org.openjfx:javafx-media:$javafx.version:linux"
+    runtimeOnly "org.openjfx:javafx-media:$javafx.version:mac"
+    runtimeOnly "org.openjfx:javafx-web:$javafx.version:win"
+    runtimeOnly "org.openjfx:javafx-web:$javafx.version:linux"
+    runtimeOnly "org.openjfx:javafx-web:$javafx.version:mac"
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources", "web/dist"
+        }
+    }
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls' ]
+}
+
+mainClassName = 'Main'
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
