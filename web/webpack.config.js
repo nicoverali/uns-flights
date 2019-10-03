@@ -8,12 +8,20 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
 
     // Path to entry point. Webpack will begin here
-    entry: './src/javascript/index.jsx',
+    entry: './src/index.js',
 
     // Path and filename of result bundles
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
+    },
+
+    resolve: {
+        // Simplifies path resolving in modules
+        alias: {
+          Assets: path.resolve(__dirname, 'src/assets/'),
+          Components: path.resolve(__dirname, 'src/components/')
+        }
     },
 
     // Add steps to bundling process
@@ -25,9 +33,19 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
+                        presets: [
+                            '@babel/preset-env',
+                            '@babel/preset-react', 
+                            {'plugins': 
+                                ['@babel/plugin-proposal-class-properties', 'emotion']
+                            }
+                        ]
                     }
                 }
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack'],
             },
             {
                 test: /\.(sa|sc|c)ss$/,
@@ -57,7 +75,7 @@ module.exports = {
             },
             {
                 // Loads images
-                test: /\.(png|jpe?g|gif|svg)$/,
+                test: /\.(png|jpe?g|gif)$/,
                 use: [
                        {
                          loader: "file-loader",
