@@ -4,6 +4,9 @@ const path = require('path');
 // Use to export processed CSS
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+// Creates an index.html with dependencies injected
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 // Main configuration object. Determines Webpack behavior
 module.exports = {
 
@@ -74,6 +77,12 @@ module.exports = {
                         options: {
                             implementation: require("sass")
                         }
+                    },
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                          resources: ['./src/vars.scss']
+                        }
                     }
                 ],
             },
@@ -110,6 +119,9 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: "bundle.css"
+        }),
+        new HtmlWebpackPlugin({
+            template: __dirname+'/src/index.html'
         })
     ],
 

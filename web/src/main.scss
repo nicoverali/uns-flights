@@ -1,3 +1,65 @@
-.hidden{
-    display: none;
+/** Fonts */
+@font-face {
+    font-family: "Roboto";
+    src: url("Assets/fonts/Roboto/Roboto-Light.ttf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("Assets/fonts/Roboto/Roboto-Regular.ttf");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("Assets/fonts/Roboto/Roboto-Medium.ttf");
+    font-weight: 600;
+}
+@font-face {
+    font-family: "Roboto";
+    src: url("Assets/fonts/Roboto/Roboto-Bold.ttf");
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: "Work Sans";
+    src: url("Assets/fonts/Work_Sans/WorkSans-Light.ttf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Work Sans";
+    src: url("Assets/fonts/Work_Sans/WorkSans-Regular.ttf");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Work Sans";
+    src: url("Assets/fonts/Work_Sans/WorkSans-SemiBold.ttf");
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Work Sans";
+    src: url("Assets/fonts/Work_Sans/WorkSans-Bold.ttf");
+    font-weight: 800;
+}
+/**       */
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+
+    #app{
+        height: 100%;
+    }
+
+}
+
+button, a, input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-width: 0;
+    text-decoration: none;
+    cursor: pointer;
 }

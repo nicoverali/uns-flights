@@ -1,7 +1,8 @@
 import './index.scss';
 import React from 'react';
-import UserIcon from 'Assets/images/account-circle.svg';
+import UserIcon from 'Assets/icons/account-circle.svg';
 import BeatLoader from 'react-spinners/BeatLoader';
+import PrimaryButton from 'Components/PrimaryButton';
 
 export default class LoginForm extends React.Component{
 
@@ -29,7 +30,7 @@ export default class LoginForm extends React.Component{
     }
 
     handleLoginModeChange = event => {
-        this.setState({isAdmin: !this.state.isAdmin, empId: ''});
+        this.setState({isAdmin: !this.state.isAdmin, empId: '', password: ''});
     }
 
     handleLogin = event => {
@@ -39,26 +40,31 @@ export default class LoginForm extends React.Component{
 
 
     render(){
+        let userName = this.state.isAdmin ? 'Administrador' : 'Empleado';
         let loginModeText = `Ingresar como ${this.state.isAdmin ? 'empleado' : 'administrador'}`;
-        let submitButtonContent = this.state.isLoading ? (<BeatLoader></BeatLoader>) : 'INGRESAR';
+        let submitButtonContent = this.state.isLoading ? (<BeatLoader size={8} color={'#FFF'}/>) : 'INGRESAR';
 
         return (
-            <div className="login-form">
-                <UserIcon id="user-icon"></UserIcon> 
-                <h3>Empleado</h3>
-                <form onSubmit={this.handleLogin}>
-                    <p className={this.state.isAdmin ? 'hidden' : ''}>
-                        <label className="input-caption">N Legajo</label>
-                        <input type="text" name="empId" value={this.state.empId} onChange={this.handleEmpIdChange} />
-                    </p>
-                    <p>
-                        <label className="input-caption">Contrasena</label>
-                        <input type="password" name="password" value={this.state.password} onChange={this.handlePasswordChange}/>
-                    </p>
+            <div id="login-form" {...this.props}>
+                <UserIcon className="user-icon"/> 
 
-                    <button type="submit">
+                <h3 className="user">{userName}</h3>
+
+                <form onSubmit={this.handleLogin}>
+                    <fieldset className="form-input-container">
+                        <div className={this.state.isAdmin ? 'input-container hide' : 'input-container'}>
+                            <label>Nº Legajo</label>
+                            <input type="text" name="empId" value={this.state.empId} onChange={this.handleEmpIdChange} />
+                        </div>
+                        <div className="input-container">
+                            <label>Contraseña</label>
+                            <input type="password" name="password" value={this.state.password} onChange={this.handlePasswordChange}/>
+                        </div>
+                    </fieldset>
+
+                    <PrimaryButton type="submit" className="submit-button">
                         {submitButtonContent}
-                    </button>
+                    </PrimaryButton>
                 </form>
 
                 <a onClick={this.handleLoginModeChange}>{loginModeText}</a>
