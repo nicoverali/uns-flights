@@ -20,9 +20,13 @@ module.exports = {
         // Simplifies path resolving in modules
         alias: {
           Assets: path.resolve(__dirname, 'src/assets/'),
-          Components: path.resolve(__dirname, 'src/components/')
+          Components: path.resolve(__dirname, 'src/components/'),
+          Pages: path.resolve(__dirname, 'src/pages/')
         }
     },
+
+    // After building keep watching for file's changes
+    watch: true,
 
     // Add steps to bundling process
     module: {

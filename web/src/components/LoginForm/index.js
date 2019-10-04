@@ -40,7 +40,7 @@ export default class LoginForm extends React.Component{
 
     render(){
         let loginModeText = `Ingresar como ${this.state.isAdmin ? 'empleado' : 'administrador'}`;
-        let submitButtonContent = this.isLoading ? (<BeatLoader></BeatLoader>) : 'INGRESAR';
+        let submitButtonContent = this.state.isLoading ? (<BeatLoader></BeatLoader>) : 'INGRESAR';
 
         return (
             <div className="login-form">

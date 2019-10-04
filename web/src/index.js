@@ -1,16 +1,16 @@
 'use strict';
 import './main.scss';
 import 'normalize.css';
-import LoginForm from 'Components/LoginForm';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
+
+import Login from 'Pages/Login';
 
 
 const domContainer = document.querySelector('#app');
 ReactDOM.render(
-  <div>
-    <LoginForm>
-
-    </LoginForm>
-  </div>  
+  <BrowserRouter>
+    <Route path="/" component={Login}/>
+  </BrowserRouter>
 ,domContainer);
