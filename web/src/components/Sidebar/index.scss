@@ -1,0 +1,18 @@
+.sidebar-component{
+    width: 15vw;
+    min-width: 240px;
+    height: 100vh;
+    background-color: $light-background;
+
+    padding-top: $app-padding-top;
+
+
+    .sidebar-logo{
+        display: block;
+        margin: auto;
+    }
+
+    .side-bar-items{
+        margin-top: 80px;
+    }
+}

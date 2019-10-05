@@ -6,10 +6,10 @@ $plane-padding: 0.14644661 * $circle-size; /** Calculated as size*(2-sqrt(2))/4 
     background-color: $background-color;
     height: 100%;
     overflow: hidden;
+    padding-top: $app-padding-top;
 
     >.logo{
         margin-left: 64px;
-        margin-top: 48px;
     }
 
     >.content{

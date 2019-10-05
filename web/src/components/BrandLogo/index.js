@@ -6,7 +6,7 @@ const BrandLogo = (props) =>{
     let h1ClassName = props.horizontal ? 'horizontal': '';
 
     return (
-        <div id="brand-logo" {...props}>
+        <div {...props} className={`brand-logo-component ${props.className||''}`}>
             <img src={logo}/>
             <h1 className={h1ClassName}>UNS Flights</h1>
         </div>
