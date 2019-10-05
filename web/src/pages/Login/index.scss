@@ -1,5 +1,65 @@
-#login-page{
+$circle-size: 90vh;
+$plane-padding: 0.14644661 * $circle-size; /** Calculated as size*(2-sqrt(2))/4  */
 
+#login-page{
+    position: relative;
     background-color: $background-color;
     height: 100%;
+    overflow: hidden;
+
+    >.logo{
+        margin-left: 64px;
+        margin-top: 48px;
+    }
+
+    >.content{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+
+        .app-version{
+            font-family: $body-font;
+            font-size: $caption-size;
+            font-weight: 400;
+            color: $secondary-color;
+            margin-top: 40px;
+            margin-bottom: 24px;
+        }
+    }
+
+    >.circle-decoration{
+        position: absolute;
+        right: -($circle-size/2);
+        bottom: -($circle-size/2);
+        width: $circle-size;
+        height: $circle-size;
+        
+        border-radius: 100%;
+        border: 2px dashed $dark-details-color;
+
+        svg{
+            position: relative;
+            width: 40px;
+            height: auto;
+            left: -20px;
+            top: -20px;
+            transform: rotate(45deg);
+            margin-left: $plane-padding;
+            margin-top: $plane-padding;
+            fill: $secondary-color;
+        }
+    }
+
+    >.circle-decoration:after{
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: $circle-size *0.85;
+        height: $circle-size *0.85;
+        border-radius: 100%;
+        background-color: $dark-details-color;
+    }
 }

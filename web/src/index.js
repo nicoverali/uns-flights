@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route} from 'react-router-dom';
 
-import Login from 'Pages/Login';
+import Login from '@Pages/Login';
 
 
 const domContainer = document.querySelector('#app');

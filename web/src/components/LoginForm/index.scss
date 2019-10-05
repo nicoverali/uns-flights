@@ -1,4 +1,4 @@
-div#login-form{
+div.login-form-component{
     text-align: center;
 
     .user-icon{
@@ -28,39 +28,15 @@ div#login-form{
             padding: 0;
             margin-bottom: 64px;
             max-width: 320px;
+
+            .hide{
+                order: 1;
+                visibility: hidden;
+            }
+
         }
 
-        .input-container:first-child{
-            margin-bottom: 32px;
-        }
-
-        .input-container.hide{
-            order: 1;
-            visibility: hidden;
-        }
-
-        label{
-            display: block;
-            text-align: start;
-            font-family: $body-font;
-            font-size: $body-size;
-            font-weight: 400;
-            color: $secondary-color;
-            margin-bottom: 8px;
-        }
-
-        input{
-            height: 52px;
-            width: 100%;
-            padding-left: 24px;
-            padding-right: 16px;
-
-            font-family: $body-font;
-            font-size: $body-size;
-            color: $secondary-color;
-            border-radius: 12px;
-            box-shadow: 0px 3px 15px #0000001F;
-        }
+        
 
         .submit-button{
             display: block;

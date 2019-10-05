@@ -1,0 +1,27 @@
+div#brand-logo{
+    display: inline-block;
+    text-align: center;
+
+    >svg{
+        width: 64px;
+        height: 64px;
+        vertical-align: middle;
+    }
+
+    >h1{
+        display: block;
+        margin: 20px auto 0 auto;
+        font-family: $brand-font;
+        font-size: 20px;
+        color: #6E647C;
+        letter-spacing: 4.4px;
+        text-transform: uppercase;
+    }
+
+    >h1.horizontal{
+        display: inline;
+        vertical-align: middle;
+        margin: 0 20px;
+    }
+
+}

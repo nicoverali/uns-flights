@@ -22,9 +22,9 @@ module.exports = {
     resolve: {
         // Simplifies path resolving in modules
         alias: {
-          Assets: path.resolve(__dirname, 'src/assets/'),
-          Components: path.resolve(__dirname, 'src/components/'),
-          Pages: path.resolve(__dirname, 'src/pages/')
+          '@Assets': path.resolve(__dirname, 'src/assets/'),
+          '@Components': path.resolve(__dirname, 'src/components/'),
+          '@Pages': path.resolve(__dirname, 'src/pages/')
         }
     },
 
