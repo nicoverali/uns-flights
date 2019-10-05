@@ -1,13 +1,13 @@
 import './index.scss';
 import React from 'react';
-import Logo from '@Assets/images/logo.svg';
+import logo from '@Assets/images/logo.png';
 
 const BrandLogo = (props) =>{
     let h1ClassName = props.horizontal ? 'horizontal': '';
 
     return (
         <div id="brand-logo" {...props}>
-            <Logo/>
+            <img src={logo}/>
             <h1 className={h1ClassName}>UNS Flights</h1>
         </div>
     );
