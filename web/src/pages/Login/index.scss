@@ -18,6 +18,8 @@ $plane-padding: 0.14644661 * $circle-size; /** Calculated as size*(2-sqrt(2))/4 
         text-align: center;
         bottom: 0;
 
+        z-index: 1;
+
         .app-version{
             font-family: $body-font;
             font-size: $caption-size;

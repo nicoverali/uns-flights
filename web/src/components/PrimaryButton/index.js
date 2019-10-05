@@ -1,12 +1,13 @@
 import './index.scss';
 import React from 'react';
 
-const PrimaryButton = ({className, ...props}) => {
-    let classes = `${className ? className : ''} primary-button ${props.outline ? 'outline' : ''}`;
-
+const PrimaryButton = (props) => {
     return (
-        <button className={classes} {...props}>
+        <button {...props} 
+            className={`primary-button-component ${props.className||''} ${props.outline ? 'outline':''}`} >
+            
             {props.children}
+        
         </button>
     )
 }
