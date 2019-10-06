@@ -4,6 +4,7 @@ $secondary-color: #454F63;
 $light-background: #F7F7F7;
 $background-color: #F0F2F4;
 $dark-details-color: #78849E;
+$input-border-color: #C8CCD4;
 
 /** Fonts */
 $title-font: 'Work Sans';
@@ -20,3 +21,11 @@ $caption-size:  14px;
 
 /** Margins and paddings */
 $app-padding-top: 48px;
+$dashboard-sidebar-min-width: 240px;
+$dashboard-sidebar-width: 15%;
+
+/** Border radius */
+$dashboard-components-border-radius: 16px;
+
+/** Shadows */
+$dashboard-components-shadow: 0px 3px 6px #0000001A;

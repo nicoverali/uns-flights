@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.FontSmoothingType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
@@ -21,6 +22,8 @@ public class HelloFX extends Application {
 
         WebView webView = new WebView();
         webView.setPrefHeight(screenBounds.getHeight());
+        webView.setFontSmoothingType(FontSmoothingType.GRAY);
+
         WebEngine webEngine = webView.getEngine();
 
         URL url = this.getClass().getClassLoader().getResource("index.html");

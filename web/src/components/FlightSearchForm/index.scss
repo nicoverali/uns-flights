@@ -1,0 +1,17 @@
+div.flight-search-form-component{
+    width: 100%;
+    background-color: $light-background;
+    padding: 48px;
+    border-radius: $dashboard-components-border-radius;
+    box-shadow: $dashboard-components-shadow;
+
+    .flight-search-type-fieldset{
+        border: none;
+    }
+    .flight-search-data-fieldset{
+        border: none;
+    }
+
+    
+
+}

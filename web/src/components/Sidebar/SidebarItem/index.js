@@ -2,7 +2,7 @@ import './index.scss';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const SideBarItem = props => {
+const SidebarItem = props => {
     let className = `side-bar-item-component ${props.className || ''}`;
     if(props.active){
         className += 'active';
@@ -16,4 +16,4 @@ const SideBarItem = props => {
 
 }
 
-export default SideBarItem;
+export default SidebarItem;

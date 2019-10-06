@@ -1,0 +1,19 @@
+/**
+    'react-autosuggest__*' classes were extracted from the Autosuggest github repo, and are used to make this component
+    compatible with that library
+    See: https://github.com/moroshko/react-autosuggest
+*/
+
+fieldset.location-fieldset-component{
+    display: inline-block;
+    border: none;
+
+    .react-autosuggest__container{
+        position: relative;
+        display: inline-block;
+    }
+
+    &>*{
+        margin-right: 64px;
+    }
+}
