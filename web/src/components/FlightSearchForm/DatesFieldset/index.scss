@@ -1,0 +1,99 @@
+fieldset.dates-fieldset-component{
+    border: none;
+    display: inline-block;
+    position: relative;
+    padding: 0;
+
+    .date-text-input{
+        margin-right: 64px;
+        max-width: 160px;
+        min-width: 144px;
+        
+        &:focus-within ~ .DayPicker{
+            visibility: visible;
+        }
+    }
+
+
+
+    // ReactDayPicker
+    .DayPicker{
+        position: absolute;
+        visibility: hidden;
+        background-color: white;
+        border-radius: 12px;
+        border: 2px solid $input-border-color;
+        
+        top: calc(100% + 18px);
+        left: 0px;
+
+        &:hover{
+            visibility: visible;
+
+        }
+
+        &::before{
+            content: '';
+            position: absolute;
+            width: 0; 
+            height: 0; 
+            top: -18px;
+            left: 24px;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-bottom: 16px solid $input-border-color;
+        }
+
+        &::after{
+            content: '';
+            position: absolute;
+            width: 0; 
+            height: 0; 
+            top: -16px;
+            left: 24px;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-bottom: 17px solid white;
+        }
+
+        .DayPicker-Caption{
+            font-family: $body-font;
+            font-size: $body-size;
+            color: $dark-details-color;
+        }
+
+        .DayPicker-Weekday{
+            font-family: $body-font;
+            font-size: $body-size;
+            color: $input-border-color;
+        }
+
+        .DayPicker-Day{
+            font-family: $body-font;
+            font-size: $caption-size;
+            color: $secondary-color;
+
+            &.DayPicker-Day--disabled{
+                pointer-events: none;
+                color: $input-border-color;
+            }
+
+            /** TODO Customize day picker */
+
+            // &.DayPicker-Day--selected{
+            //     background-color: inherit;
+                
+            //     &::after{
+            //         content: '';
+            //         position: absolute;
+            //         width: 100%;
+            //         height: 100%;
+            //         background-color: red;
+            //     }
+
+            // }
+        }
+
+    }
+
+}

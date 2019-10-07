@@ -29,7 +29,7 @@ dependencies {
 sourceSets {
     main {
         resources {
-            srcDirs "src/main/resources", "web"
+            srcDirs "src/main/resources", "web/dist"
         }
     }
 }
@@ -37,6 +37,7 @@ sourceSets {
 javafx {
     version = "11.0.2"
     modules = [ 'javafx.media', 'javafx.web' ]
+    configuration = "compileOnly"
 }
 
 mainClassName = 'Main'

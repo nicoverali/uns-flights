@@ -1,0 +1,29 @@
+.primary-button-component{
+    height: 52px;
+    border-radius: 12px;
+    background-color: $primary-color;
+    color: #FFFFFF;
+    padding: 16px 24px;
+
+    font-family: $body-font;
+    font-size: $body-size;
+    font-weight: 400;
+    text-transform: uppercase;
+
+    svg{
+        width: 16px;
+        fill: #FFFFFF;
+        vertical-align: top;
+        margin-right: 8px;
+    }
+}
+
+.primary-button.outline{
+    background-color: transparent;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+
+    svg{
+        fill: $primary-color;
+    }
+}

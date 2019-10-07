@@ -1,0 +1,61 @@
+div.flight-search-form-component{
+    width: 100%;
+    background-color: $light-background;
+    padding: 48px;
+    border-radius: $dashboard-components-border-radius;
+    box-shadow: $dashboard-components-shadow;
+
+    form{
+        position: relative;
+        .flight-search-type-fieldset{
+            border: none;
+            padding: 0;
+        }   
+    
+        .flight-search-bottom-fieldsets{
+            display: inline-block;
+            margin-top: 32px;
+        }
+    
+        .flight-search-button{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+
+}
+
+@media only screen and (max-width: 1664px)  {
+    div.flight-search-form-component{
+        form{
+            .flight-search-dates-fieldset {
+                width: 100%;
+                margin-top: 32px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px)  {
+    div.flight-search-form-component{
+        form{
+            .flight-search-dates-fieldset{
+                width: 50%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 800px)  {
+    div.flight-search-form-component{
+        form{
+            .flight-search-button {
+                display: block;
+                position: relative;
+                margin-top: 32px;
+            }
+        }
+    }
+}

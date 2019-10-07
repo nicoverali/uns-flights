@@ -1,0 +1,63 @@
+div.login-form-component{
+    text-align: center;
+
+    .user-icon{
+        width: 144px;
+        fill: $secondary-color;
+    }
+
+    h3.user{
+        font-family: $title-font;
+        font-size: $h3-size;
+        font-weight: 800;
+        color: $secondary-color;
+
+        margin-top: 24px;
+        margin-bottom: 96px;
+    }
+
+    form{
+        text-align: center;
+        margin-bottom: 32px;
+
+        .form-input-container{
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            border: 0;
+            padding: 0;
+            margin-bottom: 64px;
+            max-width: 320px;
+
+            .hide{
+                order: 1;
+                visibility: hidden;
+            }
+
+        }
+
+        
+
+        .submit-button{
+            display: block;
+            margin: auto;
+            width: 100%;
+            max-width: 240px;
+        }
+    }
+
+    a{
+        display: block;
+        margin: auto;
+        font-family: $body-font;
+        font-size: $caption-size;
+        font-weight: 500;
+        color: $dark-details-color;
+    }
+
+    a:hover{
+        text-decoration: underline;
+    }
+    
+
+}

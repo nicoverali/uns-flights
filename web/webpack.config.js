@@ -4,17 +4,32 @@ const path = require('path');
 // Use to export processed CSS
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+// Creates an index.html with dependencies injected
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 // Main configuration object. Determines Webpack behavior
 module.exports = {
 
     // Path to entry point. Webpack will begin here
-    entry: './src/javascript/index.jsx',
+    entry: './src/index.js',
 
     // Path and filename of result bundles
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
     },
+
+    resolve: {
+        // Simplifies path resolving in modules
+        alias: {
+          '@Assets': path.resolve(__dirname, 'src/assets/'),
+          '@Components': path.resolve(__dirname, 'src/components/'),
+          '@Pages': path.resolve(__dirname, 'src/pages/')
+        }
+    },
+
+    // After building keep watching for file's changes
+    watch: true,
 
     // Add steps to bundling process
     module: {
@@ -25,9 +40,19 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
+                        presets: [
+                            '@babel/preset-env',
+                            '@babel/preset-react', 
+                            {'plugins': 
+                                ['@babel/plugin-proposal-class-properties', 'emotion']
+                            }
+                        ]
                     }
                 }
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack'],
             },
             {
                 test: /\.(sa|sc|c)ss$/,
@@ -52,12 +77,18 @@ module.exports = {
                         options: {
                             implementation: require("sass")
                         }
+                    },
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                          resources: ['./src/vars.scss']
+                        }
                     }
                 ],
             },
             {
                 // Loads images
-                test: /\.(png|jpe?g|gif|svg)$/,
+                test: /\.(png|jpe?g|gif)$/,
                 use: [
                        {
                          loader: "file-loader",
@@ -88,6 +119,9 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: "bundle.css"
+        }),
+        new HtmlWebpackPlugin({
+            template: __dirname+'/src/index.html'
         })
     ],
 
