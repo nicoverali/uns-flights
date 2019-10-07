@@ -49,6 +49,20 @@ div.icon-text-input-component{
         &:disabled{
             opacity: 0.4;
         }
+
+        &.icon-text-input-error{
+            border: $input-border-width solid $error-color;
+
+            & + .icon-container {
+                fill: $error-color;
+                color: $error-color;
+            }
+        }
+
+        &.icon-text-input-valid + .icon-container{
+            fill: $primary-color;
+            color: $primary-color;
+        }
     }
 
     .icon-container{
