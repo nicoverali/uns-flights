@@ -26,11 +26,11 @@ export default class DatesFieldset extends React.Component{
 	};
 
 	handleDaySelect = selection => {
-		if(this.state.departureDate === undefined || !this.props.willReturn){
+		if(this.state.departureDate === undefined){
 			this.setDeparture(selection);
 			document.getElementById('dates-fieldset-component-input-return').focus();
 		}
-		else if(this.state.returnDate === undefined){
+		else if(this.state.returnDate === undefined && this.props.willReturn && selection.getTime() != this.state.departureDate.getTime()){
 			if(DateUtils.isDayBefore(selection, this.state.departureDate)){
 				this.setReturn(this.state.departureDate);
 				this.setDeparture(selection);
@@ -38,6 +38,9 @@ export default class DatesFieldset extends React.Component{
 			else{
 				this.setReturn(selection);
 			}
+		}
+		else if(selection.getTime() === this.state.departureDate.getTime()){
+			this.setDeparture(undefined);
 		}
 		else{
 			this.setDeparture(selection);
@@ -90,8 +93,9 @@ export default class DatesFieldset extends React.Component{
 					name="departure" 
 					label="Fecha de salida" 
 					value={this.state.departureInputValue}
-					readOnly 
 					onFocus={this.moveDayPicker}
+					valid={this.state.departureDate != undefined}
+					readOnly 
 					/>
 
 				<IconTextInput id="dates-fieldset-component-input-return" className="date-text-input" 
@@ -100,9 +104,10 @@ export default class DatesFieldset extends React.Component{
 					name="return" 
 					label="Fecha de retorno" 
 					value={this.state.returnInputValue}  
-					readOnly
 					onFocus={this.moveDayPicker}
 					disabled={!this.props.willReturn}
+					valid={this.state.returnDate != undefined}
+					readOnly
 					/>
 
 				<DayPicker className="dates-fieldset-component-day-picker"
