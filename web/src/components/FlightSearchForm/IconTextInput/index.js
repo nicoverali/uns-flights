@@ -1,21 +1,21 @@
 import './index.scss';
 import React from 'react';
 
-const IconTextInput = (props) => {
-    let icon;
-    if(props.icon){
-        icon = (<div className="icon-container">
-                    {React.createElement(props.icon)}
+const IconTextInput = ({icon, label, ...props}) => {
+    let reactIcon = '';
+    if(icon){
+        reactIcon = (<div className="icon-container">
+                    {React.createElement(icon)}
                 </div>);
     }
 
     return (
-        <div {...props} className={`icon-text-input-component ${props.className || ''}`}>
+        <div className={`icon-text-input-component ${props.className || ''}`}>
             <label>
-                {props.label}
+                {label}
             </label>
-            <input type="text" placeholder={props.placeholder} value={props.value} id={props.inputId} disabled={props.disabled}/>
-            {icon}
+            <input {...props} type="text"/>
+            {reactIcon}
         </div>
     );
 

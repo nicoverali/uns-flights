@@ -83,22 +83,24 @@ export default class DatesFieldset extends React.Component{
 		}
 
 		return (
-			<fieldset {...this.props} className={`dates-fieldset-component ${this.props.className || ''}`}>
-				<IconTextInput inputId="dates-fieldset-component-input-departure" className="date-text-input" 
+			<fieldset className={`dates-fieldset-component ${this.props.className || ''}`}>
+				<IconTextInput id="dates-fieldset-component-input-departure" className="date-text-input" 
 					placeholder="-- / -- / --"
 					icon={CalendarIcon}
 					name="departure" 
 					label="Fecha de salida" 
-					value={this.state.departureInputValue} 
+					value={this.state.departureInputValue}
+					readOnly 
 					onFocus={this.moveDayPicker}
 					/>
 
-				<IconTextInput inputId="dates-fieldset-component-input-return" className="date-text-input" 
+				<IconTextInput id="dates-fieldset-component-input-return" className="date-text-input" 
 					placeholder="-- / -- / --"
 					icon={CalendarIcon}
 					name="return" 
 					label="Fecha de retorno" 
 					value={this.state.returnInputValue}  
+					readOnly
 					onFocus={this.moveDayPicker}
 					disabled={!this.props.willReturn}
 					/>
