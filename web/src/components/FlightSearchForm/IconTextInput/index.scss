@@ -22,6 +22,7 @@ div.icon-text-input-component{
     input{
         display: block;
         height: $input-height;
+        width: 100%;
         margin-top: 8px;
         padding-left: 14px + $icon-width + 16px;
         padding-right: 8px;
@@ -43,6 +44,10 @@ div.icon-text-input-component{
         &:focus + .icon-container{
             fill: $primary-color;
             color: $primary-color;
+        }
+
+        &:disabled{
+            opacity: 0.4;
         }
     }
 

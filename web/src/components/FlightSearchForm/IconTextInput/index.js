@@ -14,7 +14,7 @@ const IconTextInput = (props) => {
             <label>
                 {props.label}
             </label>
-            <input type="text" placeholder={props.placeholder}/>
+            <input type="text" placeholder={props.placeholder} value={props.value} id={props.inputId} disabled={props.disabled}/>
             {icon}
         </div>
     );

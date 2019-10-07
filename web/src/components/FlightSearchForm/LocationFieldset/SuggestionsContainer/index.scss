@@ -10,6 +10,7 @@ div.suggestions-container-component{
     background-color: white;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
+    z-index: 1;
     
     &.react-autosuggest__suggestions-container--open{
         border: 2px solid $input-border-color;

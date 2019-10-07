@@ -7,13 +7,13 @@
 fieldset.location-fieldset-component{
     display: inline-block;
     border: none;
+    padding: 0;
 
     .react-autosuggest__container{
-        position: relative;
         display: inline-block;
-    }
-
-    &>*{
+        position: relative;
         margin-right: 64px;
+        max-width: 224px;
+        min-width: 212px;
     }
 }
