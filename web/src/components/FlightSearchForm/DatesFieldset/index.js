@@ -41,7 +41,7 @@ export default class DatesFieldset extends React.Component{
 		}
 		else{
 			this.setDeparture(selection);
-			this.setState({returnDate: undefined, returnInputValue: ''});
+			this.setReturn(undefined);
 			document.getElementById('dates-fieldset-component-input-return').focus();
 		}
 	}
@@ -51,11 +51,23 @@ export default class DatesFieldset extends React.Component{
 	}
 
 	setDeparture(departureDate){
-		this.setState({departureDate: departureDate, departureInputValue: this.formatDate(departureDate)});
+		let newDeparture = {
+			departureDate: departureDate,
+			departureInputValue: departureDate != undefined ? this.formatDate(departureDate) : ''
+		}
+		this.setState(newDeparture);
+		if(this.props.onDepartureUpdate != null)
+			this.props.onDepartureUpdate(departureDate);
 	}
 
 	setReturn(returnDate){
-		this.setState({returnDate: returnDate, returnInputValue: this.formatDate(returnDate)})
+		let newReturn = {
+			returnDate: returnDate,
+			returnInputValue: returnDate != undefined ? this.formatDate(returnDate) : ''
+		}
+		this.setState(newReturn);
+		if(this.props.onReturnUpdate != null)
+			this.props.onReturnUpdate(returnDate);
 	}
 
 
