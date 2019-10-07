@@ -7,11 +7,15 @@ group 'uns'
 version '1.0-SNAPSHOT'
 
 repositories {
+    //agrego FRAN
+    jcenter()
     mavenLocal()
     mavenCentral()
 }
 
 dependencies {
+    //agrego Dependencia
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     runtimeOnly "org.openjfx:javafx-media:$javafx.version:win"
