@@ -12,4 +12,52 @@ div#available-flights-page{
             margin-top: 0px; 
         }
     }
+
+    .available-flights-list{
+        overflow-x: hidden;
+        padding: 5px;
+        margin: -5px;
+
+        .available-flights-item{
+            position: relative;
+            border-bottom: 1px dashed $input-border-color;
+            box-shadow: $dashboard-components-shadow;
+    
+            &:not(:first-child)::before{
+                content: '';
+                position: absolute;
+                height: 40px;
+                width: 40px;
+                left: -20px;
+                top: -20px;
+                background-color: $background-color;
+                border-radius: 100%;
+                box-shadow: inset -3px 0 6px #0000001A;
+            }
+    
+            &:not(:first-child)::after{
+                content: '';
+                position: absolute;
+                height: 40px;
+                width: 40px;
+                right: -20px;
+                top: -20px;
+                background-color: $background-color;
+                border-radius: 100%;
+                box-shadow: inset 3px 0 6px #0000001A;
+
+            }
+    
+            &:first-child{
+                border-top-left-radius: 12px;
+                border-top-right-radius: 12px;           
+            }
+    
+            &:last-child{
+                border-bottom-left-radius: 12px;
+                border-bottom-right-radius: 12px;
+                border-bottom: none;
+            }
+        }
+    }
 }
