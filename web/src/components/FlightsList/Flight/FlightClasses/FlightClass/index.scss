@@ -1,6 +1,6 @@
 .flight-class-component{
     display: block;
-    background-color: $light-background;
+    background-color: darken($light-background, 1%);
     border-top: 1px dashed $input-border-color;
     padding: 24px 48px;
     

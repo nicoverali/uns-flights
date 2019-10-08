@@ -13,7 +13,7 @@ export default class AvailableFlights extends React.Component{
                 <FlightsSearchForm/>
                 <h2 className="available-flights-main-title">Vuelos de ida</h2>
                 <div className="available-flights-list">
-                    <Flight className="available-flights-item" onShowClasses={()=>console.log("showww!")}/>
+                    <Flight className="available-flights-item open" classes={[{name:'Turista', availableSeats:50, price:1200}]} showClasses onShowClasses={()=>console.log("showww!")}/>
                     <Flight className="available-flights-item" onShowClasses={()=>console.log("showww!")}/>
                     <Flight className="available-flights-item" onShowClasses={()=>console.log("showww!")}/>
                     <Flight className="available-flights-item" onShowClasses={()=>console.log("showww!")}/>
