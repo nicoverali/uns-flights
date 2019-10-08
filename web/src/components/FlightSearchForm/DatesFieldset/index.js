@@ -73,6 +73,12 @@ export default class DatesFieldset extends React.Component{
 			this.props.onReturnUpdate(returnDate);
 	}
 
+	componentDidUpdate(){
+		if(!this.props.willReturn && this.state.returnDate != undefined){
+			this.setReturn(undefined);
+		}
+	}
+
 
 	render(){
 		const modifiers = {
@@ -80,6 +86,7 @@ export default class DatesFieldset extends React.Component{
 				from: this.state.departureDate, 
 				to: this.state.returnDate
 			},
+			returnDate: this.state.returnDate,
 			disabled: {
 				before: new Date()
 			} 

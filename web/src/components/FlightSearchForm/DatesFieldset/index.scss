@@ -23,6 +23,7 @@ fieldset.dates-fieldset-component{
         background-color: white;
         border-radius: 12px;
         border: 2px solid $input-border-color;
+        z-index: 1;
         
         top: calc(100% + 18px);
         left: 0px;
@@ -77,21 +78,32 @@ fieldset.dates-fieldset-component{
                 pointer-events: none;
                 color: $input-border-color;
             }
-
-            /** TODO Customize day picker */
-
-            // &.DayPicker-Day--selected{
-            //     background-color: inherit;
                 
-            //     &::after{
-            //         content: '';
-            //         position: absolute;
-            //         width: 100%;
-            //         height: 100%;
-            //         background-color: red;
-            //     }
+            &.DayPicker-Day--highlighted{
+                color: white;
+                background-color: inherit;
+                background-color: lighten($primary-color, 15%);
+                border-radius: 0;
+            }
+                
+            &.DayPicker-Day--selected{
+                color: white;
+                background-color: inherit;
+                background-color: $primary-color;
+                border-radius: 8px;
+            }
 
-            // }
+            &.DayPicker-Day--selected.DayPicker-Day--highlighted{
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+            }
+
+            &.DayPicker-Day--selected.DayPicker-Day--returnDate{
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                border-top-right-radius: 8px;
+                border-bottom-right-radius: 8px;
+            }                  
         }
 
     }

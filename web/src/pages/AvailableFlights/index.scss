@@ -1,5 +1,6 @@
-div#available-flights-page{
+$flights-list-circles-size: 48px;
 
+div#available-flights-page{
 
     h2.available-flights-main-title{
         font-family: $title-font;
@@ -15,8 +16,8 @@ div#available-flights-page{
 
     .available-flights-list{
         overflow-x: hidden;
-        padding: 5px;
-        margin: -5px;
+        padding: 5px 5px;
+        margin: 0 -5px 48px -5px;
 
         .available-flights-item{
             position: relative;
@@ -26,25 +27,25 @@ div#available-flights-page{
             &:not(:first-child)::before{
                 content: '';
                 position: absolute;
-                height: 40px;
-                width: 40px;
-                left: -20px;
-                top: -20px;
+                height: $flights-list-circles-size;
+                width: $flights-list-circles-size;
+                left: -($flights-list-circles-size/2);
+                top: -($flights-list-circles-size/2);
                 background-color: $background-color;
                 border-radius: 100%;
-                box-shadow: inset -3px 0 6px #0000001A;
+                box-shadow: inset -3px 0 6px #00000014;
             }
     
             &:not(:first-child)::after{
                 content: '';
                 position: absolute;
-                height: 40px;
-                width: 40px;
-                right: -20px;
-                top: -20px;
+                height: $flights-list-circles-size;
+                width: $flights-list-circles-size;
+                right: -($flights-list-circles-size/2);
+                top: -($flights-list-circles-size/2);
                 background-color: $background-color;
                 border-radius: 100%;
-                box-shadow: inset 3px 0 6px #0000001A;
+                box-shadow: inset 3px 0 6px #00000014;
             }
     
             &:first-child{
