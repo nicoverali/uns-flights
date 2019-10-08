@@ -1,0 +1,50 @@
+.flight-class-component{
+    display: block;
+    background-color: $light-background;
+    border-top: 1px dashed $input-border-color;
+    padding: 24px 48px;
+    
+    section.left{
+        display: inline-block;
+
+        h5{
+            display: inline;
+            font-family: $body-font;
+            font-size: $subtitle-size;
+            font-weight: 500;
+            color: $secondary-color;
+            margin: 0;
+        }
+
+        p{
+            display: inline;
+            font-family: $body-font;
+            font-size: $caption-size;
+            font-weight: 300;
+            color: $dark-details-color;
+            margin: 0 0 0 16px;
+        }
+    }
+
+    .flight-class-price{
+        float: right;
+        font-family: $body-font;
+        font-size: $body-size;
+        font-weight: 500;
+        color: $secondary-color;
+        margin: 0;
+    }
+}
+
+@media (max-width: 1600px) {
+    .flight-class-component{
+        padding: 24px 80px;
+    }
+}
+
+@media (max-width: 960px) {
+    .flight-class-component{
+        padding: 24px 32px;
+    }
+
+}

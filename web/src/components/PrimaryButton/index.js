@@ -3,7 +3,7 @@ import React from 'react';
 
 const PrimaryButton = ({type, outline, className, ...props}) => {
     return (
-        <button type={type} className={`primary-button-component ${className||''} ${outline ? 'outline':''}`} >
+        <button {...props} type={type} className={`primary-button-component ${className||''} ${outline ? 'outline':''}`} >
             
             {props.children}
         

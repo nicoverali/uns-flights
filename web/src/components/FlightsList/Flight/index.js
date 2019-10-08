@@ -2,6 +2,7 @@ import './index.scss';
 import React from 'react';
 import FlightEndPoint from './FlightEndPoint';
 import FlightInfoItem from './FlightInfoItem';
+import FlightClasses from './FlightClasses';
 import AirplaneIcon from '@Assets/icons/airplane.svg';
 import PrimaryButton from '@Components/PrimaryButton';
 
@@ -46,12 +47,15 @@ export default class Flight extends React.Component{
                             />
                         </div>
 
-                        <PrimaryButton className="flight-button" outline={true}>
+                        <PrimaryButton className="flight-button" outline={true} onClick={this.props.onShowClasses}>
                             Ver clases
                         </PrimaryButton>
                     </div>
                 </div>
-                
+
+                <FlightClasses className={`flight-classes ${this.props.showClasses ? '':'hide'}`}
+                    classes={[{name:'Turista', availableSeats:44, price:1200}, {name:'Ejecutivo', availableSeats:11, price:8000}]}/>
+
             </div>
         );
 

@@ -1,16 +1,16 @@
 $airplane-icon-width: 24px;
 
 div.flight-component{
-    padding: 48px 48px;
     background-color: $light-background;
 
     .flight-main-content{
-
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
+        padding: 48px 48px;
+
 
         .flight-time{
             display: flex;
@@ -79,14 +79,18 @@ div.flight-component{
         }
     }
 
+    .flight-classes.hide{
+        display: none;
+    }
+
 }
 
 @media (max-width: 1600px) {
     div.flight-component {
-        padding: 24px 80px;
-
         .flight-main-content{
             display: block;
+            padding: 24px 80px;
+
 
             .flight-time{
                 flex-grow: 1;
@@ -117,9 +121,9 @@ div.flight-component{
 
 @media (max-width: 960px) {
     div.flight-component {
-        padding: 24px 32px;
-
         .flight-main-content{
+            padding: 24px 32px;
+
             .flight-info-and-button{
                 .flight-information{
                     position: relative;
