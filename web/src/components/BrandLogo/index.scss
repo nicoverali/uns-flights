@@ -24,4 +24,28 @@ div.brand-logo-component{
         margin: 0 20px;
     }
 
+    &.small{
+        >img{
+            width: 64px;
+            height: 64px;
+        }
+
+        >h1{
+            font-size: 20px
+        }
+    }
+
+    &.big{
+        >img{
+            width: 240px;
+            height: 240px;
+        }
+
+        >h1{
+            font-size: 36px;
+            margin: 36px auto 0 auto;
+            letter-spacing: 8px;
+        }
+    }
+
 }

@@ -1,0 +1,16 @@
+div#splash-screen-page{
+    display: block;
+    height: 100%;
+    text-align: center;
+
+    .splash-content-wrapper{
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .splash-load-spinner-wrapper{
+        display: block;
+        margin:auto;
+    }
+}
