@@ -20,11 +20,11 @@ public class SQLConnection implements DBConnection {
      *
      * @param user nombre del usuario
      * @param key Password
-     * @return
+     * @return objeto Connection
      */
 
     public Connection adminConnection(String user,String key) throws SQLException{
-        Connection toRet=null;
+        Connection toRet;
 
         toRet = DriverManager.getConnection(url,user,key);
 
@@ -35,7 +35,7 @@ public class SQLConnection implements DBConnection {
      *
      *
      * @param user numero de legajo (UNSIGNED INT)
-     * @param password
+     * @param password pass user
      * @return Retornara el objeto Connection en caso de un acceso exitoso a la base de datos, en caso de contraseña
      *          o user invalido retorna un objeto NULL
      */

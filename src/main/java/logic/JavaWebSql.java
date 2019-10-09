@@ -20,7 +20,7 @@ public class JavaWebSql {
      * @param pass Admin password
      * @return un Objeto Json con [code,Msg de error,Data[]]
      */
-    public JSONObject connectToAdmin(String pass) {
+    public String connectToAdmin(String pass) {
         DBConnection cnAux = SQLConnection.getInstance();
         JSONObject toRet = new JSONObject();
 
@@ -37,14 +37,14 @@ public class JavaWebSql {
             toRet.put("data",null);
 
         }
-        return toRet;
+        return toRet.toJSONString();
     }
 
     /**
      *
      * @return un Objeto Json con [code,Msg de error,Data[]]
      */
-    public JSONObject showTables() {
+    public String showTables() {
         JSONObject toRet1 = new JSONObject();
         JSONArray data = new JSONArray();
 
@@ -53,7 +53,7 @@ public class JavaWebSql {
             toRet1.put("err","La consulta a fallado por que el usuario conectado no es Admin");
             toRet1.put("data",null);
 
-            return toRet1;
+            return toRet1.toJSONString();
         }
         try {
             Statement st = cn.createStatement();
@@ -78,7 +78,7 @@ public class JavaWebSql {
             toRet1.put("data",null);
         }
 
-        return toRet1;
+        return toRet1.toJSONString();
     }
 
     /**
@@ -86,7 +86,7 @@ public class JavaWebSql {
      * @param name nombre de la tabla
      * @return un Objeto Json con [code,Msg de error,Data[]]
      */
-    public JSONObject describeTable(String name){
+    public String describeTable(String name){
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
 
@@ -95,7 +95,7 @@ public class JavaWebSql {
             toRet.put("err","La consulta a fallado por que el usuario conectado no es Admin");
             toRet.put("data",null);
 
-            return toRet;
+            return toRet.toJSONString();
         }
 
         try {
@@ -121,7 +121,7 @@ public class JavaWebSql {
             toRet.put("data",null);
         }
 
-        return toRet;
+        return toRet.toJSONString();
 
     }
 
@@ -133,7 +133,7 @@ public class JavaWebSql {
      *  --- VERIFICAR EL IF - ELSE  ---- ver si usar o no el cn.isValid(0)
      *  Asumo como CODIGO DE ERROR (de Conneccion perdida) : 4
      */
-    public JSONObject adminQuery(String query){
+    public String adminQuery(String query){
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
         try {
@@ -171,7 +171,7 @@ public class JavaWebSql {
                 toRet.put("code",4);
                 toRet.put("err","La coneccion con la base de datos se a perdido, por favor conectarse nuevamente");
                 toRet.put("data",null);
-                return toRet;
+                return toRet.toJSONString();
             }
         }
         catch (SQLException e){
@@ -181,7 +181,7 @@ public class JavaWebSql {
                 toRet.put("data",null);
         }
 
-        return toRet;
+        return toRet.toJSONString();
     }
 
     /**
@@ -192,7 +192,7 @@ public class JavaWebSql {
      * @param sentence sentenciaSQL
      * @return Respuesta a la sentencia SQL ejecutada
      */
-    public JSONObject executeBasicSentence(String sentence){
+    public String executeBasicSentence(String sentence){
         JSONObject toRet = new JSONObject();
 
         try{
@@ -210,7 +210,7 @@ public class JavaWebSql {
                 toRet.put("code",4);
                 toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
                 toRet.put("data",null);
-                return  toRet;
+                return  toRet.toJSONString();
             }
 
         }
@@ -221,10 +221,10 @@ public class JavaWebSql {
             toRet.put("data",null);
         }
 
-        return  toRet;
+        return  toRet.toJSONString();
     }
 
-    public JSONObject executeUpdate(String sentence){
+    public String executeUpdate(String sentence){
         JSONObject toRet = new JSONObject();
         try {
             if (cn.isValid(0) && userConnected.equals("admin")) {
@@ -241,7 +241,7 @@ public class JavaWebSql {
                 toRet.put("code",4);
                 toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
                 toRet.put("data",null);
-                return  toRet;
+                return  toRet.toJSONString();
             }
         }
 
@@ -251,7 +251,7 @@ public class JavaWebSql {
             toRet.put("data",null);
         }
 
-        return  toRet;
+        return  toRet.toJSONString();
     }
 
 
@@ -262,7 +262,7 @@ public class JavaWebSql {
      * @return Objeto Json :([cod,],[err,],[data,NULL]), donde cod--> 2 (es legajo/contraseña invalida)
      */
 
-    public JSONObject connectToEmploy(int leg,String pass){
+    public String connectToEmploy(int leg,String pass){
         DBConnection cnAux = SQLConnection.getInstance();
         JSONObject toRet = new JSONObject();
         Connection validConn;
@@ -273,7 +273,7 @@ public class JavaWebSql {
                 toRet.put("code",2);
                 toRet.put("err","Hay un error en el legajo/password Ingresados");
                 toRet.put("data",null);
-                return toRet;
+                return toRet.toJSONString();
             }
 
             cn=validConn;
@@ -290,10 +290,10 @@ public class JavaWebSql {
             toRet.put("data",null);
         }
 
-        return toRet;
+        return toRet.toJSONString();
     }
 
-    public JSONObject ubicaciones() {
+    public String ubicaciones() {
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
         try {
@@ -301,7 +301,7 @@ public class JavaWebSql {
                 Statement st = cn.createStatement();
                 st.execute("use vuelos");
                 ResultSet rs = st.executeQuery("select * from ubicaciones");
-                toRet.put("cod",1);
+                toRet.put("code",1);
                 toRet.put("msg","");
 
                 String pais;
@@ -327,7 +327,7 @@ public class JavaWebSql {
                 toRet.put("code",4);
                 toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
                 toRet.put("data",null);
-                return  toRet;
+                return  toRet.toJSONString();
             }
         }
         catch (SQLException e){
@@ -336,10 +336,10 @@ public class JavaWebSql {
             toRet.put("data",null);
         }
 
-        return toRet;
+        return toRet.toJSONString();
     }
 
-    public JSONObject getAvalaibleFlyes(String fecha,String ciudad){
+    public String getAvalaibleFlyes(String fecha,String ciudad){
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
         try{
@@ -350,7 +350,7 @@ public class JavaWebSql {
                         "a2_nombre,a2_codigo,hora_llega,modelo_avion,tiempo_estimado " +
                         "from vuelos_disponibles where "+
                         "fecha='"+fecha+"' AND a1_ciudad='"+ciudad+"';");
-                toRet.put("cod",1);
+                toRet.put("code",1);
                 toRet.put("msg","");
                 JSONObject aux;
                 while(rs.next()){
@@ -378,7 +378,7 @@ public class JavaWebSql {
                 toRet.put("code",4);
                 toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
                 toRet.put("data",null);
-                return  toRet;
+                return  toRet.toJSONString();
             }
         }
 
@@ -387,10 +387,10 @@ public class JavaWebSql {
             toRet.put("msg",e.getMessage());
             toRet.put("data",null);
         }
-        return toRet;
+        return toRet.toJSONString();
     }
 
-    public JSONObject getClassesForFlight(String vuelo,String fecha,String ciudad){
+    public String getClassesForFlight(String vuelo,String fecha,String ciudad){
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
         try{
@@ -399,7 +399,7 @@ public class JavaWebSql {
                 st.execute("use vuelos");
                 ResultSet rs = st.executeQuery("select clase,asientos_disponibles,precio from vuelos_disponibles " +
                         "where fecha='"+fecha+"' AND a1_ciudad='"+ciudad+"' and vuelo='"+vuelo+"';");
-                toRet.put("cod",1);
+                toRet.put("code",1);
                 toRet.put("msg","");
                 JSONObject aux;
                 while(rs.next()) {
@@ -417,7 +417,7 @@ public class JavaWebSql {
                 toRet.put("code",4);
                 toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
                 toRet.put("data",null);
-                return  toRet;
+                return  toRet.toJSONString();
             }
 
             }
@@ -426,6 +426,6 @@ public class JavaWebSql {
             toRet.put("msg",e.getMessage());
             toRet.put("data",null);
         }
-        return toRet;
+        return toRet.toJSONString();
     }
 }
