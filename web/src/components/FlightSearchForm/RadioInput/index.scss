@@ -32,6 +32,12 @@ label.radio-input-component{
         border-radius: 100%;
         -webkit-tap-highlight-color: transparent;
 
+        &.reversed{
+            float: right;
+            margin-left: 10px;
+            margin-right: 0;
+        }
+
         &::after{
             content: '';
             position: absolute;

@@ -1,10 +1,9 @@
 import './index.scss';
 import React from 'react';
 
-const PrimaryButton = (props) => {
+const PrimaryButton = ({type, outline, className, ...props}) => {
     return (
-        <button {...props} 
-            className={`primary-button-component ${props.className||''} ${props.outline ? 'outline':''}`} >
+        <button {...props} type={type} className={`primary-button-component ${className||''} ${outline ? 'outline':''}`} >
             
             {props.children}
         

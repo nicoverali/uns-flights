@@ -1,11 +1,11 @@
 import './index.scss';
 import React from 'react';
 
-const RadioInput = props => {
+const RadioInput = ({className, ...props}) => {
     return (
-        <label className={`radio-input-component ${props.className || ''}`}>
+        <label className={`radio-input-component ${className || ''}`}>
             <input {...props} type="radio"/>
-            <span  className="styled-radio"></span>
+            <span  className={`styled-radio ${props.reversed ? 'reversed':''}`}></span>
             {props.label}
         </label>
     );

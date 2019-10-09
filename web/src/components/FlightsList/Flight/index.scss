@@ -1,0 +1,142 @@
+$airplane-icon-width: 24px;
+
+div.flight-component{
+    background-color: $light-background;
+
+    .flight-main-content{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 48px;
+
+
+        .flight-time{
+            display: flex;
+            position: relative;
+            top: 8px;
+    
+            .flight-route{
+                min-width: 240px;
+                margin: 4px 40px 0 40px;
+    
+                .flight-route-line{
+                    box-sizing: border-box;
+                    display: inline-block;
+                    position: relative;
+                    margin: 0;
+                    border: 1px solid $dark-details-color;
+                    width: calc(100% - #{$airplane-icon-width} - 16px);
+                    vertical-align: middle;
+    
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        text-align: center;
+                        width: 4px;
+                        height: 4px;
+                        top: 50%;
+                        left: 50%;
+                        transform: translateX(-50%) translateY(-50%);
+                        background-color: $secondary-color;
+                        border: 8px solid $light-background;
+                        border-radius: 100%;
+                    }
+                }
+    
+                svg{
+                    float: right;
+                    width: $airplane-icon-width;
+                    vertical-align: middle;
+                    fill: $secondary-color;
+                    transform: rotate(90deg);
+                }
+            }
+    
+            .flight-end-point{
+                vertical-align: middle;
+            }
+    
+        }
+    
+        .flight-info-and-button{
+            display: flex;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .flight-information{
+            display: flex;
+            justify-content: space-between;
+            flex-grow: 1;
+            margin-right: 80px;
+            margin-left: 80px;
+        }
+    
+        .flight-button{
+            height: 48px;
+        }
+    }
+
+    .flight-classes{
+        max-height: 600px; // Always bigger
+        transition: max-height 0.4s ease-in-out;
+    }
+
+    .flight-classes.hide{
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.25s ease-out;
+    }
+
+}
+
+@media (max-width: 1600px) {
+    div.flight-component {
+        .flight-main-content{
+            display: block;
+            padding: 24px 80px;
+
+
+            .flight-time{
+                flex-grow: 1;
+
+                .flight-route{
+                    flex-grow: 1;
+                    min-width: 140px;
+                }
+            }
+
+            .flight-info-and-button{
+                position: relative;
+                margin-top: 40px;
+                
+                .flight-information{
+                    position: relative;
+                    width: 50%;
+                    min-width: 280px;
+                    margin-left: 0px;
+                    margin-right: 80px;
+                }
+            }
+        }
+
+
+    }
+}
+
+@media (max-width: 960px) {
+    div.flight-component {
+        .flight-main-content{
+            padding: 24px 32px;
+
+            .flight-info-and-button{
+                .flight-information{
+                    position: relative;
+                    margin-right: 24px;
+                }
+            }
+        }  
+    }
+}

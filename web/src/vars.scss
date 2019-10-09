@@ -31,3 +31,14 @@ $dashboard-components-border-radius: 16px;
 
 /** Shadows */
 $dashboard-components-shadow: 0px 3px 6px #0000001A;
+
+/** Mixins */
+@mixin dashboard-title {
+        display: inline-block;
+        font-family: $title-font;
+        font-size: $h2-size;
+        font-weight: 800;
+        color: $secondary-color;
+        margin-top: 0;
+        margin-bottom: 40px;
+}

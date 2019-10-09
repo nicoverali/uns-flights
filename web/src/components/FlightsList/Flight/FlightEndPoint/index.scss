@@ -1,0 +1,37 @@
+div.flight-end-point-component{
+    display: inline-block;
+    text-align: center;
+
+
+    .flight-end-point-top{
+        display: block;
+
+        h3{
+            display: inline;
+            vertical-align: middle;
+            font-family: $title-font;
+            font-size: $h3-size;
+            font-weight: 600;
+            color: $secondary-color;
+        }
+
+        h4{
+            display: inline;
+            vertical-align: middle;
+            margin-left: 8px;
+            font-family: $title-font;
+            font-size: $subtitle-size;
+            font-weight: 300;
+            color: $dark-details-color;
+        }
+    }
+
+    p{
+        display: block;
+        margin-top: 8px;
+        font-family: $body-font;
+        font-size: $caption-size;
+        font-weight: 400;
+        color: $dark-details-color;
+    }
+}

@@ -11,7 +11,7 @@ import Dashboard from '@Pages/Dashboard';
 
 const domContainer = document.querySelector('#app');
 ReactDOM.render(
-  <MemoryRouter initialEntries={['/dashboard']}>
+  <MemoryRouter initialEntries={['/dashboard?isAdmin=true']}>
     <Route path="/login" component={Login}/>
     <Route path='/dashboard' component={Dashboard}/>
   </MemoryRouter>

@@ -1,0 +1,21 @@
+div.flight-info-item-component{
+    display: inline-block;
+
+    p.flight-info-item-label{
+        display: block;
+        margin: 0;
+        font-family: $body-font;
+        font-size: $body-size;
+        color: $dark-details-color;
+    }
+
+    p.flight-info-item-value{
+        display: block;
+        margin: 4px 0 0 0;
+        font-family: $body-font;
+        font-size: $body-size;
+        font-weight: 700;
+        color: $secondary-color;
+    }
+
+}
