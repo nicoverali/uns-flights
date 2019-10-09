@@ -49,6 +49,7 @@ export default class Dashboard extends React.Component{
 
         return (
             <div id="dashboard-page">
+                <Redirect to={this.state.links[1].to}/> {/*TODO Take this out */}
                 <SideBar links={this.state.links} className="dashboard-sidebar"/>
                 <div className="dashboard-content">
                     <Route path={`${this.state.arrivePath}/available-flights`} component={AvailableFlights}/>

@@ -1,13 +1,7 @@
 div#available-flights-page{
 
     h2.available-flights-main-title{
-        display: inline-block;
-        font-family: $title-font;
-        font-size: $h2-size;
-        font-weight: 800;
-        color: $secondary-color;
-        margin-top: 0;
-        margin-bottom: 40px;
+        @include dashboard-title;
     }
 
 
