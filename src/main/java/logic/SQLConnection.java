@@ -1,7 +1,7 @@
 package logic;
 import java.sql.*;
 public class SQLConnection implements DBConnection {
-    private String url = "jdbc:mysql://localhost:3306";
+    private String url = "jdbc:mysql://localhost:3306/?serverTimezone=America/Argentina/Buenos_Aires";
     private static SQLConnection yo=null;
 
     private SQLConnection() {

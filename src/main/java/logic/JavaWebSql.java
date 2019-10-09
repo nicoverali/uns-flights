@@ -101,7 +101,7 @@ public class JavaWebSql {
         try {
             Statement st = cn.createStatement();
             st.execute("use vuelos");
-            ResultSet query = st.executeQuery("show tables");
+            ResultSet query = st.executeQuery("describe "+name);
             toRet.put("code",1);
             toRet.put("err",null);
 
@@ -297,7 +297,7 @@ public class JavaWebSql {
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
         try {
-            if (cn.isValid(0) && userConnected.equals("empleado")) {
+            if (cn.isValid(0)) {
                 Statement st = cn.createStatement();
                 st.execute("use vuelos");
                 ResultSet rs = st.executeQuery("select * from ubicaciones");
@@ -339,5 +339,93 @@ public class JavaWebSql {
         return toRet;
     }
 
+    public JSONObject getAvalaibleFlyes(String fecha,String ciudad){
+        JSONObject toRet = new JSONObject();
+        JSONArray data = new JSONArray();
+        try{
+            if (cn.isValid(0)) {
+                Statement st = cn.createStatement();
+                st.execute("use vuelos");
+                ResultSet rs = st.executeQuery(" select distinct vuelo as'Numero de vuelo',a1_codigo, a1_nombre,hora_sale," +
+                        "a2_nombre,a2_codigo,hora_llega,modelo_avion,tiempo_estimado " +
+                        "from vuelos_disponibles where "+
+                        "fecha='"+fecha+"' AND a1_ciudad='"+ciudad+"';");
+                toRet.put("cod",1);
+                toRet.put("msg","");
+                JSONObject aux;
+                while(rs.next()){
+                    aux= new JSONObject();
+                    aux.put("Numero de vuelo",rs.getString("Numero de vuelo"));
+                    aux.put("a1_codigo",rs.getString("a1_codigo"));
+                    aux.put("a1_nombre",rs.getString("a1_nombre"));
+                    aux.put("hora_sale",rs.getString("hora_sale"));
+                    aux.put("a2_codigo",rs.getString("a2_codigo"));
+                    aux.put("a2_nombre",rs.getString("a2_nombre"));
+                    aux.put("hora_llega",rs.getString("hora_llega"));
+                    aux.put("model_avion",rs.getString("modelo_avion"));
+                    aux.put("tiempo_estimado",rs.getString("tiempo_estimado"));
 
+                    data.add(aux);
+
+                }
+
+                toRet.put("data",data);
+                st.close();
+                rs.close();
+
+            }
+            else{
+                toRet.put("code",4);
+                toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
+                toRet.put("data",null);
+                return  toRet;
+            }
+        }
+
+        catch (SQLException e){
+            toRet.put("code",3);
+            toRet.put("msg",e.getMessage());
+            toRet.put("data",null);
+        }
+        return toRet;
+    }
+
+    public JSONObject getClassesForFlight(String vuelo,String fecha,String ciudad){
+        JSONObject toRet = new JSONObject();
+        JSONArray data = new JSONArray();
+        try{
+            if (cn.isValid(0)) {
+                Statement st = cn.createStatement();
+                st.execute("use vuelos");
+                ResultSet rs = st.executeQuery("select clase,asientos_disponibles,precio from vuelos_disponibles " +
+                        "where fecha='"+fecha+"' AND a1_ciudad='"+ciudad+"' and vuelo='"+vuelo+"';");
+                toRet.put("cod",1);
+                toRet.put("msg","");
+                JSONObject aux;
+                while(rs.next()) {
+                    aux=new JSONObject();
+                    aux.put("clase",rs.getString("clase"));
+                    aux.put("asientos_disponibles",rs.getString("asientos_disponibles"));
+                    aux.put("precio",rs.getString("precio"));
+                    data.add(aux);
+                }
+                toRet.put("data",data);
+                st.close();
+                rs.close();
+                }
+            else{
+                toRet.put("code",4);
+                toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
+                toRet.put("data",null);
+                return  toRet;
+            }
+
+            }
+        catch (SQLException e){
+            toRet.put("code",3);
+            toRet.put("msg",e.getMessage());
+            toRet.put("data",null);
+        }
+        return toRet;
+    }
 }
