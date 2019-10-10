@@ -42,3 +42,11 @@ $dashboard-components-shadow: 0px 3px 6px #0000001A;
         margin-top: 0;
         margin-bottom: 40px;
 }
+
+/** Exports to JS */
+:export{
+        primaryColor: $primary-color;
+        secondaryColor: $secondary-color;
+        backgroundColor: $background-color;
+        lightBackgroundColor: $light-background;
+}
