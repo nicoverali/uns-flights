@@ -1,4 +1,5 @@
 package web;
+import logic.JavaWebSql;
 
 public class Main {
 
@@ -7,8 +8,10 @@ public class Main {
         //HelloFX.main(args);
 
         JavaWebSql base = new JavaWebSql();
-        /**
 
+
+        /**
+         String ret = base.connectToAdmin("admin");
         String ret2= base.showTables();
         System.out.println(ret2.toString());
         String ret3 = base.describeTable("aeropuertos");
@@ -23,7 +26,8 @@ public class Main {
         String ret7= base.executeUpdate("insert into ubicaciones (pais,estado,ciudad,huso) values ('Suarez','Bs.As','pepi',0);");
         System.out.println(ret7.toString());
 
-        String ret = base.connectToAdmin("admin");
+
+
 
          String ret8=base.execute("show databases;");
         System.out.println(ret8.toString());

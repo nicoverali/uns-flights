@@ -2,6 +2,19 @@ package logic;
 import org.json.simple.*;
 import java.sql.*;
 
+/**
+ * La clase JavaWebSql es la que se encarga de mantener la comunicacion entre Java y Sql y a su vez se encarga de comunicar
+ * Java y JavaScript. Esta clase sirve como servidor, y le brinda una interfaz a la web para que realize los pedidos que quiera,
+ * y la clase JWS(JavaWebSql) se comunica con la base de datos, y manteniendo un protocolo preestablecido con javaScript (ideado
+ * por nosotros) retorna un String (Que a su vez tiene la estructura de un Json el cual es facil de trabajar desde JavaScript)
+ * el tiene:
+ * - una clave : "code" (codigo de error) tal que :: si code=1 (OK) , code=2 error en los parametros , code=3 error sql
+ *              code=4 error en la conexion.
+ * - una clave: "msg" :: la cual da informacion de la ejecucion del metodo
+ * - una clave: "data" :: el cual es otro ArrayJson con toda la informacion que Java recopilo de la sentencia sobre sql
+ *              y que la Web necesita mostrarle al usuario
+ */
+
 public class JavaWebSql {
     private Connection cn;
     private String userConnected;
@@ -18,7 +31,7 @@ public class JavaWebSql {
 
     /**
      * @param pass Admin password
-     * @return un Objeto Json con [code,Msg de error,Data[]]
+     * @return un String-->Objeto Json con [code,Msg de error,Data[]]
      */
     @SuppressWarnings("unchecked")
     public String connectToAdmin(String pass) {
@@ -42,8 +55,8 @@ public class JavaWebSql {
     }
 
     /**
-     *
-     * @return un Objeto Json con [code,Msg de error,Data[]]
+     * Muestra todas las tablas de la Base de datos vuelos
+     * @return un String-->Objeto Json con [code,Msg de error,Data[]]
      */
     @SuppressWarnings("unchecked")
     public String showTables() {
@@ -86,7 +99,7 @@ public class JavaWebSql {
     /**
      *
      * @param name nombre de la tabla
-     * @return un Objeto Json con [code,Msg de error,Data[]]
+     * @return un String -->Objeto Json con [code,Msg de error,Data[]]
      */
     @SuppressWarnings("unchecked")
     public String describeTable(String name){
@@ -131,7 +144,7 @@ public class JavaWebSql {
     /**
      *
      * @param query recibo la query cargada por consola del usuario admin
-     * @return Un objeto Json : (cod,err,data:[(),(),...,()]) donde cada
+     * @return Un String -->objeto Json : (cod,err,data:[(),(),...,()]) donde cada
      *         () corresponde con un nuevo Objeto Json con --> :[(nomCol1,dato1),...,(nomColN,datoN)]
      *  --- VERIFICAR EL IF - ELSE  ---- ver si usar o no el cn.isValid(0)
      *  Asumo como CODIGO DE ERROR (de Conneccion perdida) : 4
@@ -189,23 +202,24 @@ public class JavaWebSql {
     }
 
     /**
-     * La idea seria muy similar a excecuteQuery con la salvedad que no retornaremos datos en el Json, solamente
-     * codigo de error y msg correspondiente.
-     * Recordar que uso isValid(0) para verificar si la coneccion sigue activa y le asocio el codigo de error 4
+     *
+     * Realiza la sentencia sql recibida por parametro y corrobora si la sentencia retorna algo y en tal caso
+     * analiza el objeto Resultset de la respuesta y lo convierte en Json para retornarlo a la web
      *
      * @param sentence sentenciaSQL
-     * @return Respuesta a la sentencia SQL ejecutada
+     * @return String --> Json:Respuesta a la sentencia SQL ejecutada
      */
     @SuppressWarnings("unchecked")
     public String execute(String sentence){
         JSONObject toRet = new JSONObject();
-        JSONArray data = new JSONArray();
+        JSONArray data=null;
         try{
             if(cn.isValid(0) && userConnected.equals("admin")){
                 Statement st = cn.createStatement();
                 boolean hasResult=st.execute(sentence);
 
                 if(hasResult){
+                    data=new JSONArray();
                     ResultSet rs= st.getResultSet();
                     ResultSetMetaData colData = rs.getMetaData();
                     int columnas = colData.getColumnCount();
@@ -244,6 +258,13 @@ public class JavaWebSql {
 
         return  toRet.toJSONString();
     }
+
+    /**
+     * Realiza la sentencia sql que modifica la base de datos de alguna forma y retorna el msj que da sql.
+     * @param sentence sentencia sql
+     *
+     * @return String --> objeto Json
+     */
     @SuppressWarnings("unchecked")
     public String executeUpdate(String sentence){
         JSONObject toRet = new JSONObject();
@@ -280,7 +301,7 @@ public class JavaWebSql {
      *
      * @param leg unsigned int correspondiente al numero de legajo del empelado
      * @param pass  contraseña del usuario la cual debe coincidir con la contraseña en la tabla empleados
-     * @return Objeto Json :([cod,],[err,],[data,NULL]), donde cod--> 2 (es legajo/contraseña invalida)
+     * @return String --> Objeto Json :([cod,],[err,],[data,NULL]), donde cod--> 2 (es legajo/contraseña invalida)
      */
     @SuppressWarnings("unchecked")
     public String connectToEmploy(int leg,String pass){
@@ -313,6 +334,11 @@ public class JavaWebSql {
 
         return toRet.toJSONString();
     }
+
+    /**
+     *
+     * @return String --> Json con todas las ubicaciones disponibles donde hay aeropuerto
+     */
     @SuppressWarnings("unchecked")
     public String ubicaciones() {
         JSONObject toRet = new JSONObject();
@@ -359,6 +385,14 @@ public class JavaWebSql {
 
         return toRet.toJSONString();
     }
+
+    /**
+     *
+     * @param fecha fecha del vuelo
+     * @param ciudadSalida ciudad desde la que sale el vuelo
+     * @param ciudadLlegada ciudad de arrivo
+     * @return un String --> Json con todas los vuelos disponibles que cumplan esas condiciones
+     */
     @SuppressWarnings("unchecked")
     public String getAvailableFlights(String fecha,String ciudadSalida,String ciudadLlegada){
         JSONObject toRet = new JSONObject();
@@ -410,6 +444,14 @@ public class JavaWebSql {
         }
         return toRet.toJSONString();
     }
+
+    /**
+     *
+     * @param vuelo numero de vuelo
+     * @param fecha fecha de salida
+     * @param ciudad ciudad de salida
+     * @return un String --> Json con las clases disponibles, cant_asientos y precio del vuelo para cada clase
+     */
     @SuppressWarnings("unchecked")
     public String getClassesForFlight(String vuelo,String fecha,String ciudad){
         JSONObject toRet = new JSONObject();
