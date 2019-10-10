@@ -1,0 +1,27 @@
+div#database-tables-page{
+    padding-bottom: 48px;
+    
+    h2{
+        @include dashboard-title;
+        
+        &:not(:first-child){
+            margin-top: 48px;
+        }
+    }
+
+    .database-tables-container{
+        padding: 48px 48px 48px-16px 48px;
+        background-color: $light-background;
+        box-shadow: $dashboard-components-shadow;
+        border-radius: $dashboard-components-border-radius;
+
+        .database-tables-chip{
+            margin-bottom: 16px;
+            
+            &.database-tables-chip:not(:last-child){
+                margin-right: 16px;
+            }
+    
+        }
+    }
+}
