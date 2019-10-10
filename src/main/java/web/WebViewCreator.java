@@ -25,12 +25,15 @@ public class WebViewCreator extends Application {
     public void start(Stage primaryStage) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         URL url = this.getClass().getClassLoader().getResource("index.html");
+
+
         WebView webView = new WebView();
 
         webView.setPrefHeight(screenBounds.getHeight());
         webView.setFontSmoothingType(FontSmoothingType.GRAY);
 
         WebEngine webEngine = webView.getEngine();
+        webEngine.setUserAgent("JAVAFX");
         webEngine.load(url.toString());
 
         // Add the Java-JS communication bridge object into the JS window object
@@ -40,6 +43,13 @@ public class WebViewCreator extends Application {
 
                     JSObject window = (JSObject) webEngine.executeScript("window");
                     window.setMember("javaSQLBridge", new JavaWebSql());
+                    window.setMember("javaLoggerBridge", new SystemLoggerBridge());
+                    webEngine.executeScript(
+                            String.join("\n",
+                          "console.log = function(message){",
+                                        "javaLoggerBridge.log(message);",
+                                    "}")
+                    );
                 }
         );
 

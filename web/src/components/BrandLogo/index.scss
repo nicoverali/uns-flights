@@ -29,6 +29,10 @@ div.brand-logo-component{
         font-size: 20px;
         letter-spacing: 4.4px;
 
+        &.horizontal{
+            margin: 0 20px;
+        }
+
     }
 
     &.big img{
@@ -40,5 +44,9 @@ div.brand-logo-component{
         font-size: $h1-size;
         margin: 32px auto 0 auto;
         letter-spacing: 8px;
+
+        &.horizontal{
+            margin: 0 40px;
+        }
     }
 }

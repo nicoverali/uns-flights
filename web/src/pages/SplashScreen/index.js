@@ -9,13 +9,30 @@ export default class SplashScreen extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {
-            loading : true
+
+        if(window.navigator.userAgent == 'JAVAFX'){
+            this.state = {
+                loading: true
+            }
+            this.waitForJavaBridges();
+        }
+        else{
+            this.state = {
+                loading: false
+            }
         }
 
+    }
+    
+    waitForJavaBridges(){
         setTimeout(()=>{
-            if(window.javaSQLBridge != null){
+            if(window.javaSQLBridge != null && window.javaLoggerBridge != null){
+                //Display all error in Java console
+                window.onerror = (errorMsg, url, lineNumber) => window.javaLoggerBridge.logError(`At line ${lineNumber} :: ${errorMsg}`);
                 this.setState({loading: false});
+            }
+            else{
+                this.waitForJavaBridge();
             }
         }, 200);
     }
