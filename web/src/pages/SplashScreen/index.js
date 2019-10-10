@@ -26,9 +26,7 @@ export default class SplashScreen extends React.Component{
     
     waitForJavaBridges(){
         setTimeout(()=>{
-            if(window.javaSQLBridge != null && window.javaLoggerBridge != null){
-                //Display all error in Java console
-                window.onerror = (errorMsg, url, lineNumber) => window.javaLoggerBridge.logError(`At line ${lineNumber} :: ${errorMsg}`);
+            if(window.javaSQLBridge != null){
                 this.setState({loading: false});
             }
             else{
