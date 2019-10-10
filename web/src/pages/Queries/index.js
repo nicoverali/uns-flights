@@ -1,5 +1,6 @@
 import './index.scss';
 import React from 'react';
+import PrimaryButton from '@Components/PrimaryButton';
 import DataTable from 'react-data-table-component';
 
 const data = [
@@ -346,7 +347,13 @@ export default class Queries extends React.Component {
         return (
             <div id="queries-page">
                 <h2>Haz tu consulta</h2>
-                <textarea className="queries-textarea"/>
+                <div className="queries-container">
+                  <textarea className="queries-textarea"/>
+                  <PrimaryButton className="queries-submit-button">
+                    Consultar
+                  </PrimaryButton>
+                  <p className="queries-result-box">Actualizacion ejecutada satisfactoriamente.</p>
+                </div>
                 <h2>Resultados</h2>
                 <div className="queries-table-wrapper">
                     <DataTable className="queries-table"

@@ -12,7 +12,7 @@ import SplashScreen from '@Pages/SplashScreen';
 
 const domContainer = document.querySelector('#app');
 ReactDOM.render(
-  <MemoryRouter initialEntries={['/splash']}>
+  <MemoryRouter initialEntries={['/dashboard?isAdmin=true']}>
     <Route path="/splash" component={SplashScreen}/>
     <Route path="/login" component={Login}/>
     <Route path='/dashboard' component={Dashboard}/>

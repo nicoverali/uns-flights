@@ -1,6 +1,6 @@
 import './index.scss';
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route, Redirect,  withRouter} from 'react-router-dom';
 import QueryString from 'query-string';
 
 import SideBar from '@Components/Sidebar';
@@ -29,7 +29,7 @@ const getEmployeeLinks = (pathPrefix = '') => {
     ]
 }
 
-export default class Dashboard extends React.Component{
+class Dashboard extends React.Component{
 
     constructor(props) {
         super(props);
@@ -41,6 +41,16 @@ export default class Dashboard extends React.Component{
         }
     }
 
+    componentWillMount() {
+        this.unlisten = this.props.history.listen((location, action) => {
+            // This will be executed on route change
+            window.scrollTo(0,0);
+        });
+    }
+
+    componentWillUnmount() {
+        this.unlisten();
+    }
 
     render(){
         if(this.props.location.pathname == this.state.arrivePath){
@@ -60,3 +70,5 @@ export default class Dashboard extends React.Component{
     }
 
 }
+
+export default  withRouter(Dashboard);
