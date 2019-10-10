@@ -4,21 +4,30 @@ public class Main {
 
     public static void main(String[] args){
 
-        HelloFX.main(args);
-       /**
+        //HelloFX.main(args);
+
         JavaWebSql base = new JavaWebSql();
-        JSONObject ret = base.connectToAdmin("admin");
-        JSONObject ret2= base.showTables();
+        /**
+
+        String ret2= base.showTables();
         System.out.println(ret2.toString());
-        JSONObject ret3 = base.describeTable("aeropuertos");
+        String ret3 = base.describeTable("aeropuertos");
         System.out.println(ret3.toString());
-        JSONObject ret4 = base.adminQuery("select * from salidas");
+        String ret4 = base.adminQuery("select * from reserva_vuelo_clase");
         System.out.println(ret4.toString());
-        JSONObject ret5 = base.ubicaciones();
+        String ret5 = base.ubicaciones();
         System.out.println(ret5.toString());
         System.out.println(Hash.md5("pepe"));
-**/
+        String ret6= base.executeUpdate("drop table posee;");
+        System.out.println(ret6.toString());
+        String ret7= base.executeUpdate("insert into ubicaciones (pais,estado,ciudad,huso) values ('Suarez','Bs.As','pepi',0);");
+        System.out.println(ret7.toString());
 
+        String ret = base.connectToAdmin("admin");
+
+         String ret8=base.execute("show databases;");
+        System.out.println(ret8.toString());
+         **/
     }
 
 }
