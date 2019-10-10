@@ -1,12 +1,13 @@
 package web;
-import logic.JavaWebSql;
 
 public class Main {
 
     public static void main(String[] args){
 
-        //HelloFX.main(args);
+        WebViewCreator.init(args);
 
+
+        /**
         JavaWebSql base = new JavaWebSql();
 
 
@@ -29,9 +30,8 @@ public class Main {
 
 
 
-         String ret8=base.execute("show databases;");
-        System.out.println(ret8.toString());
+            String ret8=base.execute("show databases;");
+            System.out.println(ret8.toString());
          **/
     }
-
 }
