@@ -43,13 +43,6 @@ public class WebViewCreator extends Application {
 
                     JSObject window = (JSObject) webEngine.executeScript("window");
                     window.setMember("javaSQLBridge", new JavaWebSql());
-                    window.setMember("javaLoggerBridge", new SystemLoggerBridge());
-                    webEngine.executeScript(
-                            String.join("\n",
-                          "console.log = function(message){",
-                                        "javaLoggerBridge.log(message);",
-                                    "}")
-                    );
                 }
         );
 
