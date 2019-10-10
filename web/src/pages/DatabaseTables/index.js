@@ -345,12 +345,16 @@ export default class DatabaseTables extends React.Component {
             <div id="database-tables-page">
                 <h2>Selecciona una de las tablas</h2>
                 <div className="database-tables-container">
-                    <Chip className="database-tables-chip" label="vuelos_progamados" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="clases" onClick={this.handleTableSelected}/>
                     <Chip className="database-tables-chip" label="vista_vuelos_disponibilidad" onClick={this.handleTableSelected}/>
                     <Chip className="database-tables-chip" label="vuelos_progamados" onClick={this.handleTableSelected}/>
-                    <Chip className="database-tables-chip" label="vuelos_progamados" onClick={this.handleTableSelected}/>
-                    <Chip className="database-tables-chip" label="vuelos_progamados" onClick={this.handleTableSelected}/>
-                    <Chip className="database-tables-chip" label="vuelos_progamados" active/>
+                    <Chip className="database-tables-chip" label="salidas" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="vuelos_disponibles" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="aeropuertos" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="ubicaciones" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="reserva" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="reserva_vuelos_clase" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="brinda" active/>
                 </div>
                 <h2>Resultados</h2>
                 <Table

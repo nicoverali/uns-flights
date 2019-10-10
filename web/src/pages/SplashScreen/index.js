@@ -32,7 +32,7 @@ export default class SplashScreen extends React.Component{
                 this.setState({loading: false});
             }
             else{
-                this.waitForJavaBridge();
+                this.waitForJavaBridges();
             }
         }, 200);
     }
