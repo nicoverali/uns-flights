@@ -41,7 +41,7 @@ class Dashboard extends React.Component{
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.unlisten = this.props.history.listen((location, action) => {
             // This will be executed on route change
             window.scrollTo(0,0);

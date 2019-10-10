@@ -1,7 +1,7 @@
 import './index.scss';
 import React from 'react';
 import PrimaryButton from '@Components/PrimaryButton';
-import DataTable from 'react-data-table-component';
+import Table from '@Components/Table';
 
 const data = [
     {
@@ -335,13 +335,6 @@ const columns = [
 
 export default class Queries extends React.Component {
 
-    getPaginationOptions(){
-        return { 
-            rowsPerPageText: 'Filas por página:', 
-            rangeSeparatorText: 'de' 
-        }
-    }
-
     render(){
 
         return (
@@ -355,14 +348,10 @@ export default class Queries extends React.Component {
                   <p className="queries-result-box">Actualizacion ejecutada satisfactoriamente.</p>
                 </div>
                 <h2>Resultados</h2>
-                <div className="queries-table-wrapper">
-                    <DataTable className="queries-table"
-                        columns={columns}
-                        data={data}
-                        pagination
-                        paginationComponentOptions={this.getPaginationOptions()}
-                    />
-                </div>
+                <Table
+                  data={data}
+                  columns={columns}
+                />
             </div>
         );
 

@@ -68,60 +68,6 @@ div#queries-page{
             margin-left: auto;
         }
     }
-
-    .queries-table-wrapper{
-        background-color: $light-background;
-        padding: 0 48px;
-        border-radius: $dashboard-components-border-radius;
-        box-shadow: $dashboard-components-shadow;
-
-        
-        // The following class names were extracted from the ReactDataTable GitHub repository
-        // See: https://github.com/jbetancur/react-data-table-component
-        .rdt_Table{
-
-            .rdt_TableHead{
-                .rdt_TableCol_Sortable{
-                    font-family: $title-font;
-                    font-size: $body-size;
-                    font-weight: 600;
-                    color: $secondary-color;
-
-                    span{
-                        color: fade-out($primary-color, 0.5%);
-
-                        &:hover{
-                            color: $primary-color;
-                        }
-                    }
-                }
-            }
-
-            .rdt_TableRow{
-                .rdt_TableCell{
-                    font-family: $body-font;
-                    font-size: $caption-size;
-                    font-weight: 400;
-                    color: darken($dark-details-color, 2%);
-                }
-            }
-
-            
-        }
-        .rdt_TableFooter{
-            font-family: $body-font;
-            
-            span{
-                color: $secondary-color;
-            }
-
-            svg{
-                fill: $dark-details-color;
-                color: $dark-details-color;
-            }
-        }
-    }
-
 }
 
 @media (max-width: 1300px) {
