@@ -3,7 +3,7 @@ import React from 'react';
 import logo from '@Assets/images/logo.png';
 import logoBig from '@Assets/images/logo-big.png';
 
-const BrandLogo = (props) =>{
+const BrandLogo = ({size = 'small', ...props}) =>{
     let h1ClassName = props.horizontal ? 'horizontal': '';
     
     return (
