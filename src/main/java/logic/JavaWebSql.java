@@ -1,4 +1,5 @@
 package logic;
+import com.mysql.cj.xdevapi.JsonArray;
 import org.json.simple.*;
 import java.sql.*;
 
@@ -150,7 +151,9 @@ public class JavaWebSql {
      *  Asumo como CODIGO DE ERROR (de Conneccion perdida) : 4
      */
     @SuppressWarnings("unchecked")
-    public String adminQuery(String query){
+    public String executeSelect(String query){
+        JSONArray nom_atributos;
+        JSONObject datos_total=null;
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
         try {
@@ -163,22 +166,30 @@ public class JavaWebSql {
                 ResultSetMetaData colData = rs.getMetaData();
                 int columnas = colData.getColumnCount();
 
-                //Comienzo a cargar el objeto Json el cual tiene codigo error OK
+                nom_atributos = new JSONArray();
+                int j;
+                for (j=1;j<=columnas;j++)
+                    nom_atributos.add(colData.getColumnName(j));
+
+
+                //Comienzo a cargar el objeto Json el cual tiene code OK
                 toRet.put("code",1);
-                toRet.put("err",null);
+                toRet.put("msg","OK");
 
                 JSONObject aux;
-
+                int i;
                 while(rs.next()){
                     aux= new JSONObject();
-                    int i;
                     for(i=1; i<=columnas ;i++){
                         aux.put(colData.getColumnName(i),rs.getString(i));
                     }
                     data.add(aux);
                 }
+                datos_total = new JSONObject();
+                datos_total.put("colNames",nom_atributos);
+                datos_total.put("rows",data);
 
-                toRet.put("data",data);
+                toRet.put("data",datos_total);
                 rs.close();
                 st.close();
             }
@@ -186,7 +197,7 @@ public class JavaWebSql {
             // Hay un error en la coneccion ver si funciona bien el isValid()
             else {
                 toRet.put("code",4);
-                toRet.put("err","La coneccion con la base de datos se a perdido, por favor conectarse nuevamente");
+                toRet.put("msg","La coneccion con la base de datos se a perdido, por favor conectarse nuevamente");
                 toRet.put("data",null);
                 return toRet.toJSONString();
             }
@@ -194,7 +205,7 @@ public class JavaWebSql {
         catch (SQLException e){
                 //aqui considerariamos el error de sintaxis en la sentencia sql
                 toRet.put("cod",3);
-                toRet.put("err",e.getMessage());
+                toRet.put("msg",e.getMessage());
                 toRet.put("data",null);
         }
 
@@ -211,8 +222,10 @@ public class JavaWebSql {
      */
     @SuppressWarnings("unchecked")
     public String execute(String sentence){
+        JSONArray nom_atributos;
+        JSONObject datos_total=null;
         JSONObject toRet = new JSONObject();
-        JSONArray data=null;
+        JSONArray data;
         try{
             if(cn.isValid(0) && userConnected.equals("admin")){
                 Statement st = cn.createStatement();
@@ -223,6 +236,10 @@ public class JavaWebSql {
                     ResultSet rs= st.getResultSet();
                     ResultSetMetaData colData = rs.getMetaData();
                     int columnas = colData.getColumnCount();
+                    nom_atributos = new JSONArray();
+                    int j;
+                    for (j=1;j<=columnas;j++)
+                        nom_atributos.add(colData.getColumnName(j));
                     JSONObject aux;
                     int i;
                     while(rs.next()){
@@ -233,12 +250,14 @@ public class JavaWebSql {
                         }
                         data.add(aux);
                     }
-
+                    datos_total = new JSONObject();
+                    datos_total.put("colNames",nom_atributos);
+                    datos_total.put("rows",data);
                 }
 
                 toRet.put("code",1);
                 toRet.put("msg","La sentencia sql se realizo correctamente");
-                toRet.put("data",data);
+                toRet.put("data",datos_total);
                 st.close();
             }
             else{
