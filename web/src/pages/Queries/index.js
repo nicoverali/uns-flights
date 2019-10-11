@@ -39,13 +39,11 @@ export default class Queries extends React.Component {
       this.state.queryExecutor(this.state.query)
         .then(result => {
           if(result.data != null){
-            console.log(JSON.stringify(result.data));
             let columns = result.data.colNames.map(colName => ({
               name: colName,
               selector: colName,
               sortable:true
             }))
-            console.log(JSON.stringify(columns));
             this.setState({consoleMsg: result.msg, tableResult: {columns: columns, data: result.data.rows}});
           }
           else{

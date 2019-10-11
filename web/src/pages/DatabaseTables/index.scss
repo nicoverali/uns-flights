@@ -4,7 +4,7 @@ div#database-tables-page{
     h2{
         @include dashboard-title;
         
-        &:not(:first-child){
+        &.tables-bottom-header{
             margin-top: 48px;
         }
     }
