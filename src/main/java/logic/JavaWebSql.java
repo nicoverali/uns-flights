@@ -104,6 +104,8 @@ public class JavaWebSql {
      */
     @SuppressWarnings("unchecked")
     public String describeTable(String name){
+        JSONArray nom_atributos;
+        JSONObject datos_total=null;
         JSONObject toRet = new JSONObject();
         JSONArray data = new JSONArray();
 
@@ -119,16 +121,34 @@ public class JavaWebSql {
             Statement st = cn.createStatement();
             st.execute("use vuelos");
             ResultSet query = st.executeQuery("describe "+name);
+
+            ResultSetMetaData colData = query.getMetaData();
+            int columnas = colData.getColumnCount();
+
+            nom_atributos = new JSONArray();
+            int j;
+            for (j=1;j<=columnas;j++)
+                nom_atributos.add(colData.getColumnName(j));
+
+
+            //Comienzo a cargar el objeto Json el cual tiene code OK
             toRet.put("code",1);
-            toRet.put("err",null);
+            toRet.put("msg","OK");
 
-            String atributo;
-
-            while (query.next()) {
-                atributo = query.getString("Field");
-                data.add(atributo);
+            JSONObject aux;
+            int i;
+            while(query.next()){
+                aux= new JSONObject();
+                for(i=1; i<=columnas ;i++){
+                    aux.put(colData.getColumnName(i),query.getString(i));
+                }
+                data.add(aux);
             }
-            toRet.put("data",data);
+            datos_total = new JSONObject();
+            datos_total.put("colNames",nom_atributos);
+            datos_total.put("rows",data);
+
+            toRet.put("data",datos_total);
             st.close();
             }
 
@@ -294,7 +314,7 @@ public class JavaWebSql {
                 int i = st.executeUpdate(sentence);
 
                 toRet.put("code", 1);
-                toRet.put("msg", "Query OK,"+i+"row affected");
+                toRet.put("msg", "Query OK, "+i+" row affected");
                 toRet.put("data", null);
                 st.close();
             }
