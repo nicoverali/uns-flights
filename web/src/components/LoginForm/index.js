@@ -1,8 +1,9 @@
 import './index.scss';
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import UserIcon from '@Assets/icons/account-circle.svg';
+import { store } from 'react-notifications-component';
 
+import UserIcon from '@Assets/icons/account-circle.svg';
 import TextInput from './TextInput';
 import PrimaryButton from '@Components/PrimaryButton';
 import BeatLoader from 'react-spinners/BeatLoader';
@@ -42,18 +43,27 @@ export default class LoginForm extends React.Component{
     handleLogin = event => {
         event.preventDefault();
         this.setState({isLoading: true});
-        if(this.state.isAdmin){
-            let promise = loginAsAdmin(this.state.password);
-            promise.then(() => {
-                this.setState({isLoggedIn: true})
-            })
-        }
-        else{
-            loginAsEmployee(this.state.empId, this.state.password)
-                .then(() => {
-                    this.setState({isLoggedIn: true})
-                })
-        }
+        let loginPromise = this.state.isAdmin ? loginAsAdmin(this.state.password) : loginAsEmployee(this.state.empId, this.state.password);
+
+        loginPromise.then(() => {
+            this.setState({isLoggedIn: true})
+        })
+        .catch(() =>{
+            store.addNotification({
+                title: "Error",
+                message: "Verificar los datos ingresados.",
+                type: "danger",
+                insert: "bottom",
+                container: "bottom-right",
+                animationIn: ["animated", "fadeIn"],
+                animationOut: ["animated", "fadeOut"],
+                dismiss: {
+                  duration: 5000,
+                  onScreen: true
+                }
+              });
+            this.setState({isLoading: false});
+        })
     }
 
     getFormButtonContent(isLoading){

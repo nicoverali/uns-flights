@@ -11,10 +11,6 @@ import DatabaseTables from '@Pages/DatabaseTables';
 const getAdminLinks = (pathPrefix = '') => {
     return [
         {
-            to: pathPrefix+'/available-flights',
-            label: 'Vuelos disponibles'
-        },
-        {
             to: pathPrefix+'/queries',
             label: 'Consultas'
         },
@@ -39,7 +35,7 @@ class Dashboard extends React.Component{
     constructor(props) {
         super(props);
         let urlParams = QueryString.parse(props.location.search);
-        let links = urlParams.isAdmin == true ? getAdminLinks(props.location.pathname) : getEmployeeLinks(props.location.pathname);
+        let links = urlParams.isAdmin == "true" ? getAdminLinks(props.location.pathname) : getEmployeeLinks(props.location.pathname);
         this.state = { 
             arrivePath: props.location.pathname,
             links: links
@@ -64,7 +60,6 @@ class Dashboard extends React.Component{
 
         return (
             <div id="dashboard-page">
-                {/* <Redirect to={this.state.links[2].to}/> TODO Take this out */}
                 <SideBar links={this.state.links} className="dashboard-sidebar"/>
                 <div className="dashboard-content">
                     <Route path={`${this.state.arrivePath}/available-flights`} component={AvailableFlights}/>

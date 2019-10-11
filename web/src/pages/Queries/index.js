@@ -54,7 +54,6 @@ export default class Queries extends React.Component {
     }
 
     render(){
-        console.log(this.state.query);
         return (
             <div id="queries-page">
                 <h2>Haz tu consulta</h2>

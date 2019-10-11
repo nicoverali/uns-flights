@@ -29,14 +29,13 @@ export default class SplashScreen extends React.Component{
     waitForJavaBridges(){
         setTimeout(()=>{
             if(window.javaSQLBridge != null && window.javaLoggerBridge){
-                console.log(JSON.stringify(window.javaSQLBridge.connectToAdmin("admin")));
                 window.onerror = (err) => window.javaLoggerBridge.logError(err);
                 this.setState({loading: false});
             }
             else{
                 this.waitForJavaBridges();
             }
-        }, 200);
+        }, 800);
     }
 
     render(){

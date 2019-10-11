@@ -65,12 +65,10 @@ export default class FlightSearchForm extends React.Component{
             let toLocation = this.state.toLocation.split(',')[0].trim();
             let date = formatDate(this.state.departureDate);
             if(!this.state.isRoundTrip){
-                console.log("voy a pedir esto")
                 getAvailableFlightsFor(fromLocation, toLocation, date)
                     .then(flights => this.props.onAvailableFlights([flights, undefined]));
             }
             else{
-                console.log("Voy a pedir este otro")
                 getAvailableFlightsFor(fromLocation, toLocation, date)
                     .then(goFlights => {
                         let returnDate = formatDate(this.state.returnDate);

@@ -18,12 +18,10 @@ export default class AvailableFlights extends React.Component{
     }
 
     handleAvailableFlights = (flights) => {
-        console.log(JSON.stringify(flights));
         this.setState({availableFlights: flights, showingReturnFlights: false});
     }
 
     handleIsRoundTripChange = (isRoundTrip) => {
-        console.log(`cambio el round trip: ${isRoundTrip}`)
         this.setState({isRoundTrip: isRoundTrip});
     }
 

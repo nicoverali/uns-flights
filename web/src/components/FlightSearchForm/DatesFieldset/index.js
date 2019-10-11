@@ -81,23 +81,15 @@ export default class DatesFieldset extends React.Component{
 
 	
 	render(){
-		// const modifiers = {
-		// 	highlighted: {
-		// 		from: this.state.departureDate, 
-		// 		to: this.state.returnDate
-		// 	},
-		// 	returnDate: this.state.returnDate,
-		// 	disabled: {
-		// 		before: new Date()
-		// 	} 
-		// }
-		// TODO Disableeee
 		const modifiers = {
 			highlighted: {
 				from: this.state.departureDate, 
 				to: this.state.returnDate
 			},
-			returnDate: this.state.returnDate, 
+			returnDate: this.state.returnDate,
+			disabled: {
+				before: new Date()
+			} 
 		}
 
 		return (
