@@ -10,9 +10,10 @@ public class Main {
         JavaWebSql base = new JavaWebSql();
 
 
-        /**
+
          String ret = base.connectToAdmin("admin");
         String ret2= base.showTables();
+        /**
         System.out.println(ret2.toString());
         String ret3 = base.describeTable("aeropuertos");
         System.out.println(ret3.toString());
@@ -26,12 +27,18 @@ public class Main {
         String ret7= base.executeUpdate("insert into ubicaciones (pais,estado,ciudad,huso) values ('Suarez','Bs.As','pepi',0);");
         System.out.println(ret7.toString());
 
+         String ret8=base.executeSelect("select * from salidas;");
+         System.out.println(ret8.toString());
+         String ret9 = base.describeTable("salidas");
+         System.out.println(ret9);
 
 
-
-         String ret8=base.execute("show databases;");
-        System.out.println(ret8.toString());
          **/
+
+
+
+
+
     }
 
 }
