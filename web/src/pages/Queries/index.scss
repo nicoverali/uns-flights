@@ -4,10 +4,10 @@ div#queries-page{
 
     h2{
         @include dashboard-title;
+    }
 
-        &:not(:first-child){
-            margin-top: 48px;
-        }
+    h2.queries-bottom-header{
+        margin-top: 48px;
     }
 
     div.queries-container{

@@ -294,7 +294,7 @@ public class JavaWebSql {
                 int i = st.executeUpdate(sentence);
 
                 toRet.put("code", 1);
-                toRet.put("msg", "Query OK,"+i+"row affected");
+                toRet.put("msg", "Query OK, "+i+" row affected");
                 toRet.put("data", null);
                 st.close();
             }
