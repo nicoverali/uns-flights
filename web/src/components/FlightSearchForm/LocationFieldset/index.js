@@ -11,8 +11,8 @@ import AirplaneLandingIcon from '@Assets/icons/airplane-landing.svg';
 
 export default class LocationFieldset extends React.Component{
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           locations: [],
           fromValue: '',
@@ -163,7 +163,7 @@ export default class LocationFieldset extends React.Component{
         };
 
         return (
-            <fieldset {...this.props} className={`location-fieldset-component ${this.props.className || ''}`}>
+            <fieldset className={`location-fieldset-component ${this.props.className || ''}`}>
                 <Autosuggest
                     suggestions={this.state.fromSuggestions}
                     onSuggestionsFetchRequested={this.onFromSuggestionsFetchRequested}

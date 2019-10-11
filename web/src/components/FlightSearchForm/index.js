@@ -1,6 +1,6 @@
 import './index.scss';
 import React from 'react';
-import {getAvailableFlightsFor,  getClassesForFlight} from './AvailableFlightsQueries';
+import {getAvailableFlightsFor, formatDate} from './AvailableFlightsQueries';
 
 import RadioInput from './RadioInput';
 import LocationFieldset from './LocationFieldset';
@@ -14,7 +14,7 @@ export default class FlightSearchForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            searchType: 'one-way',
+            isRoundTrip: false,
             fromLocation: '',
             toLocation: '',
             departureDate: undefined,
@@ -27,20 +27,21 @@ export default class FlightSearchForm extends React.Component{
         if(state.fromLocation == '' || state.toLocation == ''){
             return false;
         }
-        if(state.searchType == 'one-way'){
-            return state.departureDate != null
+        if(state.isRoundTrip){
+            return state.departureDate != null && state.returnDate != null;
         }
         else{
-            return state.departureDate != null && state.returnDate != null;
+            return state.departureDate != null
         }
     }
 
     handleSearchTypeChange = (event) => {
-        this.setState({searchType: event.target.value});
+        let isRoundTrip = event.target.value != 'one-way'
+        this.setState({isRoundTrip: isRoundTrip});
+        this.props.onIsRoundTripChange(isRoundTrip);
     }
 
     handleFromLocationChange = (fromLocation) => {
-        console.log("Valor de from: " + fromLocation);
         this.setState({fromLocation: fromLocation});
     }
 
@@ -58,12 +59,25 @@ export default class FlightSearchForm extends React.Component{
 
     handleFlightSearchSubmit = (event) => {
         event.preventDefault();
-        if(this.checkStateIsValid){
+        if(this.props.onAvailableFlights != null && this.checkStateIsValid){
+            
             let fromLocation = this.state.fromLocation.split(',')[0].trim();
             let toLocation = this.state.toLocation.split(',')[0].trim();
-            let date = `${this.state.departureDate.getFullYear()}-${this.state.departureDate.getMonth()+1}-${this.state.departureDate.getDate()}/`
-            getAvailableFlightsFor(fromLocation, toLocation, date)
-                .then(data => console.log(JSON.stringify(data)));
+            let date = formatDate(this.state.departureDate);
+            if(!this.state.isRoundTrip){
+                console.log("voy a pedir esto")
+                getAvailableFlightsFor(fromLocation, toLocation, date)
+                    .then(flights => this.props.onAvailableFlights([flights, undefined]));
+            }
+            else{
+                console.log("Voy a pedir este otro")
+                getAvailableFlightsFor(fromLocation, toLocation, date)
+                    .then(goFlights => {
+                        let returnDate = formatDate(this.state.returnDate);
+                        getAvailableFlightsFor(toLocation, fromLocation, returnDate)
+                            .then(backFligts => this.props.onAvailableFlights([goFlights, backFligts]))
+                    })
+            }
         }
     }
 
@@ -74,7 +88,7 @@ export default class FlightSearchForm extends React.Component{
     render(){
         return (
             <div className={`flight-search-form-component ${this.props.className || ''}`}>
-                
+                <p>{JSON.stringify(this.state.departureFlights)}</p>
                 <form onSubmit={this.handleFlightSearchSubmit}>
                     <fieldset className="flight-search-type-fieldset">
                         <RadioInput
@@ -82,14 +96,14 @@ export default class FlightSearchForm extends React.Component{
                             label="Solo ida"
                             value="one-way"
                             onChange={this.handleSearchTypeChange}
-                            checked={this.state.searchType === 'one-way'}
+                            checked={!this.state.isRoundTrip}
                         />  
                         <RadioInput
                             name="search-type"
                             label="Ida y vuelta"
                             value="round-trip"
                             onChange={this.handleSearchTypeChange}
-                            checked={this.state.searchType === 'round-trip'}
+                            checked={this.state.isRoundTrip}
                         />
                     </fieldset>
 
@@ -99,7 +113,7 @@ export default class FlightSearchForm extends React.Component{
                             onToLocationChange={this.handleToLocationChange} 
                         />
                         <DatesFieldset className="flight-search-dates-fieldset" 
-                            willReturn={this.state.searchType === 'round-trip'}
+                            willReturn={this.state.isRoundTrip}
                             onDepartureUpdate={this.handleDepartureUpdate}
                             onReturnUpdate={this.handleReturnUpdate}
                         />

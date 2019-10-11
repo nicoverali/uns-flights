@@ -23,7 +23,7 @@ export default class FlightsList extends React.Component {
                 let flight = this.props.flights[i];
                 reactFlights[i] = (
                     <Flight key={i} className="flights-list-item" 
-                        classes={flight.classes} 
+                        flight={flight} 
                         onShowClasses={()=>this.handleShowClasses(i)}
                         showClasses={i == this.state.openFlight} 
                     />

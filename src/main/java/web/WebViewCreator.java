@@ -2,6 +2,7 @@ package web;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -17,6 +18,11 @@ import netscape.javascript.JSObject;
 import java.net.URL;
 
 public class WebViewCreator extends Application {
+
+    // This objects communicates Java with Javascript
+    private JavaWebSql javaSQLBridge = new JavaWebSql();
+
+    private SystemLoggerBridge loggerBridge = new SystemLoggerBridge();
 
     public static void init(String[] args) {
         launch(args);
@@ -34,17 +40,24 @@ public class WebViewCreator extends Application {
 
         WebEngine webEngine = webView.getEngine();
         webEngine.setUserAgent("JAVAFX");
-        webEngine.load(url.toString());
-
         // Add the Java-JS communication bridge object into the JS window object
         webEngine.getLoadWorker().stateProperty().addListener(
-                (ChangeListener<? super Worker.State>) (observable, oldValue, newValue) -> {
+                (ChangeListener) (observable, oldValue, newValue) -> {
                     if (newValue != Worker.State.SUCCEEDED) { return; }
 
                     JSObject window = (JSObject) webEngine.executeScript("window");
-                    window.setMember("javaSQLBridge", new JavaWebSql());
+                    window.setMember("javaSQLBridge", javaSQLBridge);
+                    window.setMember("javaLoggerBridge", loggerBridge);
+                    webEngine.executeScript("console.log = function(message)\n" +
+                            "{\n" +
+                            "    javaLoggerBridge.log(message);\n" +
+                            "};");
                 }
         );
+
+        webEngine.load(url.toString());
+
+
 
         Scene scene = new Scene(new VBox((webView)), screenBounds.getWidth(), screenBounds.getHeight());
         primaryStage.setTitle("UNS Flights");

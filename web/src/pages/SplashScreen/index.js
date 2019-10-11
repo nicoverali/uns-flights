@@ -5,6 +5,8 @@ import {Redirect} from 'react-router-dom';
 import BrandLogo from '@Components/BrandLogo';
 import ClipLoader from 'react-spinners/ClipLoader';
 
+import {getAvailableFlightsFor} from '@Components/FlightSearchForm/AvailableFlightsQueries';
+
 export default class SplashScreen extends React.Component{
 
     constructor(props){
@@ -26,7 +28,9 @@ export default class SplashScreen extends React.Component{
     
     waitForJavaBridges(){
         setTimeout(()=>{
-            if(window.javaSQLBridge != null){
+            if(window.javaSQLBridge != null && window.javaLoggerBridge){
+                console.log(JSON.stringify(window.javaSQLBridge.connectToAdmin("admin")));
+                window.onerror = (err) => window.javaLoggerBridge.logError(err);
                 this.setState({loading: false});
             }
             else{

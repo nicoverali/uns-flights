@@ -78,10 +78,9 @@ ul{
         display: block;
         
         &.debug{
-            position: absolute;
             overflow: scroll;
             height: 100vh;
-            width: 80vw;
+            width: 100vw;
 
         }
     }
@@ -89,6 +88,7 @@ ul{
     .app-console{
         display: block;
         position: absolute;
+        background-color: black;
         width: 100vw;
         top: 100vh;
     }

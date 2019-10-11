@@ -64,7 +64,6 @@ export default class LoginForm extends React.Component{
         let submitButtonContent = this.getFormButtonContent(this.state.isLoading);
 
         let redirection = '';
-        console.log(`/dashboard?idAdmin=${this.state.isAdmin}`);
         if(this.state.isLoggedIn){
             redirection = (<Redirect to={`/dashboard?isAdmin=${this.state.isAdmin}`} />)
         }
