@@ -8,42 +8,62 @@ import ArrowLeft from '@Assets/icons/chevron-left.svg';
 
 export default class AvailableFlights extends React.Component{
 
+    constructor(props){
+        super(props);
+        this.state = {
+            availableFlights : undefined,
+            isRoundTrip: false,
+            showingReturnFlights: false,
+        }
+    }
+
+    handleAvailableFlights = (flights) => {
+        console.log(JSON.stringify(flights));
+        this.setState({availableFlights: flights, showingReturnFlights: false});
+    }
+
+    handleIsRoundTripChange = (isRoundTrip) => {
+        console.log(`cambio el round trip: ${isRoundTrip}`)
+        this.setState({isRoundTrip: isRoundTrip});
+    }
+
+    handleArrowsClick = () =>{
+        this.setState({showingReturnFlights : !this.state.showingReturnFlights});
+    }
 
     render(){
+
+        let flightSelectionArrows = this.state.isRoundTrip ? (
+                <div className="flight-arrow-container">
+                    <ArrowLeft className="available-flights-arrow" onClick={this.handleArrowsClick}/>
+                    <ArrowRight className="available-flights-arrow" onClick={this.handleArrowsClick}/>
+                </div>
+            ):'';
+
         return (
             <div id="available-flights-page">
                 <h2 className="available-flights-main-title">Consulta los vuelos disponibles</h2>
-                <FlightsSearchForm/>
-
-                <div className="available-flights-list-header">
-                    <h2 className="available-flights-main-title">Vuelos de ida</h2>
-                    <div className="available-flights-list-arrows">
-                        <ArrowLeft className="available-flights-arrow" onClick={()=>console.log('Clicked!!')}/>
-                        <ArrowRight className="available-flights-arrow"/>
-                    </div>
-                </div>
-
-                <FlightsList
-                    flights={
-                        [   
-                            {
-                                classes: [{name:'Turista', availableSeats:50, price:1200}]
-                            },
-                            {
-                                classes: [{name:'Turista', availableSeats:50, price:1200}]
-                            },
-                            {
-                                classes: [{name:'Turista', availableSeats:50, price:1200}]
-                            },
-                            {
-                                classes: [{name:'Turista', availableSeats:50, price:1200}]
-                            },
-                            {
-                                classes: [{name:'Turista', availableSeats:50, price:1200}]
-                            },
-                        ]
-                    }
+                <FlightsSearchForm
+                    onAvailableFlights={this.handleAvailableFlights}
+                    onIsRoundTripChange={this.handleIsRoundTripChange}
                 />
+
+                {this.state.availableFlights != undefined &&
+                    
+                    <div className="available-flights-container">
+                        <div className="available-flights-list-header">
+                            <h2 className="available-flights-main-title">Vuelos de {this.state.showingReturnFlights ? 'vuelta' : 'ida'}</h2>
+                            <div className="available-flights-list-arrows">
+                                {flightSelectionArrows}
+                            </div>
+                        </div>
+
+                        <FlightsList
+                            flights={this.state.showingReturnFlights ? this.state.availableFlights[1] : this.state.availableFlights[0]}
+                        />
+                    </div>
+                }
+
             </div>
         );
     }

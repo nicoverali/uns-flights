@@ -24,12 +24,17 @@ module.exports = {
         alias: {
           '@Assets': path.resolve(__dirname, 'src/assets/'),
           '@Components': path.resolve(__dirname, 'src/components/'),
-          '@Pages': path.resolve(__dirname, 'src/pages/')
+          '@Pages': path.resolve(__dirname, 'src/pages/'),
+          '@Root': path.resolve(__dirname, 'src')
         }
     },
 
     // After building keep watching for file's changes
     watch: true,
+    watchOptions: {
+        poll: true,
+        ignored: /node_modules/
+    },
 
     // Add steps to bundling process
     module: {
@@ -49,10 +54,6 @@ module.exports = {
                         ]
                     }
                 }
-            },
-            {
-                test: /\.svg$/,
-                use: ['@svgr/webpack'],
             },
             {
                 test: /\.(sa|sc|c)ss$/,
@@ -100,6 +101,10 @@ module.exports = {
                          }
                        }
                     ]
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack'],
             },
             {
                 // Loads fonts

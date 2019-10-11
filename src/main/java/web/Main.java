@@ -6,10 +6,9 @@ public class Main {
 
         WebViewCreator.init(args);
 
-
         /**
         JavaWebSql base = new JavaWebSql();
-
+        
 
         /**
          String ret = base.connectToAdmin("admin");

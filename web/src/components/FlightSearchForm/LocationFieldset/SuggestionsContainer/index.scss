@@ -16,7 +16,7 @@ div.suggestions-container-component{
         border: 2px solid $input-border-color;
     }
 
-    & .react-autosuggest__suggestion{
+    .react-autosuggest__suggestion{
         font-family: $body-font;
         font-size: $body-size;
         height: 40px;
@@ -26,9 +26,19 @@ div.suggestions-container-component{
         
         color: $secondary-color;
         list-style: none;
-
         &:hover{
             background-color: #F7F7F7;
         }
+
+        .location-suggestion{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            padding-right: 4px;
+        }
+    }
+    
+    .react-autosuggest__suggestion--highlighted{
+        background-color: #F7F7F7;
     }
 }

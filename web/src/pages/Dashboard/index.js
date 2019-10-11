@@ -1,11 +1,12 @@
 import './index.scss';
 import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route, Redirect,  withRouter} from 'react-router-dom';
 import QueryString from 'query-string';
-
 import SideBar from '@Components/Sidebar';
+
 import AvailableFlights from '@Pages/AvailableFlights';
 import Queries from '@Pages/Queries';
+import DatabaseTables from '@Pages/DatabaseTables';
 
 const getAdminLinks = (pathPrefix = '') => {
     return [
@@ -16,7 +17,11 @@ const getAdminLinks = (pathPrefix = '') => {
         {
             to: pathPrefix+'/queries',
             label: 'Consultas'
-        }
+        },
+        {
+            to: pathPrefix+'/database-tables',
+            label: 'Tablas'
+        },
     ]
 }
 
@@ -29,7 +34,7 @@ const getEmployeeLinks = (pathPrefix = '') => {
     ]
 }
 
-export default class Dashboard extends React.Component{
+class Dashboard extends React.Component{
 
     constructor(props) {
         super(props);
@@ -41,6 +46,16 @@ export default class Dashboard extends React.Component{
         }
     }
 
+    componentDidMount() {
+        this.unlisten = this.props.history.listen((location, action) => {
+            // This will be executed on route change
+            window.scrollTo(0,0);
+        });
+    }
+
+    componentWillUnmount() {
+        this.unlisten();
+    }
 
     render(){
         if(this.props.location.pathname == this.state.arrivePath){
@@ -49,14 +64,17 @@ export default class Dashboard extends React.Component{
 
         return (
             <div id="dashboard-page">
-                <Redirect to={this.state.links[1].to}/> {/*TODO Take this out */}
+                {/* <Redirect to={this.state.links[2].to}/> TODO Take this out */}
                 <SideBar links={this.state.links} className="dashboard-sidebar"/>
                 <div className="dashboard-content">
                     <Route path={`${this.state.arrivePath}/available-flights`} component={AvailableFlights}/>
                     <Route path={`${this.state.arrivePath}/queries`} component={Queries}/>
+                    <Route path={`${this.state.arrivePath}/database-tables`} component={DatabaseTables}/>
                 </div> 
             </div>
         );
     }
 
 }
+
+export default  withRouter(Dashboard);

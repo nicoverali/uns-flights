@@ -410,14 +410,14 @@ public class JavaWebSql {
                 JSONObject aux;
                 while(rs.next()){
                     aux= new JSONObject();
-                    aux.put("Numero de vuelo",rs.getString("Numero de vuelo"));
+                    aux.put("nro_vuelo",rs.getString("Numero de vuelo"));
                     aux.put("a1_codigo",rs.getString("a1_codigo"));
                     aux.put("a1_nombre",rs.getString("a1_nombre"));
                     aux.put("hora_sale",rs.getString("hora_sale"));
                     aux.put("a2_codigo",rs.getString("a2_codigo"));
                     aux.put("a2_nombre",rs.getString("a2_nombre"));
                     aux.put("hora_llega",rs.getString("hora_llega"));
-                    aux.put("model_avion",rs.getString("modelo_avion"));
+                    aux.put("modelo_avion",rs.getString("modelo_avion"));
                     aux.put("tiempo_estimado",rs.getString("tiempo_estimado"));
 
                     data.add(aux);

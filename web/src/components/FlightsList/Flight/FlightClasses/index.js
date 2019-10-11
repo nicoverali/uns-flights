@@ -6,7 +6,7 @@ const FlightClasses = ({classes = [], ...props}) => {
     let reactClasses = [];
     for(let i = 0; i < classes.length; i++){
         reactClasses[i] = (
-            <FlightClass key={classes[i].name} name={classes[i].name} availableSeats={classes[i].availableSeats} price={classes[i].price} />
+            <FlightClass key={classes[i].clase} name={classes[i].clase} availableSeats={classes[i].asientos_disponibles} price={classes[i].precio} />
         )
     }
     

@@ -1,21 +1,27 @@
 import './index.scss';
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import UserIcon from '@Assets/icons/account-circle.svg';
 
 import TextInput from './TextInput';
 import PrimaryButton from '@Components/PrimaryButton';
 import BeatLoader from 'react-spinners/BeatLoader';
 
+import LoginHandler from './LoginHandler';
+
 export default class LoginForm extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
+            isLoggedIn: false,
             isLoading: false,
             isAdmin: false, 
             empId: '', 
             password:''
         };
+        
+        this.loginHandler = new LoginHandler();
     }
 
     handleEmpIdChange = event => {
@@ -38,6 +44,12 @@ export default class LoginForm extends React.Component{
     handleLogin = event => {
         event.preventDefault();
         this.setState({isLoading: true});
+        if(this.state.isAdmin){
+            let promise = this.loginHandler.loginAsAdmin(this.state.password);
+            promise.then(() => {
+                this.setState({isLoggedIn: true})
+            })
+        }
     }
 
     getFormButtonContent(isLoading){
@@ -51,8 +63,14 @@ export default class LoginForm extends React.Component{
         let empIdInputClass = this.state.isAdmin ? 'hide' : '';
         let submitButtonContent = this.getFormButtonContent(this.state.isLoading);
 
+        let redirection = '';
+        if(this.state.isLoggedIn){
+            redirection = (<Redirect to={`/dashboard?isAdmin=${this.state.isAdmin}`} />)
+        }
+
         return (
             <div {...this.props} className={`login-form-component ${this.props.className||''}`} >
+                {redirection}
                 <UserIcon className="user-icon"/> 
 
                 <h3 className="user">{this.state.isAdmin ? 'Administrador' : 'Empleado'}</h3>

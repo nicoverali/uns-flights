@@ -1,5 +1,7 @@
 div#available-flights-page{
 
+    padding-bottom: 48px;
+
     h2.available-flights-main-title{
         @include dashboard-title;
     }

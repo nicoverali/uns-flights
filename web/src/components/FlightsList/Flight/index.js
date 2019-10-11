@@ -8,7 +8,16 @@ import PrimaryButton from '@Components/PrimaryButton';
 
 export default class Flight extends React.Component{
 
+
+    formatTime(time){
+        let seconds = time.lastIndexOf(':');
+        return time.substring(0, seconds);
+    }
+
     render(){
+
+        let flightInfo = this.props.flight.flight;
+        let classesInfo = this.props.flight.classes;
 
         return (
             <div className={`flight-component ${this.props.className||''}`}>
@@ -16,18 +25,18 @@ export default class Flight extends React.Component{
                 <div className="flight-main-content">
                     <div className="flight-time">
                         <FlightEndPoint className="flight-end-point"
-                            time="08:00"
-                            airportCode="BCN"
-                            airportName="Wiloxx Fox"
+                            time={this.formatTime(flightInfo.hora_sale)}
+                            airportCode={flightInfo.a1_codigo}
+                            airportName={flightInfo.a1_nombre}
                         />
                         <div className="flight-route">
                             <hr className="flight-route-line"></hr>
                             <AirplaneIcon/>
                         </div>
                         <FlightEndPoint className="flight-end-point"
-                            time="14:30"
-                            airportCode="MIA"
-                            airportName="Wiloxx Fox"
+                            time={this.formatTime(flightInfo.hora_llega)}
+                            airportCode={flightInfo.a2_codigo}
+                            airportName={flightInfo.a2_nombre}
                         />
                     </div>
 
@@ -35,15 +44,15 @@ export default class Flight extends React.Component{
                         <div className="flight-information">
                             <FlightInfoItem 
                                 label="Nro vuelo"
-                                value="AC9217"
+                                value={flightInfo.nro_vuelo}
                             />
                             <FlightInfoItem 
-                                label="Nro vuelo"
-                                value="AC9217"
+                                label="Modelo avion"
+                                value={flightInfo.modelo_avion}
                             />
                             <FlightInfoItem 
-                                label="Nro vuelo"
-                                value="AC9217"
+                                label="Tiempo estimado"
+                                value={this.formatTime(flightInfo.tiempo_estimado)}
                             />
                         </div>
 
@@ -54,7 +63,7 @@ export default class Flight extends React.Component{
                 </div>
 
                 <FlightClasses className={`flight-classes ${this.props.showClasses ? '':'hide'}`}
-                    classes={[{name:'Turista', availableSeats:44, price:1200}, {name:'Ejecutivo', availableSeats:11, price:8000}]}/>
+                    classes={classesInfo}/>
 
             </div>
         );

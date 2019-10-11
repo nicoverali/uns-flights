@@ -1,6 +1,6 @@
 import './index.scss';
 import React from 'react';
-import PrimaryButton from '@Components/PrimaryButton';
+import Chip from '@Components/Chip';
 import Table from '@Components/Table';
 
 const data = [
@@ -333,19 +333,28 @@ const columns = [
   },
 ];
 
-export default class Queries extends React.Component {
+export default class DatabaseTables extends React.Component {
+
+    handleTableSelected = (event) => {
+        event.target.classList.add('active');
+    }
 
     render(){
 
         return (
-            <div id="queries-page">
-                <h2>Haz tu consulta</h2>
-                <div className="queries-container">
-                  <textarea className="queries-textarea"/>
-                  <PrimaryButton className="queries-submit-button">
-                    Consultar
-                  </PrimaryButton>
-                  <p className="queries-result-box">Actualizacion ejecutada satisfactoriamente.</p>
+            <div id="database-tables-page">
+                <h2>Selecciona una de las tablas</h2>
+                <div className="database-tables-container">
+                    <Chip className="database-tables-chip" label="clases" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="vista_vuelos_disponibilidad" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="vuelos_progamados" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="salidas" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="vuelos_disponibles" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="aeropuertos" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="ubicaciones" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="reserva" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="reserva_vuelos_clase" onClick={this.handleTableSelected}/>
+                    <Chip className="database-tables-chip" label="brinda" active/>
                 </div>
                 <h2>Resultados</h2>
                 <Table

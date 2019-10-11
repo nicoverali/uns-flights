@@ -1,0 +1,32 @@
+$chip-height : 40px;
+
+div.chip-component{
+    display: inline-block;
+    min-height: $chip-height;
+    max-width: 240px;
+    border: 1px solid $primary-color;
+    border-radius: $chip-height;
+    padding: 8px 16px;
+    text-align: center;
+    
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    
+    span {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: $body-font;
+        font-size: $body-size;
+        color: $primary-color;
+        word-wrap: break-word;
+    }
+
+    &.active, &:hover{
+        background-color: $primary-color;
+
+        span{
+            color: white;
+        }
+    }
+}

@@ -1,80 +1,20 @@
 import './index.scss';
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import {getAllLocations} from './Locations';
 
 import IconTextInput from '@Components/FlightSearchForm/IconTextInput';
 import SuggestionsContainer from './SuggestionsContainer';
-import AirplaneIcon from '@Assets/icons/airplane.svg';
 import AirplaneTakeOffIcon from '@Assets/icons/airplane-takeoff.svg';
 import AirplaneLandingIcon from '@Assets/icons/airplane-landing.svg';
 
 
-// Imagine you have a list of languages that you'd like to autosuggest.
-const languages = [
-    {
-      name: 'C',
-      year: 1972
-    },
-    {
-        name: 'C++',
-        year: 1972
-      },
-      {
-        name: 'Clojure',
-        year: 1972
-      },
-      {
-        name: 'C#',
-        year: 1972
-      },
-      {
-        name: 'Canvas',
-        year: 1972
-      },
-      {
-        name: 'Codigofacilito',
-        year: 1972
-      },
-    {
-      name: 'Elm',
-      year: 2012
-    }
-  ];
-  
-  // Teach Autosuggest how to calculate suggestions for any given input value.
-  const getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-  
-    // TODO This should return an array with all matching suggestions
-    return inputLength === 0 ? [] : languages.filter(lang =>
-      lang.name.toLowerCase().slice(0, inputLength) === inputValue
-    );
-    return []
-  };
-  
-  // When suggestion is clicked, Autosuggest needs to populate the input
-  // based on the clicked suggestion. Teach Autosuggest how to calculate the
-  // input value for every given suggestion.
-  const getSuggestionValue = suggestion => suggestion.name;
-  
-  // Use your imagination to render suggestions.
-  const renderSuggestion = suggestion => (
-    <div>
-      {suggestion.name}
-    </div>
-  );
-
 export default class LocationFieldset extends React.Component{
 
-    constructor() {
-        super();
-        // Autosuggest is a controlled component.
-        // This means that you need to provide an input value
-        // and an onChange handler that updates this value (see below).
-        // Suggestions also need to be provided to the Autosuggest,
-        // and they are initially empty because the Autosuggest is closed.
+    constructor(props) {
+        super(props);
         this.state = {
+          locations: [],
           fromValue: '',
           fromSuggestions: [],
           toValue: '',
@@ -82,81 +22,122 @@ export default class LocationFieldset extends React.Component{
         };
     }
 
+    componentDidMount(){
+      getAllLocations()
+        .then(data => this.setState({locations: data}));
+    }
+
     onFromChange = (event, { newValue }) => {
+        if(this.isValidInput(newValue)){
+          this.props.onFromLocationChange(newValue);
+        }else{
+          this.props.onFromLocationChange('');
+        }
         this.setState({
             fromValue: newValue
         });
     };
 
     onToChange = (event, { newValue }) => {
+      if(this.isValidInput(newValue)){
+        this.props.onToLocationChange(newValue);
+      }else{
+        this.props.onToLocationChange('');
+      }
       this.setState({
           toValue: newValue
       });
-  };
+    };
 
-    // Autosuggest will call this function every time you need to update suggestions.
-    // You already implemented this logic above, so just use it.
+    renderSuggestion = (suggestion) => {
+      return(
+        <div className="location-suggestion">
+          {this.getSuggestionValue(suggestion)}
+        </div>
+      )
+    };
+
+    getSuggestionValue = (suggestion) => {
+      return `${suggestion.ciudad}, ${suggestion.estado}, ${suggestion.pais}`;
+    }
+
+
     onFromSuggestionsFetchRequested = ({ value }) => {
-        // TODO This gets called every time the user updates the value, you should return an array with all matching suggestions
-        // This behavior is already made in an upper method called 'getSuggestions(value)'
         this.setState({
-          fromSuggestions: getSuggestions(value)
+          fromSuggestions: this.getSuggestions(value)
         });
     };
 
     onToSuggestionsFetchRequested = ({ value }) => {
-      // TODO This gets called every time the user updates the value, you should return an array with all matching suggestions
-      // This behavior is already made in an upper method called 'getSuggestions(value)'
-      this.setState({
-      toSuggestions: getSuggestions(value)
-      });
-  };
-
-    // Autosuggest will call this function every time you need to clear suggestions.
-    onFromSuggestionsClearRequested = () => {
         this.setState({
-          fromSuggestions: []
+        toSuggestions: this.getSuggestions(value)
         });
     };
 
+    getSuggestions(value){
+      const inputValue = value.trim().toLowerCase();
+      const inputLength = inputValue.length;
+
+      return inputLength === 0 ? [] : this.state.locations.filter(loc =>{
+          if(loc.ciudad.toLowerCase().includes(inputValue.toLowerCase())) return true;
+          if(loc.estado.toLowerCase().includes(inputValue.toLowerCase())) return true;
+        }
+      );
+    };
+
+    onFromSuggestionsClearRequested = () => {
+        this.setState({ fromSuggestions: [] });
+    };
+
     onToSuggestionsClearRequested = () => {
-      this.setState({
-        toSuggestions: []
-      });
+      this.setState({ toSuggestions: [] });
     };
 
     handleFromInputBlur = (event) =>{
       if(event.target.value != ''){
-        this.setState({fromValue: this.findMatchFor(event.target.value)});
+        let match = this.findMatchFor(event.target.value);
+        if(this.isValidInput(match)){
+          this.props.onFromLocationChange(match);
+        }else{
+          this.props.onFromLocationChange('');
+        }
+        this.setState({fromValue: match});
       }
     }
 
     handleToInputBlur = (event) => {
       if(event.target.value != ''){
+        let match = this.findMatchFor(event.target.value);
+        if(this.isValidInput(match)){
+          this.props.onToLocationChange(match);
+        }else{
+          this.props.onToLocationChange('');
+        }
         this.setState({toValue: this.findMatchFor(event.target.value)});
       }
     }
 
     isValidInput(inputValue){
-      if(languages.find((lan) => lan.name == inputValue) != undefined){
-        return true;
-      }
-      return false;
+      let valuesAsArray = inputValue.split(",");
+      if(valuesAsArray.length != 3) return false;
+
+      if(this.state.locations.find(loc => loc.ciudad == valuesAsArray[0].trim() == undefined)) return false;
+      if(this.state.locations.find(loc => loc.estado == valuesAsArray[1].trim() == undefined)) return false;
+      if(this.state.locations.find(loc => loc.pais == valuesAsArray[2].trim() == undefined)) return false;
+      
+      return true;
     }
 
     findMatchFor(value){
       if(!this.isValidInput(value)){
-        let possibleMatch = languages.find(lan => lan.name.toLowerCase().startsWith(value.toLowerCase()));
+        let possibleMatch = this.state.locations.find(loc => loc.ciudad.toLowerCase().startsWith(value.toLowerCase().trim()));
         if(possibleMatch != undefined){
-          return possibleMatch.name;
+          return this.getSuggestionValue(possibleMatch);
         }
         return value
       }
       return value;
     }
-
-
-    
 
     render(){
         let fromInputValid = this.isValidInput(this.state.fromValue);
@@ -171,7 +152,6 @@ export default class LocationFieldset extends React.Component{
           error: !fromInputValid && this.state.fromValue != '',
           valid: fromInputValid
         }
-        // Autosuggest will pass through all these props to the input.
         const toProps = {
           value: this.state.toValue,
             onChange: this.onToChange,
@@ -183,13 +163,13 @@ export default class LocationFieldset extends React.Component{
         };
 
         return (
-            <fieldset {...this.props} className={`location-fieldset-component ${this.props.className || ''}`}>
+            <fieldset className={`location-fieldset-component ${this.props.className || ''}`}>
                 <Autosuggest
                     suggestions={this.state.fromSuggestions}
                     onSuggestionsFetchRequested={this.onFromSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onFromSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
+                    getSuggestionValue={this.getSuggestionValue}
+                    renderSuggestion={this.renderSuggestion}
                     inputProps={fromProps}
                     renderInputComponent={IconTextInput}
                     renderSuggestionsContainer={SuggestionsContainer}
@@ -199,8 +179,8 @@ export default class LocationFieldset extends React.Component{
                     suggestions={this.state.toSuggestions}
                     onSuggestionsFetchRequested={this.onToSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onToSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    renderSuggestion={renderSuggestion}
+                    getSuggestionValue={this.getSuggestionValue}
+                    renderSuggestion={this.renderSuggestion}
                     inputProps={toProps}
                     renderInputComponent={IconTextInput}
                     renderSuggestionsContainer={SuggestionsContainer}
