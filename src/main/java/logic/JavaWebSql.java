@@ -343,7 +343,7 @@ public class JavaWebSql {
      * @return String --> Objeto Json :([cod,],[err,],[data,NULL]), donde cod--> 2 (es legajo/contraseña invalida)
      */
     @SuppressWarnings("unchecked")
-    public String connectToEmploy(int leg,String pass){
+    public String connectToEmployee(int leg, String pass){
         DBConnection cnAux = SQLConnection.getInstance();
         JSONObject toRet = new JSONObject();
         Connection validConn;

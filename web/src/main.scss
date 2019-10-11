@@ -72,24 +72,3 @@ button, a, input {
 ul{
     padding: 0;
 }
-
-#app-component{
-    .app-content{
-        display: block;
-        
-        &.debug{
-            overflow: scroll;
-            height: 100vh;
-            width: 100vw;
-
-        }
-    }
-
-    .app-console{
-        display: block;
-        position: absolute;
-        background-color: black;
-        width: 100vw;
-        top: 100vh;
-    }
-}

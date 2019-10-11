@@ -10,13 +10,11 @@ export default class App extends React.Component{
     render(){
         
         return (
-            <div id="app-component">
-                <MemoryRouter initialEntries={['/splash']}>
-                    <Route path="/splash" component={SplashScreen}/>
-                    <Route path="/login" component={Login}/>
-                    <Route path='/dashboard' component={Dashboard}/>
-                </MemoryRouter>
-            </div>
+            <MemoryRouter initialEntries={['/splash']}>
+                <Route path="/splash" component={SplashScreen}/>
+                <Route path="/login" component={Login}/>
+                <Route path='/dashboard' component={Dashboard}/>
+            </MemoryRouter>
         )
 
     }

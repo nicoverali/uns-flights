@@ -7,7 +7,7 @@ import TextInput from './TextInput';
 import PrimaryButton from '@Components/PrimaryButton';
 import BeatLoader from 'react-spinners/BeatLoader';
 
-import LoginHandler from './LoginHandler';
+import {loginAsAdmin, loginAsEmployee} from './LoginHandler';
 
 export default class LoginForm extends React.Component{
 
@@ -20,8 +20,6 @@ export default class LoginForm extends React.Component{
             empId: '', 
             password:''
         };
-        
-        this.loginHandler = new LoginHandler();
     }
 
     handleEmpIdChange = event => {
@@ -45,10 +43,16 @@ export default class LoginForm extends React.Component{
         event.preventDefault();
         this.setState({isLoading: true});
         if(this.state.isAdmin){
-            let promise = this.loginHandler.loginAsAdmin(this.state.password);
+            let promise = loginAsAdmin(this.state.password);
             promise.then(() => {
                 this.setState({isLoggedIn: true})
             })
+        }
+        else{
+            loginAsEmployee(this.state.empId, this.state.password)
+                .then(() => {
+                    this.setState({isLoggedIn: true})
+                })
         }
     }
 

@@ -39,7 +39,7 @@ class Dashboard extends React.Component{
     constructor(props) {
         super(props);
         let urlParams = QueryString.parse(props.location.search);
-        let links = urlParams.isAdmin ? getAdminLinks(props.location.pathname) : getEmployeeLinks(props.location.pathname);
+        let links = urlParams.isAdmin == true ? getAdminLinks(props.location.pathname) : getEmployeeLinks(props.location.pathname);
         this.state = { 
             arrivePath: props.location.pathname,
             links: links
