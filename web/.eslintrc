@@ -1,0 +1,29 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["airbnb"],
+    "rules": { 
+            "padded-blocks": ["error", "always"],
+            "react/jsx-filename-extension": [0],
+            "react/destructuring-assignment": [0, "never"],
+            "no-plusplus": [0, { "allowForLoopAfterthoughts": true }],
+            "react/prop-types": [0],
+            "no-tabs": [2, { "allowIndentationTabs": true }],
+            "no-mixed-spaces-and-tabs": [2, "smart-tabs"]
+    },
+    "settings": {
+        "import/resolver": {
+          "alias": {
+            "map": [
+              ["@Components", "./src/components"],
+              ["@Assets", "./src/assets"],
+              ["@Pages", "./src/pages"],
+              ["@Root", "./src"]
+            ]
+          }
+        }
+    },
+    "env": {
+        "browser": true
+    }
+
+}

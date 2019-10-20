@@ -1,6 +1,5 @@
-'use strict';
 
-class login extends React.Component{
+class login extends React.Component {
 
 }
 
@@ -16,12 +15,12 @@ class LikeButton extends React.Component {
     }
 
     /* return React.createElement('button', { onClick: () => this.setState({ liked: true }) }, 'Like'); */
-    
+
     return (
-        <button onClick={() => this.setState({ liked: true })}>
+      <button onClick={() => this.setState({ liked: true })}>
           Like
-          <p>Hola que tal Juan Jose?</p>
-        </button>
+        <p>Hola que tal Juan Jose?</p>
+      </button>
     );
   }
 }

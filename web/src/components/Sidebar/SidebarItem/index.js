@@ -1,28 +1,32 @@
 import './index.scss';
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const SidebarItem = ({linkTo, active, ...props}) => {
-    let className = `side-bar-item-component ${props.className || ''} ${active ? 'active' : ''}`;
-    let item;
+const SidebarItem = ({ linkTo, active, ...props }) => {
 
-    if(linkTo != null){
-        item =  (
-            <Link {...props} to={linkTo} className={className}>
-                {props.label}
-            </Link>
-        )
-    }
-    else{
-        item = (
-            <a {...props} className={className}>
-                {props.label}
-            </a>
-        )
-    }
+  const className = `side-bar-item-component ${props.className || ''} ${active ? 'active' : ''}`;
+  let item;
 
-    return item;
+  if (linkTo != null) {
 
-}
+    item = (
+      <Link {...props} to={linkTo} className={className}>
+        {props.label}
+      </Link>
+    );
+
+  } else {
+
+    item = (
+      <a {...props} className={className}>
+        {props.label}
+      </a>
+    );
+
+  }
+
+  return item;
+
+};
 
 export default SidebarItem;
