@@ -10,156 +10,156 @@ import es from './localization';
 
 export default class DatesFieldset extends React.Component {
 
-  constructor(props) {
+	static formatDate(date) {
 
-    super(props);
-    this.state = {
-      departureInputValue: '',
-      departureDate: undefined,
-      returnInputValue: '',
-      returnDate: undefined,
-    };
+		return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
-  }
+	}
 
-    moveDayPicker = (event) => {
+	constructor(props) {
 
-      document.getElementsByClassName(
-        'dates-fieldset-component-day-picker',
-      )[0].style.left = `${event.target.offsetParent.offsetLeft}px`;
+		super(props);
+		this.state = {
+			departureInputValue: '',
+			departureDate: undefined,
+			returnInputValue: '',
+			returnDate: undefined,
+		};
 
-    };
+	}
 
-    handleDaySelect = (selection) => {
+	componentDidUpdate() {
 
-      if (this.state.departureDate === undefined) {
+		if (!this.props.willReturn && this.state.returnDate !== undefined) {
 
-        this.setDeparture(selection);
-        document.getElementById('dates-fieldset-component-input-return').focus();
+			this.setReturn(undefined);
 
-      } else if (
-        this.state.returnDate === undefined
-            && this.props.willReturn
-            && selection.getTime() !== this.state.departureDate.getTime()
-      ) {
+		}
 
-        if (DateUtils.isDayBefore(selection, this.state.departureDate)) {
+	}
 
-          this.setReturn(this.state.departureDate);
-          this.setDeparture(selection);
+	setDeparture(departureDate) {
 
-        } else {
+		const newDeparture = {
+			departureDate,
+			departureInputValue: departureDate !== undefined ? this.formatDate(departureDate) : '',
+		};
+		this.setState(newDeparture);
+		if (this.props.onDepartureUpdate !== null) this.props.onDepartureUpdate(departureDate);
 
-          this.setReturn(selection);
+	}
 
-        }
+	setReturn(returnDate) {
 
-      } else if (selection.getTime() === this.state.departureDate.getTime()) {
+		const newReturn = {
+			returnDate,
+			returnInputValue: returnDate !== undefined ? this.formatDate(returnDate) : '',
+		};
+		this.setState(newReturn);
+		if (this.props.onReturnUpdate != null) this.props.onReturnUpdate(returnDate);
 
-        this.setDeparture(undefined);
+	}
 
-      } else {
+	moveDayPicker = (event) => {
 
-        this.setDeparture(selection);
-        this.setReturn(undefined);
-        document.getElementById('dates-fieldset-component-input-return').focus();
+		document.getElementsByClassName(
+			'dates-fieldset-component-day-picker',
+		)[0].style.left = `${event.target.offsetParent.offsetLeft}px`;
 
-      }
+	};
 
-    };
+	handleDaySelect = (selection) => {
 
-    formatDate(date) {
+		if (this.state.departureDate === undefined) {
 
-      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+			this.setDeparture(selection);
+			document.getElementById('dates-fieldset-component-input-return').focus();
 
-    }
+		} else if (
+			this.state.returnDate === undefined
+			&& this.props.willReturn
+			&& selection.getTime() !== this.state.departureDate.getTime()
+		) {
 
-    setDeparture(departureDate) {
+			if (DateUtils.isDayBefore(selection, this.state.departureDate)) {
 
-      const newDeparture = {
-        departureDate,
-        departureInputValue: departureDate != undefined ? this.formatDate(departureDate) : '',
-      };
-      this.setState(newDeparture);
-      if (this.props.onDepartureUpdate != null) this.props.onDepartureUpdate(departureDate);
+				this.setReturn(this.state.departureDate);
+				this.setDeparture(selection);
 
-    }
+			} else {
 
-    setReturn(returnDate) {
+				this.setReturn(selection);
 
-      const newReturn = {
-        returnDate,
-        returnInputValue: returnDate != undefined ? this.formatDate(returnDate) : '',
-      };
-      this.setState(newReturn);
-      if (this.props.onReturnUpdate != null) this.props.onReturnUpdate(returnDate);
+			}
 
-    }
+		} else if (selection.getTime() === this.state.departureDate.getTime()) {
 
-    componentDidUpdate() {
+			this.setDeparture(undefined);
 
-      if (!this.props.willReturn && this.state.returnDate != undefined) {
+		} else {
 
-        this.setReturn(undefined);
+			this.setDeparture(selection);
+			this.setReturn(undefined);
+			document.getElementById('dates-fieldset-component-input-return').focus();
 
-      }
+		}
 
-    }
+	};
 
-    render() {
+	render() {
 
-      const modifiers = {
-        highlighted: {
-          from: this.state.departureDate,
-          to: this.state.returnDate,
-        },
-        returnDate: this.state.returnDate,
-        disabled: {
-          before: new Date(),
-        },
-      };
+		const modifiers = {
+			highlighted: {
+				from: this.state.departureDate,
+				to: this.state.returnDate,
+			},
+			returnDate: this.state.returnDate,
+			disabled: {
+				before: new Date(),
+			},
+		};
 
-      return (
-        <fieldset className={`dates-fieldset-component ${this.props.className || ''}`}>
-          <IconTextInput
-            id="dates-fieldset-component-input-departure"
-            className="date-text-input"
-            placeholder="-- / -- / --"
-            icon={CalendarIcon}
-            name="departure"
-            label="Fecha de salida"
-            value={this.state.departureInputValue}
-            onFocus={this.moveDayPicker}
-            valid={this.state.departureDate != undefined}
-            readOnly
-          />
+		return (
+			<fieldset className={`dates-fieldset-component ${this.props.className || ''}`}>
+				<IconTextInput
+					id="dates-fieldset-component-input-departure"
+					className="date-text-input"
+					placeholder="-- / -- / --"
+					icon={CalendarIcon}
+					name="departure"
+					label="Fecha de salida"
+					value={this.state.departureInputValue}
+					onFocus={this.moveDayPicker}
+					valid={this.state.departureDate !== undefined}
+					readOnly
+				/>
 
-          <IconTextInput
-            id="dates-fieldset-component-input-return"
-            className="date-text-input"
-            placeholder="-- / -- / --"
-            icon={CalendarIcon}
-            name="return"
-            label="Fecha de retorno"
-            value={this.state.returnInputValue}
-            onFocus={this.moveDayPicker}
-            disabled={!this.props.willReturn}
-            valid={this.state.returnDate != undefined}
-            readOnly
-          />
+				<IconTextInput
+					id="dates-fieldset-component-input-return"
+					className="date-text-input"
+					placeholder="-- / -- / --"
+					icon={CalendarIcon}
+					name="return"
+					label="Fecha de retorno"
+					value={this.state.returnInputValue}
+					onFocus={this.moveDayPicker}
+					disabled={!this.props.willReturn}
+					valid={this.state.returnDate !== undefined}
+					readOnly
+				/>
 
-          <DayPicker
-            className="dates-fieldset-component-day-picker"
-            onDayClick={this.handleDaySelect}
-            selectedDays={[this.state.departureDate, this.state.returnDate]}
-            modifiers={modifiers}
-            months={es.months}
-            weekdaysLong={es.weekdaysLong}
-            weekdaysShort={es.weekdaysShort}
-          />
-        </fieldset>
-      );
+				<DayPicker
+					className="dates-fieldset-component-day-picker"
+					onDayClick={this.handleDaySelect}
+					selectedDays={[this.state.departureDate, this.state.returnDate]}
+					modifiers={modifiers}
+					months={es.months}
+					weekdaysLong={es.weekdaysLong}
+					weekdaysShort={es.weekdaysShort}
+				/>
+			</fieldset>
+		);
 
-    }
+	}
 
 }

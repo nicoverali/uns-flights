@@ -10,233 +10,234 @@ import { getAllLocations } from './Locations';
 
 export default class LocationFieldset extends React.Component {
 
-  constructor(props) {
+	constructor(props) {
 
-    super(props);
-    this.state = {
-      locations: [],
-      fromValue: '',
-      fromSuggestions: [],
-      toValue: '',
-      toSuggestions: [],
-    };
+		super(props);
+		this.state = {
+			locations: [],
+			fromValue: '',
+			fromSuggestions: [],
+			toValue: '',
+			toSuggestions: [],
+		};
 
-  }
+	}
 
-  componentDidMount() {
+	componentDidMount() {
 
-    getAllLocations().then((data) => this.setState({ locations: data }));
+		getAllLocations().then((data) => this.setState({ locations: data }));
 
-  }
+	}
 
-    onFromChange = (event, { newValue }) => {
+	onFromChange = (event, { newValue }) => {
 
-      if (this.isValidInput(newValue)) {
+		if (this.isValidInput(newValue)) {
 
-        this.props.onFromLocationChange(newValue);
+			this.props.onFromLocationChange(newValue);
 
-      } else {
+		} else {
 
-        this.props.onFromLocationChange('');
+			this.props.onFromLocationChange('');
 
-      }
-      this.setState({
-        fromValue: newValue,
-      });
+		}
+		this.setState({
+			fromValue: newValue,
+		});
 
-    };
+	};
 
-    onToChange = (event, { newValue }) => {
+	onToChange = (event, { newValue }) => {
 
-      if (this.isValidInput(newValue)) {
+		if (this.isValidInput(newValue)) {
 
-        this.props.onToLocationChange(newValue);
+			this.props.onToLocationChange(newValue);
 
-      } else {
+		} else {
 
-        this.props.onToLocationChange('');
+			this.props.onToLocationChange('');
 
-      }
-      this.setState({
-        toValue: newValue,
-      });
+		}
+		this.setState({
+			toValue: newValue,
+		});
 
-    };
+	};
 
-    getSuggestionValue = (suggestion) => `${suggestion.ciudad}, ${suggestion.estado}, ${suggestion.pais}`;
+	getSuggestionValue = (suggestion) => `${suggestion.ciudad}, ${suggestion.estado}, ${suggestion.pais}`;
 
-    getSuggestions(value) {
+	getSuggestions(value) {
 
-      const inputValue = value.trim().toLowerCase();
-      const inputLength = inputValue.length;
+		const inputValue = value.trim().toLowerCase();
+		const inputLength = inputValue.length;
 
-      return inputLength === 0
-        ? []
-        : this.state.locations.filter((loc) => {
+		return inputLength === 0
+			? []
+			: this.state.locations.filter((loc) => {
 
-          if (loc.ciudad.toLowerCase().includes(inputValue.toLowerCase())) return true;
-          if (loc.estado.toLowerCase().includes(inputValue.toLowerCase())) return true;
+				if (loc.ciudad.toLowerCase().includes(inputValue.toLowerCase())) return true;
+				if (loc.estado.toLowerCase().includes(inputValue.toLowerCase())) return true;
+				return false;
 
-        });
+			});
 
-    }
+	}
 
-    renderSuggestion = (suggestion) => (
-      <div className="location-suggestion">{this.getSuggestionValue(suggestion)}</div>
-    );
+	renderSuggestion = (suggestion) => (
+		<div className="location-suggestion">{this.getSuggestionValue(suggestion)}</div>
+	);
 
-    onFromSuggestionsFetchRequested = ({ value }) => {
+	onFromSuggestionsFetchRequested = ({ value }) => {
 
-      this.setState({
-        fromSuggestions: this.getSuggestions(value),
-      });
+		this.setState({
+			fromSuggestions: this.getSuggestions(value),
+		});
 
-    };
+	};
 
-    onToSuggestionsFetchRequested = ({ value }) => {
+	onToSuggestionsFetchRequested = ({ value }) => {
 
-      this.setState({
-        toSuggestions: this.getSuggestions(value),
-      });
+		this.setState({
+			toSuggestions: this.getSuggestions(value),
+		});
 
-    };
+	};
 
-    onFromSuggestionsClearRequested = () => {
+	onFromSuggestionsClearRequested = () => {
 
-      this.setState({ fromSuggestions: [] });
+		this.setState({ fromSuggestions: [] });
 
-    };
+	};
 
-    onToSuggestionsClearRequested = () => {
+	onToSuggestionsClearRequested = () => {
 
-      this.setState({ toSuggestions: [] });
+		this.setState({ toSuggestions: [] });
 
-    };
+	};
 
-    handleFromInputBlur = (event) => {
+	handleFromInputBlur = (event) => {
 
-      if (event.target.value !== '') {
+		if (event.target.value !== '') {
 
-        const match = this.findMatchFor(event.target.value);
-        if (this.isValidInput(match)) {
+			const match = this.findMatchFor(event.target.value);
+			if (this.isValidInput(match)) {
 
-          this.props.onFromLocationChange(match);
+				this.props.onFromLocationChange(match);
 
-        } else {
+			} else {
 
-          this.props.onFromLocationChange('');
+				this.props.onFromLocationChange('');
 
-        }
-        this.setState({ fromValue: match });
+			}
+			this.setState({ fromValue: match });
 
-      }
+		}
 
-    };
+	};
 
-    handleToInputBlur = (event) => {
+	handleToInputBlur = (event) => {
 
-      if (event.target.value !== '') {
+		if (event.target.value !== '') {
 
-        const match = this.findMatchFor(event.target.value);
-        if (this.isValidInput(match)) {
+			const match = this.findMatchFor(event.target.value);
+			if (this.isValidInput(match)) {
 
-          this.props.onToLocationChange(match);
+				this.props.onToLocationChange(match);
 
-        } else {
+			} else {
 
-          this.props.onToLocationChange('');
+				this.props.onToLocationChange('');
 
-        }
-        this.setState({ toValue: this.findMatchFor(event.target.value) });
+			}
+			this.setState({ toValue: this.findMatchFor(event.target.value) });
 
-      }
+		}
 
-    };
+	};
 
-    isValidInput(inputValue) {
+	isValidInput(inputValue) {
 
-      const valuesAsArray = inputValue.split(',');
-      if (valuesAsArray.length !== 3) return false;
+		const valuesAsArray = inputValue.split(',');
+		if (valuesAsArray.length !== 3) return false;
 
-      if (
-        this.state.locations.find((loc) => (loc.ciudad === valuesAsArray[0].trim()) === undefined)
-      ) return false;
-      if (
-        this.state.locations.find((loc) => (loc.estado === valuesAsArray[1].trim()) === undefined)
-      ) return false;
-      if (this.state.locations.find((loc) => (loc.pais === valuesAsArray[2].trim()) === undefined)) return false;
+		if (
+			this.state.locations.find((loc) => (loc.ciudad === valuesAsArray[0].trim()) === undefined)
+		) return false;
+		if (
+			this.state.locations.find((loc) => (loc.estado === valuesAsArray[1].trim()) === undefined)
+		) return false;
+		if (this.state.locations.find((loc) => (loc.pais === valuesAsArray[2].trim()) === undefined)) return false;
 
-      return true;
+		return true;
 
-    }
+	}
 
-    findMatchFor(value) {
+	findMatchFor(value) {
 
-      if (!this.isValidInput(value)) {
+		if (!this.isValidInput(value)) {
 
-        const possibleMatch = this.state.locations.find((loc) => loc.ciudad.toLowerCase().startsWith(value.toLowerCase().trim()));
-        if (possibleMatch !== undefined) {
+			const possibleMatch = this.state.locations.find((loc) => loc.ciudad.toLowerCase().startsWith(value.toLowerCase().trim()));
+			if (possibleMatch !== undefined) {
 
-          return this.getSuggestionValue(possibleMatch);
+				return this.getSuggestionValue(possibleMatch);
 
-        }
-        return value;
+			}
+			return value;
 
-      }
-      return value;
+		}
+		return value;
 
-    }
+	}
 
-    render() {
+	render() {
 
-      const fromInputValid = this.isValidInput(this.state.fromValue);
-      const toInputValid = this.isValidInput(this.state.toValue);
+		const fromInputValid = this.isValidInput(this.state.fromValue);
+		const toInputValid = this.isValidInput(this.state.toValue);
 
-      const fromProps = {
-        value: this.state.fromValue,
-        onChange: this.onFromChange,
-        onBlur: this.handleFromInputBlur,
-        icon: AirplaneTakeOffIcon,
-        label: 'Origen',
-        error: !fromInputValid && this.state.fromValue !== '',
-        valid: fromInputValid,
-      };
-      const toProps = {
-        value: this.state.toValue,
-        onChange: this.onToChange,
-        onBlur: this.handleToInputBlur,
-        icon: AirplaneLandingIcon,
-        label: 'Destino',
-        error: !toInputValid && this.state.toValue !== '',
-        valid: toInputValid,
-      };
+		const fromProps = {
+			value: this.state.fromValue,
+			onChange: this.onFromChange,
+			onBlur: this.handleFromInputBlur,
+			icon: AirplaneTakeOffIcon,
+			label: 'Origen',
+			error: !fromInputValid && this.state.fromValue !== '',
+			valid: fromInputValid,
+		};
+		const toProps = {
+			value: this.state.toValue,
+			onChange: this.onToChange,
+			onBlur: this.handleToInputBlur,
+			icon: AirplaneLandingIcon,
+			label: 'Destino',
+			error: !toInputValid && this.state.toValue !== '',
+			valid: toInputValid,
+		};
 
-      return (
-        <fieldset className={`location-fieldset-component ${this.props.className || ''}`}>
-          <Autosuggest
-            suggestions={this.state.fromSuggestions}
-            onSuggestionsFetchRequested={this.onFromSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onFromSuggestionsClearRequested}
-            getSuggestionValue={this.getSuggestionValue}
-            renderSuggestion={this.renderSuggestion}
-            inputProps={fromProps}
-            renderInputComponent={IconTextInput}
-            renderSuggestionsContainer={SuggestionsContainer}
-          />
+		return (
+			<fieldset className={`location-fieldset-component ${this.props.className || ''}`}>
+				<Autosuggest
+					suggestions={this.state.fromSuggestions}
+					onSuggestionsFetchRequested={this.onFromSuggestionsFetchRequested}
+					onSuggestionsClearRequested={this.onFromSuggestionsClearRequested}
+					getSuggestionValue={this.getSuggestionValue}
+					renderSuggestion={this.renderSuggestion}
+					inputProps={fromProps}
+					renderInputComponent={IconTextInput}
+					renderSuggestionsContainer={SuggestionsContainer}
+				/>
 
-          <Autosuggest
-            suggestions={this.state.toSuggestions}
-            onSuggestionsFetchRequested={this.onToSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onToSuggestionsClearRequested}
-            getSuggestionValue={this.getSuggestionValue}
-            renderSuggestion={this.renderSuggestion}
-            inputProps={toProps}
-            renderInputComponent={IconTextInput}
-            renderSuggestionsContainer={SuggestionsContainer}
-          />
-        </fieldset>
-      );
+				<Autosuggest
+					suggestions={this.state.toSuggestions}
+					onSuggestionsFetchRequested={this.onToSuggestionsFetchRequested}
+					onSuggestionsClearRequested={this.onToSuggestionsClearRequested}
+					getSuggestionValue={this.getSuggestionValue}
+					renderSuggestion={this.renderSuggestion}
+					inputProps={toProps}
+					renderInputComponent={IconTextInput}
+					renderSuggestionsContainer={SuggestionsContainer}
+				/>
+			</fieldset>
+		);
 
-    }
+	}
 
 }

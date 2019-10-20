@@ -7,62 +7,62 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 export default class SplashScreen extends React.Component {
 
-  constructor(props) {
+	constructor(props) {
 
-    super(props);
+		super(props);
 
-    if (window.navigator.userAgent === 'JAVAFX') {
+		if (window.navigator.userAgent === 'JAVAFX') {
 
-      this.state = {
-        loading: true,
-      };
-      this.waitForJavaBridges();
+			this.state = {
+				loading: true,
+			};
+			this.waitForJavaBridges();
 
-    } else {
+		} else {
 
-      this.state = {
-        loading: false,
-      };
+			this.state = {
+				loading: false,
+			};
 
-    }
+		}
 
-  }
+	}
 
-  waitForJavaBridges() {
+	waitForJavaBridges() {
 
-    setTimeout(() => {
+		setTimeout(() => {
 
-      if (window.javaSQLBridge != null && window.javaLoggerBridge) {
+			if (window.javaSQLBridge != null && window.javaLoggerBridge) {
 
-        window.onerror = (err) => window.javaLoggerBridge.logError(err);
-        this.setState({ loading: false });
+				window.onerror = (err) => window.javaLoggerBridge.logError(err);
+				this.setState({ loading: false });
 
-      } else {
+			} else {
 
-        this.waitForJavaBridges();
+				this.waitForJavaBridges();
 
-      }
+			}
 
-    }, 800);
+		}, 800);
 
-  }
+	}
 
-  render() {
+	render() {
 
-    const redirect = this.state.loading ? '' : <Redirect to="/login" />;
+		const redirect = this.state.loading ? '' : <Redirect to="/login" />;
 
-    return (
-      <div id="splash-screen-page">
-        {redirect}
-        <div className="splash-content-wrapper">
-          <BrandLogo className="splash-screen-logo" size="big" />
-          <div className="splash-load-spinner-wrapper">
-            <ClipLoader sizeUnit="px" size={48} color={vars.secondaryColor} />
-          </div>
-        </div>
-      </div>
-    );
+		return (
+			<div id="splash-screen-page">
+				{redirect}
+				<div className="splash-content-wrapper">
+					<BrandLogo className="splash-screen-logo" size="big" />
+					<div className="splash-load-spinner-wrapper">
+						<ClipLoader sizeUnit="px" size={48} color={vars.secondaryColor} />
+					</div>
+				</div>
+			</div>
+		);
 
-  }
+	}
 
 }

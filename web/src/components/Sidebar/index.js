@@ -5,52 +5,52 @@ import SidebarItem from './SidebarItem';
 
 export default class SideBar extends React.Component {
 
-  constructor(props) {
+	constructor(props) {
 
-    super(props);
-    const initialActiveLink = props.links ? props.links[0].label : '';
-    this.state = {
-      activeItem: initialActiveLink,
-    };
+		super(props);
+		const initialActiveLink = props.links ? props.links[0].label : '';
+		this.state = {
+			activeItem: initialActiveLink,
+		};
 
-  }
+	}
 
-    handleItemSelected = (itemName) => {
+	handleItemSelected = (itemName) => {
 
-      this.setState({ activeItem: itemName });
+		this.setState({ activeItem: itemName });
 
-    };
+	};
 
-    render() {
+	render() {
 
-      const items = [];
-      if (this.props.links != null) {
+		const items = [];
+		if (this.props.links != null) {
 
-        for (let i = 0; i < this.props.links.length; i++) {
+			for (let i = 0; i < this.props.links.length; i++) {
 
-          const link = this.props.links[i];
+				const link = this.props.links[i];
 
-          items.push(
-            <SidebarItem
-              key={link.label}
-              linkTo={link.to}
-              label={link.label}
-              onClick={() => this.handleItemSelected(link.label)}
-              active={this.state.activeItem == link.label}
-            />,
-          );
+				items.push(
+					<SidebarItem
+						key={link.label}
+						linkTo={link.to}
+						label={link.label}
+						onClick={() => this.handleItemSelected(link.label)}
+						active={this.state.activeItem === link.label}
+					/>,
+				);
 
-        }
+			}
 
-      }
+		}
 
-      return (
-        <div {...this.props} className={`sidebar-component ${this.props.className || ''}`}>
-          <BrandLogo className="sidebar-logo" />
-          <div className="side-bar-items">{items}</div>
-        </div>
-      );
+		return (
+			<div {...this.props} className={`sidebar-component ${this.props.className || ''}`}>
+				<BrandLogo className="sidebar-logo" />
+				<div className="side-bar-items">{items}</div>
+			</div>
+		);
 
-    }
+	}
 
 }

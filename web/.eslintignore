@@ -1,0 +1,15 @@
+# Config files
+webpack.config.js
+postcss.config.js
+
+# Dependencies
+node_modules
+
+# Not js folders
+src/assets
+
+# Generated
+dist
+
+#Misc
+ejemplo_web_simple

@@ -4,28 +4,28 @@ import { Link } from 'react-router-dom';
 
 const SidebarItem = ({ linkTo, active, ...props }) => {
 
-  const className = `side-bar-item-component ${props.className || ''} ${active ? 'active' : ''}`;
-  let item;
+	const className = `side-bar-item-component ${props.className || ''} ${active ? 'active' : ''}`;
+	let item;
 
-  if (linkTo != null) {
+	if (linkTo != null) {
 
-    item = (
-      <Link {...props} to={linkTo} className={className}>
-        {props.label}
-      </Link>
-    );
+		item = (
+			<Link {...props} to={linkTo} className={className}>
+				{props.label}
+			</Link>
+		);
 
-  } else {
+	} else {
 
-    item = (
-      <a {...props} className={className}>
-        {props.label}
-      </a>
-    );
+		item = (
+			<a {...props} className={className}>
+				{props.label}
+			</a>
+		);
 
-  }
+	}
 
-  return item;
+	return item;
 
 };
 

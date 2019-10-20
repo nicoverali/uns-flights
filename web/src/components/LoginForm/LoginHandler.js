@@ -1,38 +1,38 @@
 function loginAsAdmin(password) {
 
-  return new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 
-    const response = window.javaSQLBridge.connectToAdmin(password);
-    if (JSON.parse(response).code === 1) {
+		const response = window.javaSQLBridge.connectToAdmin(password);
+		if (JSON.parse(response).code === 1) {
 
-      resolve();
+			resolve();
 
-    } else {
+		} else {
 
-      reject();
+			reject();
 
-    }
+		}
 
-  });
+	});
 
 }
 
 function loginAsEmployee(empId, password) {
 
-  return new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 
-    const response = JSON.parse(window.javaSQLBridge.connectToEmployee(empId, password));
-    if (response.code == 1) {
+		const response = JSON.parse(window.javaSQLBridge.connectToEmployee(empId, password));
+		if (response.code === 1) {
 
-      resolve();
+			resolve();
 
-    } else {
+		} else {
 
-      reject();
+			reject();
 
-    }
+		}
 
-  });
+	});
 
 }
 

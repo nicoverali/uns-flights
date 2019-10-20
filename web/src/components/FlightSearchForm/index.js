@@ -10,146 +10,140 @@ import DatesFieldset from './DatesFieldset';
 
 export default class FlightSearchForm extends React.Component {
 
-  constructor(props) {
+	constructor(props) {
 
-    super(props);
-    this.state = {
-      isRoundTrip: false,
-      fromLocation: '',
-      toLocation: '',
-      departureDate: undefined,
-      returnDate: undefined,
-    };
+		super(props);
+		this.state = {
+			isRoundTrip: false,
+			fromLocation: '',
+			toLocation: '',
+			departureDate: undefined,
+			returnDate: undefined,
+		};
 
-  }
+	}
 
-  checkStateIsValid() {
+	handleSearchTypeChange = (event) => {
 
-    const { state } = this;
-    if (state.fromLocation === '' || state.toLocation === '') {
+		const isRoundTrip = event.target.value !== 'one-way';
+		this.setState({ isRoundTrip });
+		this.props.onIsRoundTripChange(isRoundTrip);
 
-      return false;
+	};
 
-    }
-    if (state.isRoundTrip) {
+	handleFromLocationChange = (fromLocation) => {
 
-      return state.departureDate != null && state.returnDate != null;
+		this.setState({ fromLocation });
 
-    }
+	};
 
-    return state.departureDate != null;
+	handleToLocationChange = (toLocation) => {
 
-  }
+		this.setState({ toLocation });
 
-    handleSearchTypeChange = (event) => {
+	};
 
-      const isRoundTrip = event.target.value != 'one-way';
-      this.setState({ isRoundTrip });
-      this.props.onIsRoundTripChange(isRoundTrip);
+	handleDepartureUpdate = (departureDate) => {
 
-    };
+		this.setState({ departureDate });
 
-    handleFromLocationChange = (fromLocation) => {
+	};
 
-      this.setState({ fromLocation });
+	handleReturnUpdate = (returnDate) => {
 
-    };
+		this.setState({ returnDate });
 
-    handleToLocationChange = (toLocation) => {
+	};
 
-      this.setState({ toLocation });
+	handleFlightSearchSubmit = (event) => {
 
-    };
+		event.preventDefault();
+		if (this.props.onAvailableFlights != null && this.checkStateIsValid) {
 
-    handleDepartureUpdate = (departureDate) => {
+			const fromLocation = this.state.fromLocation.split(',')[0].trim();
+			const toLocation = this.state.toLocation.split(',')[0].trim();
+			const date = formatDate(this.state.departureDate);
+			if (!this.state.isRoundTrip) {
 
-      this.setState({ departureDate });
+				getAvailableFlightsFor(fromLocation, toLocation, date).then((flights) => this.props.onAvailableFlights([flights, undefined]));
 
-    };
+			} else {
 
-    handleReturnUpdate = (returnDate) => {
+				getAvailableFlightsFor(fromLocation, toLocation, date).then((goFlights) => {
 
-      this.setState({ returnDate });
+					const returnDate = formatDate(this.state.returnDate);
+					getAvailableFlightsFor(toLocation, fromLocation, returnDate).then((backFligts) => this.props.onAvailableFlights([goFlights, backFligts]));
 
-    };
+				});
 
-    handleFlightSearchSubmit = (event) => {
+			}
 
-      event.preventDefault();
-      if (this.props.onAvailableFlights != null && this.checkStateIsValid) {
+		}
 
-        const fromLocation = this.state.fromLocation.split(',')[0].trim();
-        const toLocation = this.state.toLocation.split(',')[0].trim();
-        const date = formatDate(this.state.departureDate);
-        if (!this.state.isRoundTrip) {
+	};
 
-          getAvailableFlightsFor(fromLocation, toLocation, date).then((flights) => this.props.onAvailableFlights([flights, undefined]));
+	checkStateIsValid() {
 
-        } else {
+		const { state } = this;
+		if (state.fromLocation === '' || state.toLocation === '') {
 
-          getAvailableFlightsFor(fromLocation, toLocation, date).then((goFlights) => {
+			return false;
 
-            const returnDate = formatDate(this.state.returnDate);
-            getAvailableFlightsFor(toLocation, fromLocation, returnDate).then((backFligts) => this.props.onAvailableFlights([goFlights, backFligts]));
+		}
+		if (state.isRoundTrip) {
 
-          });
+			return state.departureDate != null && state.returnDate != null;
 
-        }
+		}
 
-      }
+		return state.departureDate != null;
 
-    };
+	}
 
-    componentDidCatch(error, info) {
+	render() {
 
-      console.error(error + info);
+		return (
+			<div className={`flight-search-form-component ${this.props.className || ''}`}>
+				<p>{JSON.stringify(this.state.departureFlights)}</p>
+				<form onSubmit={this.handleFlightSearchSubmit}>
+					<fieldset className="flight-search-type-fieldset">
+						<RadioInput
+							name="search-type"
+							label="Solo ida"
+							value="one-way"
+							onChange={this.handleSearchTypeChange}
+							checked={!this.state.isRoundTrip}
+						/>
+						<RadioInput
+							name="search-type"
+							label="Ida y vuelta"
+							value="round-trip"
+							onChange={this.handleSearchTypeChange}
+							checked={this.state.isRoundTrip}
+						/>
+					</fieldset>
 
-    }
+					<div className="flight-search-bottom-fieldsets">
+						<LocationFieldset
+							onFromLocationChange={this.handleFromLocationChange}
+							onToLocationChange={this.handleToLocationChange}
+						/>
+						<DatesFieldset
+							className="flight-search-dates-fieldset"
+							willReturn={this.state.isRoundTrip}
+							onDepartureUpdate={this.handleDepartureUpdate}
+							onReturnUpdate={this.handleReturnUpdate}
+						/>
+					</div>
 
-    render() {
+					<PrimaryButton type="submit" className="flight-search-button">
+						<SearchIcon />
+						BUSCAR
+					</PrimaryButton>
+				</form>
+			</div>
+		);
 
-      return (
-        <div className={`flight-search-form-component ${this.props.className || ''}`}>
-          <p>{JSON.stringify(this.state.departureFlights)}</p>
-          <form onSubmit={this.handleFlightSearchSubmit}>
-            <fieldset className="flight-search-type-fieldset">
-              <RadioInput
-                name="search-type"
-                label="Solo ida"
-                value="one-way"
-                onChange={this.handleSearchTypeChange}
-                checked={!this.state.isRoundTrip}
-              />
-              <RadioInput
-                name="search-type"
-                label="Ida y vuelta"
-                value="round-trip"
-                onChange={this.handleSearchTypeChange}
-                checked={this.state.isRoundTrip}
-              />
-            </fieldset>
-
-            <div className="flight-search-bottom-fieldsets">
-              <LocationFieldset
-                onFromLocationChange={this.handleFromLocationChange}
-                onToLocationChange={this.handleToLocationChange}
-              />
-              <DatesFieldset
-                className="flight-search-dates-fieldset"
-                willReturn={this.state.isRoundTrip}
-                onDepartureUpdate={this.handleDepartureUpdate}
-                onReturnUpdate={this.handleReturnUpdate}
-              />
-            </div>
-
-            <PrimaryButton type="submit" className="flight-search-button">
-              <SearchIcon />
-                        BUSCAR
-            </PrimaryButton>
-          </form>
-        </div>
-      );
-
-    }
+	}
 
 }

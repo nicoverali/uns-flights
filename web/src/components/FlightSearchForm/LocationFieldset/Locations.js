@@ -1,19 +1,19 @@
 function getAllLocations() {
 
-  return new Promise((resolve, reject) => {
+	return new Promise((resolve, reject) => {
 
-    const result = JSON.parse(window.javaSQLBridge.ubicaciones());
-    if (result.code === 1) {
+		const result = JSON.parse(window.javaSQLBridge.ubicaciones());
+		if (result.code === 1) {
 
-      resolve(result.data);
+			resolve(result.data);
 
-    } else {
+		} else {
 
-      reject(result.msg);
+			reject(result.msg);
 
-    }
+		}
 
-  });
+	});
 
 }
 

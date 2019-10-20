@@ -12,136 +12,137 @@ import { loginAsAdmin, loginAsEmployee } from './LoginHandler';
 
 export default class LoginForm extends React.Component {
 
-  constructor(props) {
+	constructor(props) {
 
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-      isLoading: false,
-      isAdmin: false,
-      empId: '',
-      password: '',
-    };
+		super(props);
+		this.state = {
+			isLoggedIn: false,
+			isLoading: false,
+			isAdmin: false,
+			empId: '',
+			password: '',
+		};
 
-  }
+	}
 
-    handleEmpIdChange = (event) => {
+	static getFormButtonContent(isLoading) {
 
-      const BACKSPACE = 8;
-      const input = event.target.value;
-      // Accept only numbers or delete
-      if (!isNaN(input) || event.keyCode === BACKSPACE) {
+		if (isLoading) {
 
-        this.setState({ empId: event.target.value });
+			return <BeatLoader size={8} color="#FFF" />;
 
-      }
+		}
+		return 'INGRESAR';
 
-    };
+	}
 
-    handlePasswordChange = (event) => {
+	handleEmpIdChange = (event) => {
 
-      this.setState({ password: event.target.value });
+		const BACKSPACE = 8;
+		const input = event.target.value;
+		// Accept only numbers or delete
+		// eslint-disable-next-line no-restricted-globals
+		if (!isNaN(input) || event.keyCode === BACKSPACE) {
 
-    };
+			this.setState({ empId: event.target.value });
 
-    handleLoginModeChange = (event) => {
+		}
 
-      this.setState({ isAdmin: !this.state.isAdmin, empId: '', password: '' });
+	};
 
-    };
+	handlePasswordChange = (event) => {
 
-    handleLogin = (event) => {
+		this.setState({ password: event.target.value });
 
-      event.preventDefault();
-      this.setState({ isLoading: true });
-      const loginPromise = this.state.isAdmin
-        ? loginAsAdmin(this.state.password)
-        : loginAsEmployee(this.state.empId, this.state.password);
+	};
 
-      loginPromise
-        .then(() => {
+	handleLoginModeChange = () => {
 
-          this.setState({ isLoggedIn: true });
+		this.setState((prevState) => ({ isAdmin: !prevState.isAdmin, empId: '', password: '' }));
 
-        })
-        .catch(() => {
+	};
 
-          store.addNotification({
-            title: 'Error',
-            message: 'Verificar los datos ingresados.',
-            type: 'danger',
-            insert: 'bottom',
-            container: 'bottom-right',
-            animationIn: ['animated', 'fadeIn'],
-            animationOut: ['animated', 'fadeOut'],
-            dismiss: {
-              duration: 5000,
-              onScreen: true,
-            },
-          });
-          this.setState({ isLoading: false });
+	handleLogin = (event) => {
 
-        });
+		event.preventDefault();
+		this.setState({ isLoading: true });
+		const loginPromise = this.state.isAdmin
+			? loginAsAdmin(this.state.password)
+			: loginAsEmployee(this.state.empId, this.state.password);
 
-    };
+		loginPromise
+			.then(() => {
 
-    getFormButtonContent(isLoading) {
+				this.setState({ isLoggedIn: true });
 
-      if (isLoading) {
+			})
+			.catch(() => {
 
-        return <BeatLoader size={8} color="#FFF" />;
+				store.addNotification({
+					title: 'Error',
+					message: 'Verificar los datos ingresados.',
+					type: 'danger',
+					insert: 'bottom',
+					container: 'bottom-right',
+					animationIn: ['animated', 'fadeIn'],
+					animationOut: ['animated', 'fadeOut'],
+					dismiss: {
+						duration: 5000,
+						onScreen: true,
+					},
+				});
+				this.setState({ isLoading: false });
 
-      }
-      return 'INGRESAR';
+			});
 
-    }
+	};
 
-    render() {
+	render() {
 
-      const empIdInputClass = this.state.isAdmin ? 'hide' : '';
-      const submitButtonContent = this.getFormButtonContent(this.state.isLoading);
+		const empIdInputClass = this.state.isAdmin ? 'hide' : '';
+		const submitButtonContent = this.getFormButtonContent(this.state.isLoading);
 
-      let redirection = '';
-      if (this.state.isLoggedIn) {
+		let redirection = '';
+		if (this.state.isLoggedIn) {
 
-        redirection = <Redirect to={`/dashboard?isAdmin=${this.state.isAdmin}`} />;
+			redirection = <Redirect to={`/dashboard?isAdmin=${this.state.isAdmin}`} />;
 
-      }
+		}
 
-      return (
-        <div {...this.props} className={`login-form-component ${this.props.className || ''}`}>
-          {redirection}
-          <UserIcon className="user-icon" />
+		return (
+			<div {...this.props} className={`login-form-component ${this.props.className || ''}`}>
+				{redirection}
+				<UserIcon className="user-icon" />
 
-          <h3 className="user">{this.state.isAdmin ? 'Administrador' : 'Empleado'}</h3>
+				<h3 className="user">{this.state.isAdmin ? 'Administrador' : 'Empleado'}</h3>
 
-          <form onSubmit={this.handleLogin}>
-            <fieldset className="form-input-container">
-              <TextInput
-                className={empIdInputClass}
-                label="Nº Legajo"
-                value={this.state.empId}
-                onChange={this.handleEmpIdChange}
-              />
-              <TextInput
-                label="Contraseña"
-                value={this.state.password}
-                onChange={this.handlePasswordChange}
-                password
-              />
-            </fieldset>
+				<form onSubmit={this.handleLogin}>
+					<fieldset className="form-input-container">
+						<TextInput
+							className={empIdInputClass}
+							label="Nº Legajo"
+							value={this.state.empId}
+							onChange={this.handleEmpIdChange}
+						/>
+						<TextInput
+							label="Contraseña"
+							value={this.state.password}
+							onChange={this.handlePasswordChange}
+							password
+						/>
+					</fieldset>
 
-            <PrimaryButton type="submit" className="submit-button">
-              {submitButtonContent}
-            </PrimaryButton>
-          </form>
+					<PrimaryButton type="submit" className="submit-button">
+						{submitButtonContent}
+					</PrimaryButton>
+				</form>
 
-          <a onClick={this.handleLoginModeChange}>
-            {`Ingresar como ${this.state.isAdmin ? 'empleado' : 'administrador'}`}
-          </a>
-        </div>
-      );
+				<a onClick={this.handleLoginModeChange}>
+					{`Ingresar como ${this.state.isAdmin ? 'empleado' : 'administrador'}`}
+				</a>
+			</div>
+		);
 
-    }
+	}
 
 }
