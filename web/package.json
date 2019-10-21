@@ -4,10 +4,11 @@
   "description": "UNS Flights web app",
   "main": "index.js",
   "scripts": {
-    "prettier": "prettier --config .prettierrc --write src/**/*.js",
-    "lint": "eslint --fix --ext .js --ext .jsx .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve:dev": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prettier": "prettier --config .prettierrc --write src/**/*.js",
+    "lint": "eslint --fix --ext .js --ext .jsx ."
   },
   "author": "",
   "license": "ISC",
@@ -42,12 +43,13 @@
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
-    "react": "^16.10.1",
+    "prop-types": "^15.7.2",
     "query-string": "^6.8.3",
-    "react-dom": "^16.10.1",
-    "react-day-picker": "^7.3.2",
+    "react": "^16.10.1",
     "react-autosuggest": "^9.4.3",
     "react-data-table-component": "^3.5.1",
+    "react-day-picker": "^7.3.2",
+    "react-dom": "^16.10.1",
     "react-notifications-component": "^2.1.0",
     "react-router-dom": "^5.1.2",
     "react-spinners": "^0.6.1",

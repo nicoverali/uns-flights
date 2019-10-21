@@ -1,5 +1,6 @@
 import './index.scss';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { store } from 'react-notifications-component';
 
@@ -110,7 +111,7 @@ export default class LoginForm extends React.Component {
 		}
 
 		return (
-			<div {...this.props} className={`login-form-component ${this.props.className || ''}`}>
+			<div className={`login-form-component ${this.props.className}`}>
 				{redirection}
 				<UserIcon className="user-icon" />
 
@@ -128,7 +129,7 @@ export default class LoginForm extends React.Component {
 							label="Contraseña"
 							value={this.state.password}
 							onChange={this.handlePasswordChange}
-							password
+							isPassword
 						/>
 					</fieldset>
 
@@ -137,12 +138,20 @@ export default class LoginForm extends React.Component {
 					</PrimaryButton>
 				</form>
 
-				<a onClick={this.handleLoginModeChange}>
+				<button
+					type="button"
+					onClick={this.handleLoginModeChange}
+					onKeyPress={this.handleLoginModeChange}
+				>
 					{`Ingresar como ${this.state.isAdmin ? 'empleado' : 'administrador'}`}
-				</a>
+				</button>
 			</div>
 		);
 
 	}
 
 }
+
+LoginForm.defaultProps = { className: '' };
+
+LoginForm.propTypes = { className: PropTypes.string };

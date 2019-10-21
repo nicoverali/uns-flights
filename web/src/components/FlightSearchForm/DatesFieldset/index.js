@@ -114,9 +114,7 @@ export default class DatesFieldset extends React.Component {
 				to: this.state.returnDate,
 			},
 			returnDate: this.state.returnDate,
-			disabled: {
-				before: new Date(),
-			},
+			disabled: { before: new Date() },
 		};
 
 		return (

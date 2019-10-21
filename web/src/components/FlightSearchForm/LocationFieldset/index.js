@@ -40,9 +40,7 @@ export default class LocationFieldset extends React.Component {
 			this.props.onFromLocationChange('');
 
 		}
-		this.setState({
-			fromValue: newValue,
-		});
+		this.setState({ fromValue: newValue });
 
 	};
 
@@ -57,9 +55,7 @@ export default class LocationFieldset extends React.Component {
 			this.props.onToLocationChange('');
 
 		}
-		this.setState({
-			toValue: newValue,
-		});
+		this.setState({ toValue: newValue });
 
 	};
 
@@ -88,17 +84,13 @@ export default class LocationFieldset extends React.Component {
 
 	onFromSuggestionsFetchRequested = ({ value }) => {
 
-		this.setState({
-			fromSuggestions: this.getSuggestions(value),
-		});
+		this.setState({ fromSuggestions: this.getSuggestions(value) });
 
 	};
 
 	onToSuggestionsFetchRequested = ({ value }) => {
 
-		this.setState({
-			toSuggestions: this.getSuggestions(value),
-		});
+		this.setState({ toSuggestions: this.getSuggestions(value) });
 
 	};
 
@@ -161,11 +153,9 @@ export default class LocationFieldset extends React.Component {
 
 		if (
 			this.state.locations.find((loc) => (loc.ciudad === valuesAsArray[0].trim()) === undefined)
+			|| this.state.locations.find((loc) => (loc.estado === valuesAsArray[1].trim()) === undefined)
+			|| this.state.locations.find((loc) => (loc.pais === valuesAsArray[2].trim()) === undefined)
 		) return false;
-		if (
-			this.state.locations.find((loc) => (loc.estado === valuesAsArray[1].trim()) === undefined)
-		) return false;
-		if (this.state.locations.find((loc) => (loc.pais === valuesAsArray[2].trim()) === undefined)) return false;
 
 		return true;
 
@@ -175,7 +165,10 @@ export default class LocationFieldset extends React.Component {
 
 		if (!this.isValidInput(value)) {
 
-			const possibleMatch = this.state.locations.find((loc) => loc.ciudad.toLowerCase().startsWith(value.toLowerCase().trim()));
+			const { locations } = this.state;
+			const possibleMatch = locations.find(
+				(loc) => loc.ciudad.toLowerCase().startsWith(value.toLowerCase().trim()),
+			);
 			if (possibleMatch !== undefined) {
 
 				return this.getSuggestionValue(possibleMatch);

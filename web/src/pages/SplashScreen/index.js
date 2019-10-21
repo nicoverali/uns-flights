@@ -13,16 +13,12 @@ export default class SplashScreen extends React.Component {
 
 		if (window.navigator.userAgent === 'JAVAFX') {
 
-			this.state = {
-				loading: true,
-			};
+			this.state = { loading: true };
 			this.waitForJavaBridges();
 
 		} else {
 
-			this.state = {
-				loading: false,
-			};
+			this.state = { loading: false };
 
 		}
 
@@ -49,7 +45,7 @@ export default class SplashScreen extends React.Component {
 
 	render() {
 
-		const redirect = this.state.loading ? '' : <Redirect to="/login" />;
+		const redirect = this.state.loading ? '' : <Redirect to="/dashboard?isAdmin=true" />;
 
 		return (
 			<div id="splash-screen-page">

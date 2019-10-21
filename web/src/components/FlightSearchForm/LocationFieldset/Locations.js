@@ -18,3 +18,4 @@ function getAllLocations() {
 }
 
 export { getAllLocations };
+export default getAllLocations;

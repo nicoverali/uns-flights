@@ -5,7 +5,6 @@ import PrimaryButton from '@Components/PrimaryButton';
 import FlightEndPoint from './FlightEndPoint';
 import FlightClasses from './FlightClasses';
 
-
 function formatTime(time) {
 
 	const seconds = time.lastIndexOf(':');
@@ -13,10 +12,7 @@ function formatTime(time) {
 
 }
 
-const Flight = ({
-	flight, classes, showClasses, onShowClasses, className,
-}) => (
-
+const Flight = ({ flight, classes, showClasses, onShowClasses, className }) => (
 	<div className={`flight-component ${className || ''}`}>
 		<div className="flight-main-content">
 			<div className="flight-time">
@@ -48,11 +44,7 @@ const Flight = ({
 					/>
 				</div>
 
-				<PrimaryButton
-					className="flight-button"
-					outline
-					onClick={onShowClasses}
-				>
+				<PrimaryButton className="flight-button" outline onClick={onShowClasses}>
 					Ver clases
 				</PrimaryButton>
 			</div>
