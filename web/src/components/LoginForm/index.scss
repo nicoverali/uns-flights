@@ -46,17 +46,20 @@ div.login-form-component{
         }
     }
 
-    a{
+    button.login-as-admin{
         display: block;
         margin: auto;
+        background: noneq;
         font-family: $body-font;
         font-size: $caption-size;
         font-weight: 500;
         color: $dark-details-color;
-    }
 
-    a:hover{
-        text-decoration: underline;
+        &:hover{
+            
+            text-decoration: underline;
+            
+        }
     }
     
 

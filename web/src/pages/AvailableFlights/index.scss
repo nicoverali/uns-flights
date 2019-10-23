@@ -1,5 +1,8 @@
 div#available-flights-page{
 
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
     padding-bottom: 48px;
 
     h2.available-flights-main-title{
@@ -8,6 +11,31 @@ div#available-flights-page{
 
     .available-flights-selector{
         margin-top: 48px;
+    }
+
+    .available-flights-not-found{
+
+        display: block;
+        margin: auto;
+        text-align: center;
+
+        svg{
+            width: 128px;
+            fill: $dark-details-color;
+            color: $dark-details-color;
+        }
+
+        h3{
+            font-family: $title-font;
+            font-size: $h3-size;
+            color: $secondary-color;
+        }
+
+        p{
+            font-family: $body-font;
+            font-size: $body-size;
+            color: $dark-details-color;
+        }
     }
 
 

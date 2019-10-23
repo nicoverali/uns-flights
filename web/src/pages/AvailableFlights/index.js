@@ -9,6 +9,8 @@ import {
 import FlightsSearchForm from '@Components/FlightSearchForm';
 import FlightSelector from '@Components/FlightSelector';
 
+import AirplaneOffIcon from '@Assets/icons/airplane-off.svg';
+
 // TODO delete this
 // const departureTest = [
 // 	{
@@ -366,7 +368,7 @@ export default class AvailableFlights extends React.Component {
 
 		const { locations, isRoundTrip, availableFlights } = this.state;
 
-		let availableFlightsExist =			availableFlights !== undefined && availableFlights[0].length > 0;
+		let availableFlightsExist =	availableFlights !== undefined && availableFlights[0].length > 0;
 		if (isRoundTrip) {
 
 			availableFlightsExist = availableFlights[1].length > 0;
@@ -380,7 +382,11 @@ export default class AvailableFlights extends React.Component {
 				returnFlights={availableFlights[1]}
 			/>
 		) : (
-			'No hay vuelos disponibles'
+			<div className="available-flights-not-found">
+				<AirplaneOffIcon />
+				<h3>¡ Lo sentimos !</h3>
+				<p>No hay vuelos disponibles en la fecha seleccionada</p>
+			</div>
 		);
 
 		return (

@@ -139,6 +139,7 @@ export default class LoginForm extends React.Component {
 				</form>
 
 				<button
+					className="login-as-admin"
 					type="button"
 					onClick={this.handleLoginModeChange}
 					onKeyPress={this.handleLoginModeChange}
