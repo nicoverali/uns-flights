@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const RadioInput = ({ className, name, label, value, checked, reversed, onChange }) => (
-	<label htmlFor={name} className={`radio-input-component ${className}`}>
+	// eslint-disable-next-line jsx-a11y/label-has-associated-control
+	<label className={`radio-input-component ${className}`}>
 		<input type="radio" name={name} value={value} checked={checked} onChange={onChange} />
 		<span className={`styled-radio ${reversed ? 'reversed' : ''}`} />
 		{label}

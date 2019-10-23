@@ -22,6 +22,7 @@
               ["@Components", "./src/components"],
               ["@Assets", "./src/assets"],
               ["@Pages", "./src/pages"],
+              ["@Services", "./src/services"],
               ["@Root", "./src"]
             ]
           }

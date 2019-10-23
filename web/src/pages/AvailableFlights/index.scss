@@ -6,38 +6,8 @@ div#available-flights-page{
         @include dashboard-title;
     }
 
-
-    .available-flights-list-header{
-
+    .available-flights-selector{
         margin-top: 48px;
-        margin-bottom: 40px;
-
-        h2{
-            margin: 0;
-            vertical-align: middle;
-        }
-
-        .available-flights-list-arrows{
-            display: inline-block;
-            position: relative;
-            vertical-align: middle;
-            top: 2px;
-            height: 100%;
-            margin-left: 24px;
-    
-            .available-flights-arrow{
-                width: 48px;
-                fill: fade-out($secondary-color, 0.4%);
-                color: fade-out($secondary-color, 0.4%);
-                transition: color 0.15s ease-out, fill 0.15s ease-out;
-                cursor: pointer;
-
-                &:hover{
-                    fill: $secondary-color;
-                    color: $secondary-color;
-                }
-            }
-        }
     }
 
 

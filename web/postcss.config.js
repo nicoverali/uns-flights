@@ -1,7 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-extraneous-dependencies */
 if (process.env.NODE_ENV === 'production') {
-
 	module.exports = {
 		plugins: [
 			require('autoprefixer'),
@@ -9,5 +8,4 @@ if (process.env.NODE_ENV === 'production') {
 			// More postCSS modules here if needed
 		],
 	};
-
 }

@@ -4,7 +4,7 @@
     See: https://github.com/moroshko/react-autosuggest
 */
 
-fieldset.location-fieldset-component{
+div.location-input-component{
     display: inline-block;
     border: none;
     padding: 0;
@@ -12,7 +12,6 @@ fieldset.location-fieldset-component{
     .react-autosuggest__container{
         display: inline-block;
         position: relative;
-        margin-right: 64px;
         max-width: 224px;
         min-width: 212px;
     }

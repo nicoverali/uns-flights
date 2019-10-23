@@ -1,0 +1,59 @@
+.flight-selector-component{
+
+    .flight-selector-header{
+
+        display: flex;
+
+        h2{
+            @include dashboard-title;
+        }
+
+        .flight-selector-arrow-container{
+            margin-left: auto;
+
+            svg{
+                width: 64px;
+                color: $dark-details-color;
+                fill: $dark-details-color;
+                cursor: pointer;
+
+                &.hide{
+                    cursor: default;
+                    color: lighten($dark-details-color, 30);
+                    fill: lighten($dark-details-color, 30);
+                }
+            }
+        }
+    }
+
+    .flight-selector-flights-container{
+        position: relative;
+        box-sizing: content-box;
+        margin-left: -48px;
+        margin-right: -48px;
+        padding-left: 48px;
+        padding-right: 48px;
+        width: 200%;
+        left: 0px;
+        transition: left 0.3s ease-in-out;
+
+        &.show-return{
+            left: calc(-100% - 48px);
+        }
+
+        .flight-selector-list{
+
+            display: inline-block;
+            vertical-align: top;
+            width: calc(50% + 10px);
+
+
+            &:nth-child(2){
+                position: relative;
+                left: 48px;
+            }
+        }
+
+    }
+
+}

@@ -1,14 +1,17 @@
-fieldset.dates-fieldset-component{
+div.dates-fieldset-component{
     border: none;
     display: inline-block;
     position: relative;
     padding: 0;
 
     .date-text-input{
-        margin-right: 64px;
         max-width: 160px;
         min-width: 144px;
         
+        &:first-child{
+            margin-right: 32px;
+        }
+
         &:focus-within ~ .DayPicker{
             visibility: visible;
         }

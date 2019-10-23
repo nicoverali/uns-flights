@@ -1,12 +1,15 @@
 import './index.scss';
 import React from 'react';
-import PrimaryButton from '@Components/PrimaryButton';
-import SearchIcon from '@Assets/icons/search.svg';
-import { getAvailableFlightsFor, formatDate } from './AvailableFlightsQueries';
 
-import RadioInput from './RadioInput';
-import LocationFieldset from './LocationFieldset';
-import DatesFieldset from './DatesFieldset';
+import PrimaryButton from '@Components/PrimaryButton';
+import RadioInput from '@Components/RadioInput';
+
+import SearchIcon from '@Assets/icons/search.svg';
+import AirplaneTakeoffIcon from '@Assets/icons/airplane-takeoff.svg';
+import AirplaneLandingIcon from '@Assets/icons/airplane-landing.svg';
+
+import LocationInput from './LocationInput';
+import DatesInputs from './DatesInputs';
 
 export default class FlightSearchForm extends React.Component {
 
@@ -15,10 +18,18 @@ export default class FlightSearchForm extends React.Component {
 		super(props);
 		this.state = {
 			isRoundTrip: false,
-			fromLocation: '',
-			toLocation: '',
-			departureDate: undefined,
-			returnDate: undefined,
+			departure: {
+				showLocationError: false,
+				showDateError: false,
+				location: '',
+				date: undefined,
+			},
+			returnn: {
+				showLocationError: false,
+				showDateError: false,
+				location: '',
+				date: undefined,
+			},
 		};
 
 	}
@@ -31,54 +42,69 @@ export default class FlightSearchForm extends React.Component {
 
 	};
 
-	handleFromLocationChange = (fromLocation) => {
+	handleDepartureLocationChange = (departureLocation) => {
 
-		this.setState({ fromLocation });
-
-	};
-
-	handleToLocationChange = (toLocation) => {
-
-		this.setState({ toLocation });
-
-	};
-
-	handleDepartureUpdate = (departureDate) => {
-
-		this.setState({ departureDate });
+		this.setState((prevState) => ({
+			departure: {
+				...prevState.departure,
+				location: departureLocation,
+				showLocationError: false,
+			},
+		}));
 
 	};
 
-	handleReturnUpdate = (returnDate) => {
+	handleReturnLocationChange = (returnLocation) => {
 
-		this.setState({ returnDate });
+		this.setState((prevState) => ({
+			returnn: {
+				...prevState.returnn,
+				location: returnLocation,
+				showLocationError: false,
+			},
+		}));
+
+	};
+
+	handleDepartureDateChange = (departureDate) => {
+
+		this.setState((prevState) => ({
+			departure: {
+				...prevState.departure,
+				date: departureDate,
+				showDateError: false,
+			},
+		}));
+
+	};
+
+	handleReturnDateChange = (returnDate) => {
+
+		this.setState((prevState) => ({
+			returnn: {
+				...prevState.returnn,
+				date: returnDate,
+				showDateError: false,
+			},
+		}));
 
 	};
 
 	handleFlightSearchSubmit = (event) => {
 
 		event.preventDefault();
-		if (this.props.onAvailableFlights != null && this.checkStateIsValid) {
+		if (this.props.onFlightsSearchSubmit != null && this.checkStateIsValid()) {
 
-			const fromLocation = this.state.fromLocation.split(',')[0].trim();
-			const toLocation = this.state.toLocation.split(',')[0].trim();
-			const date = formatDate(this.state.departureDate);
-			if (!this.state.isRoundTrip) {
-
-				getAvailableFlightsFor(fromLocation, toLocation, date)
-					.then((flights) => this.props.onAvailableFlights([flights, undefined]));
-
-			} else {
-
-				getAvailableFlightsFor(fromLocation, toLocation, date).then((goFlights) => {
-
-					const returnDate = formatDate(this.state.returnDate);
-					getAvailableFlightsFor(toLocation, fromLocation, returnDate)
-						.then((backFligts) => this.props.onAvailableFlights([goFlights, backFligts]));
-
-				});
-
-			}
+			const { isRoundTrip, departure, returnn } = this.state;
+			const { location: depLocation, date: depDate } = departure;
+			const { location: retLocation, date: retDate } = returnn;
+			this.props.onFlightsSearchSubmit(
+				isRoundTrip,
+				depLocation,
+				depDate,
+				retLocation,
+				retDate,
+			);
 
 		}
 
@@ -86,27 +112,46 @@ export default class FlightSearchForm extends React.Component {
 
 	checkStateIsValid() {
 
-		const { state } = this;
-		if (state.fromLocation === '' || state.toLocation === '') {
+		const { isRoundTrip, departure, returnn } = this.state;
 
-			return false;
+		const departureLocationError = departure.location === '';
+		const departureDateError = departure.date === undefined;
 
-		}
-		if (state.isRoundTrip) {
+		const returnLocationError = returnn.location === '';
+		const returnDateError = isRoundTrip && returnn.date === undefined;
 
-			return state.departureDate != null && state.returnDate != null;
+		this.setState((prevState) => ({
+			departure: {
+				...prevState.departure,
+				showLocationError: departureLocationError,
+				showDateError: departureDateError,
+			},
+			returnn: {
+				...prevState.returnn,
+				showLocationError: returnLocationError,
+				showDateError: returnDateError,
+			},
+		}));
 
-		}
-
-		return state.departureDate != null;
+		return (
+			!departureLocationError
+			&& !departureDateError
+			&& !returnLocationError
+			&& !returnDateError
+		);
 
 	}
 
 	render() {
 
+		const { isRoundTrip, departure, returnn } = this.state;
+		const { locations } = this.props;
+
+		const departureErrorMsg = departure.showLocationError ? 'Ingresa un origen' : '';
+		const returnErrorMsg = returnn.showLocationError ? 'Ingresa un destino' : '';
+
 		return (
 			<div className={`flight-search-form-component ${this.props.className || ''}`}>
-				<p>{JSON.stringify(this.state.departureFlights)}</p>
 				<form onSubmit={this.handleFlightSearchSubmit}>
 					<fieldset className="flight-search-type-fieldset">
 						<RadioInput
@@ -114,34 +159,46 @@ export default class FlightSearchForm extends React.Component {
 							label="Solo ida"
 							value="one-way"
 							onChange={this.handleSearchTypeChange}
-							checked={!this.state.isRoundTrip}
+							checked={!isRoundTrip}
 						/>
 						<RadioInput
 							name="search-type"
 							label="Ida y vuelta"
 							value="round-trip"
 							onChange={this.handleSearchTypeChange}
-							checked={this.state.isRoundTrip}
+							checked={isRoundTrip}
 						/>
 					</fieldset>
 
-					<div className="flight-search-bottom-fieldsets">
-						<LocationFieldset
-							onFromLocationChange={this.handleFromLocationChange}
-							onToLocationChange={this.handleToLocationChange}
+					<fieldset className="flight-search-input-fieldsets">
+						<LocationInput
+							className="flight-search-input"
+							locations={locations}
+							Icon={AirplaneTakeoffIcon}
+							label="Origen"
+							errorMsg={departureErrorMsg}
+							onLocationChange={this.handleDepartureLocationChange}
 						/>
-						<DatesFieldset
-							className="flight-search-dates-fieldset"
-							willReturn={this.state.isRoundTrip}
-							onDepartureUpdate={this.handleDepartureUpdate}
-							onReturnUpdate={this.handleReturnUpdate}
+						<LocationInput
+							className="flight-search-input"
+							locations={locations}
+							Icon={AirplaneLandingIcon}
+							label="Destino"
+							errorMsg={returnErrorMsg}
+							onLocationChange={this.handleReturnLocationChange}
 						/>
-					</div>
-
-					<PrimaryButton type="submit" className="flight-search-button">
-						<SearchIcon />
-						BUSCAR
-					</PrimaryButton>
+						<DatesInputs
+							className="flight-search-input"
+							willReturn={isRoundTrip}
+							isOnErrorState={departure.showDateError || returnn.showDateError}
+							onDepartureUpdate={this.handleDepartureDateChange}
+							onReturnUpdate={this.handleReturnDateChange}
+						/>
+						<PrimaryButton type="submit" className="flight-search-button">
+							<SearchIcon />
+							BUSCAR
+						</PrimaryButton>
+					</fieldset>
 				</form>
 			</div>
 		);

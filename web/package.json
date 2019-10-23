@@ -1,13 +1,13 @@
 {
   "name": "uns-flights-web-app",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "UNS Flights web app",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve:dev": "webpack-dev-server --open",
     "build": "webpack --config webpack.config.js",
-    "prettier": "prettier --config .prettierrc --write src/**/*.js",
+    "prettier": "prettier --config .prettierrc --write '{,!(node_modules)/**/}*.js'",
     "lint": "eslint --fix --ext .js --ext .jsx ."
   },
   "author": "",

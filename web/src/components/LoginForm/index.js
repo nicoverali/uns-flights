@@ -101,7 +101,7 @@ export default class LoginForm extends React.Component {
 	render() {
 
 		const empIdInputClass = this.state.isAdmin ? 'hide' : '';
-		const submitButtonContent = this.getFormButtonContent(this.state.isLoading);
+		const submitButtonContent = LoginForm.getFormButtonContent(this.state.isLoading);
 
 		let redirection = '';
 		if (this.state.isLoggedIn) {

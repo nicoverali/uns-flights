@@ -9,7 +9,7 @@ const Login = () => (
 		<BrandLogo className="logo" horizontal />
 		<div className="content">
 			<LoginForm className="login-form" />
-			<p className="app-version">V 1.0.0</p>
+			<p className="app-version">V 1.0.2</p>
 		</div>
 		<div className="circle-decoration">
 			<AirplaneIcon />

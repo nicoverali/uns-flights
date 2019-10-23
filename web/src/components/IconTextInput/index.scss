@@ -11,6 +11,33 @@ $icon-width: 16px;
 div.icon-text-input-component{
     position: relative;
     display: inline-block;
+
+    .icon-text-input-error-msg{
+        position: absolute;
+        right: 0;
+        bottom: calc(100% - 16px);
+        padding: 8px 16px;
+        background-color: $error-color;
+
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0,0,0, .10);
+
+        font-family: $body-font;
+        font-size: $caption-size;
+        color: white;
+
+        &::after{
+            content: '';
+            position: absolute;
+            top: auto;
+            right: 7px;
+            bottom: -16px;
+            left: auto;
+            border: 8px solid;
+            border-color: $error-color transparent transparent;
+        }
+
+    }
     
     label{
         font-family: $body-font;
@@ -47,6 +74,8 @@ div.icon-text-input-component{
         }
 
         &:disabled{
+            cursor: default;
+            background-color: $input-border-color;
             opacity: 0.4;
         }
 

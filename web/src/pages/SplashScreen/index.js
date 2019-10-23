@@ -45,7 +45,7 @@ export default class SplashScreen extends React.Component {
 
 	render() {
 
-		const redirect = this.state.loading ? '' : <Redirect to="/dashboard?isAdmin=true" />;
+		const redirect = this.state.loading ? '' : <Redirect to="/login" />;
 
 		return (
 			<div id="splash-screen-page">

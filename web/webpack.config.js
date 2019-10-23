@@ -9,7 +9,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Main configuration object. Determines Webpack behavior
 module.exports = {
-
 	// Path to entry point. Webpack will begin here
 	entry: './src/index.js',
 
@@ -25,6 +24,7 @@ module.exports = {
 			'@Assets': path.resolve(__dirname, 'src/assets/'),
 			'@Components': path.resolve(__dirname, 'src/components/'),
 			'@Pages': path.resolve(__dirname, 'src/pages/'),
+			'@Services': path.resolve(__dirname, 'src/services'),
 			'@Root': path.resolve(__dirname, 'src'),
 		},
 	},
@@ -50,8 +50,7 @@ module.exports = {
 								'@babel/preset-env',
 								'@babel/preset-react',
 								{
-									plugins:
-                    ['@babel/plugin-proposal-class-properties', 'emotion'],
+									plugins: ['@babel/plugin-proposal-class-properties', 'emotion'],
 								},
 							],
 						},
@@ -133,7 +132,5 @@ module.exports = {
 		}),
 	],
 
-
 	mode: 'development',
-
 };

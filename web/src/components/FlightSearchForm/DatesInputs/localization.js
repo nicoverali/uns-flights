@@ -1,4 +1,4 @@
-const es = {
+const langEsp = {
 	months: [
 		'Enero',
 		'Febrero',
@@ -17,4 +17,4 @@ const es = {
 	weekdaysShort: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
 };
 
-export default es;
+export default langEsp;

@@ -6,6 +6,7 @@ div#dashboard-page{
         display: inline-block;
         position: fixed;
         top: 0;
+        z-index: 1;
 
         min-width: $dashboard-sidebar-min-width;
         width: $dashboard-sidebar-width;
@@ -17,6 +18,7 @@ div#dashboard-page{
         float: right;
         padding: $app-padding-top 48px 0 48px;
         background-color: $background-color;
+        overflow-x: hidden;
 
         max-width: calc(100% - #{$dashboard-sidebar-min-width});
         width: calc(100% - #{$dashboard-sidebar-width});

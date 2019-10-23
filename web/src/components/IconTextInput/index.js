@@ -3,24 +3,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const IconTextInput = ({
-
 	id,
 	className,
 	placeholder,
 	error,
+	errorMsg,
 	disabled,
 	valid,
 	readOnly,
 	onChange,
 	onFocus,
+	onBlur,
 	name,
 	label,
 	value,
-	icon,
-
+	Icon,
 }) => {
-
-	const reactIcon = <div className="icon-container">{React.createElement(icon)}</div>;
 
 	let inputClassNames = '';
 	if (error) inputClassNames += 'icon-text-input-error';
@@ -28,6 +26,9 @@ const IconTextInput = ({
 
 	return (
 		<div className={`icon-text-input-component ${className}`}>
+			{errorMsg !== '' && errorMsg !== undefined && (
+				<div className="icon-text-input-error-msg">{errorMsg}</div>
+			)}
 			<label htmlFor={name}>{label}</label>
 			<input
 				id={id}
@@ -38,10 +39,13 @@ const IconTextInput = ({
 				value={value}
 				onChange={onChange}
 				onFocus={onFocus}
+				onBlur={onBlur}
 				readOnly={readOnly}
 				disabled={disabled}
 			/>
-			{reactIcon}
+			<div className="icon-container">
+				<Icon />
+			</div>
 		</div>
 	);
 
@@ -52,11 +56,13 @@ IconTextInput.defaultProps = {
 	className: '',
 	placeholder: '',
 	error: false,
+	errorMsg: '',
 	disabled: false,
 	valid: false,
 	readOnly: false,
 	onChange: () => {},
 	onFocus: () => {},
+	onBlur: () => {},
 };
 
 IconTextInput.propTypes = {
@@ -64,16 +70,18 @@ IconTextInput.propTypes = {
 	className: PropTypes.string,
 	placeholder: PropTypes.string,
 	error: PropTypes.bool,
+	errorMsg: PropTypes.string,
 	disabled: PropTypes.bool,
 	valid: PropTypes.bool,
 	readOnly: PropTypes.bool,
 	onChange: PropTypes.func,
 	onFocus: PropTypes.func,
+	onBlur: PropTypes.func,
 
 	name: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired,
-	icon: PropTypes.element.isRequired,
+	Icon: PropTypes.func.isRequired,
 };
 
 export default IconTextInput;
