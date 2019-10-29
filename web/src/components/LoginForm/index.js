@@ -1,84 +1,158 @@
 import './index.scss';
 import React from 'react';
-import UserIcon from '@Assets/icons/account-circle.svg';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { store } from 'react-notifications-component';
 
-import TextInput from './TextInput';
+import UserIcon from '@Assets/icons/account-circle.svg';
 import PrimaryButton from '@Components/PrimaryButton';
 import BeatLoader from 'react-spinners/BeatLoader';
+import TextInput from './TextInput';
 
-export default class LoginForm extends React.Component{
+import { loginAsAdmin, loginAsEmployee } from './LoginHandler';
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-            isAdmin: false, 
-            empId: '', 
-            password:''
-        };
-    }
+export default class LoginForm extends React.Component {
 
-    handleEmpIdChange = event => {
-        const BACKSPACE = 8;
-        let input = event.target.value;
-        // Accept only numbers or delete
-        if(!isNaN(input) || event.keyCode===BACKSPACE){
-            this.setState({empId: event.target.value});
-        }
-    }
+	constructor(props) {
 
-    handlePasswordChange = event => {
-        this.setState({password: event.target.value});
-    }
+		super(props);
+		this.state = {
+			isLoggedIn: false,
+			isLoading: false,
+			isAdmin: false,
+			empId: '',
+			password: '',
+		};
 
-    handleLoginModeChange = event => {
-        this.setState({isAdmin: !this.state.isAdmin, empId: '', password: ''});
-    }
+	}
 
-    handleLogin = event => {
-        event.preventDefault();
-        this.setState({isLoading: true});
-    }
+	static getFormButtonContent(isLoading) {
 
-    getFormButtonContent(isLoading){
-        if(isLoading){
-            return (<BeatLoader size={8} color={'#FFF'}/>);
-        }
-        return 'INGRESAR';
-    }
+		if (isLoading) {
 
-    render(){
-        let empIdInputClass = this.state.isAdmin ? 'hide' : '';
-        let submitButtonContent = this.getFormButtonContent(this.state.isLoading);
+			return <BeatLoader size={8} color="#FFF" />;
 
-        return (
-            <div {...this.props} className={`login-form-component ${this.props.className||''}`} >
-                <UserIcon className="user-icon"/> 
+		}
+		return 'INGRESAR';
 
-                <h3 className="user">{this.state.isAdmin ? 'Administrador' : 'Empleado'}</h3>
+	}
 
-                <form onSubmit={this.handleLogin}>
-                    <fieldset className="form-input-container">
-                        <TextInput className={empIdInputClass} 
-                            label="Nº Legajo" 
-                            value={this.state.empId} 
-                            onChange={this.handleEmpIdChange}/>
-                        <TextInput label="Contraseña" 
-                            value={this.state.password} 
-                            onChange={this.handlePasswordChange} 
-                            password/>
-                    </fieldset>
+	handleEmpIdChange = (event) => {
 
-                    <PrimaryButton type="submit" className="submit-button">
-                        {submitButtonContent}
-                    </PrimaryButton>
-                </form>
+		const BACKSPACE = 8;
+		const input = event.target.value;
+		// Accept only numbers or delete
+		// eslint-disable-next-line no-restricted-globals
+		if (!isNaN(input) || event.keyCode === BACKSPACE) {
 
-                <a onClick={this.handleLoginModeChange}>
-                    {`Ingresar como ${this.state.isAdmin ? 'empleado' : 'administrador'}`}
-                </a>
-            </div>
-        );
-    }    
+			this.setState({ empId: event.target.value });
+
+		}
+
+	};
+
+	handlePasswordChange = (event) => {
+
+		this.setState({ password: event.target.value });
+
+	};
+
+	handleLoginModeChange = () => {
+
+		this.setState((prevState) => ({ isAdmin: !prevState.isAdmin, empId: '', password: '' }));
+
+	};
+
+	handleLogin = (event) => {
+
+		event.preventDefault();
+		this.setState({ isLoading: true });
+		const loginPromise = this.state.isAdmin
+			? loginAsAdmin(this.state.password)
+			: loginAsEmployee(this.state.empId, this.state.password);
+
+		loginPromise
+			.then(() => {
+
+				this.setState({ isLoggedIn: true });
+
+			})
+			.catch(() => {
+
+				store.addNotification({
+					title: 'Error',
+					message: 'Verificar los datos ingresados.',
+					type: 'danger',
+					insert: 'bottom',
+					container: 'bottom-right',
+					animationIn: ['animated', 'fadeIn'],
+					animationOut: ['animated', 'fadeOut'],
+					dismiss: {
+						duration: 5000,
+						onScreen: true,
+					},
+				});
+				this.setState({ isLoading: false });
+
+			});
+
+	};
+
+	render() {
+
+		const empIdInputClass = this.state.isAdmin ? 'hide' : '';
+		const submitButtonContent = LoginForm.getFormButtonContent(this.state.isLoading);
+
+		let redirection = '';
+		if (this.state.isLoggedIn) {
+
+			redirection = <Redirect to={`/dashboard?isAdmin=${this.state.isAdmin}`} />;
+
+		}
+
+		return (
+			<div className={`login-form-component ${this.props.className}`}>
+				{redirection}
+				<UserIcon className="user-icon" />
+
+				<h3 className="user">{this.state.isAdmin ? 'Administrador' : 'Empleado'}</h3>
+
+				<form onSubmit={this.handleLogin}>
+					<fieldset className="form-input-container">
+						<TextInput
+							className={empIdInputClass}
+							label="Nº Legajo"
+							value={this.state.empId}
+							onChange={this.handleEmpIdChange}
+						/>
+						<TextInput
+							label="Contraseña"
+							value={this.state.password}
+							onChange={this.handlePasswordChange}
+							isPassword
+						/>
+					</fieldset>
+
+					<PrimaryButton type="submit" className="submit-button">
+						{submitButtonContent}
+					</PrimaryButton>
+				</form>
+
+				<button
+					className="login-as-admin"
+					type="button"
+					onClick={this.handleLoginModeChange}
+					onKeyPress={this.handleLoginModeChange}
+				>
+					{`Ingresar como ${this.state.isAdmin ? 'empleado' : 'administrador'}`}
+				</button>
+			</div>
+		);
+
+	}
 
 }
+
+LoginForm.defaultProps = { className: '' };
+
+LoginForm.propTypes = { className: PropTypes.string };

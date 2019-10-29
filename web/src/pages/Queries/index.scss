@@ -4,90 +4,92 @@ div#queries-page{
 
     h2{
         @include dashboard-title;
-
-        &:not(:first-child){
-            margin-top: 48px;
-        }
     }
 
-    textarea.queries-textarea{
+    h2.queries-bottom-header{
+        margin-top: 48px;
+    }
+
+    div.queries-container{
         display: block;
-        resize: none;
-        width: 100%;
-        min-height: 160px;
-        height: 20vh;
         padding: 48px;
-        border: 1px solid $input-border-color;
-        border-radius: $dashboard-components-border-radius;
-        box-shadow: $dashboard-components-shadow;
-
-        font-family: $body-font;
-        font-size: $body-size;
-        font-weight: 500;
-        color: $secondary-color;
-
-        transition: all 0.2s ease-in-out;
-
-        &:focus{
-            border: 2px solid $primary-color;
-        }
-
-        &.icon-text-input-error{
-            border: 2px solid $error-color;
-        }
-    }
-
-    .queries-table-wrapper{
         background-color: $light-background;
-        padding: 0 48px;
-        border-radius: $dashboard-components-border-radius;
         box-shadow: $dashboard-components-shadow;
+        border-radius: $dashboard-components-border-radius;
 
-        
-        // The following class names were extracted from the ReactDataTable GitHub repository
-        // See: https://github.com/jbetancur/react-data-table-component
-        .rdt_Table{
 
-            .rdt_TableHead{
-                .rdt_TableCol_Sortable{
-                    font-family: $title-font;
-                    font-size: $body-size;
-                    font-weight: 600;
-                    color: $secondary-color;
-
-                    span{
-                        color: fade-out($primary-color, 0.5%);
-
-                        &:hover{
-                            color: $primary-color;
-                        }
-                    }
-                }
-            }
-
-            .rdt_TableRow{
-                .rdt_TableCell{
-                    font-family: $body-font;
-                    font-size: $caption-size;
-                    font-weight: 400;
-                    color: darken($dark-details-color, 2%);
-                }
-            }
-
-            
-        }
-        .rdt_TableFooter{
+        textarea.queries-textarea{
+            display: block;
+            resize: none;
+            width: 100%;
+            min-height: 160px;
+            height: 20vh;
+            padding: 24px;
+            border: 1px solid $input-border-color;
+            border-radius: $dashboard-components-border-radius;
+    
             font-family: $body-font;
-            
-            span{
-                color: $secondary-color;
+            font-size: $body-size;
+            font-weight: 500;
+            color: $secondary-color;
+    
+            transition: all 0.2s ease-in-out;
+    
+            &:focus{
+                border: 2px solid $primary-color;
+            }
+    
+            &.icon-text-input-error{
+                border: 2px solid $error-color;
+            }
+        }
+
+        .queries-result-box{
+            display: inline-block;
+            height: 52px;
+            width: 80%;
+            margin: 24px 0 0 0;
+            padding: 0 24px;
+            border-radius: $dashboard-components-border-radius;
+            border: 1px solid $input-border-color;
+            line-height: 48px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            font-family: $body-font;
+            font-size: $body-size;
+            color: $dark-details-color;
+        }
+
+        .queries-submit-button{
+            float: right;
+            margin-top: 24px;
+            margin-left: auto;
+        }
+    }
+}
+
+@media (max-width: 1300px) {
+    div#queries-page{
+        div.queries-container{
+            position: relative;
+
+            .queries-result-box{
+                height: inherit;
+                max-height: 52px*2;
+                width: 60%;
+                line-height: 48px;
+                overflow: hidden;
+                white-space: normal;
             }
 
-            svg{
-                fill: $dark-details-color;
-                color: $dark-details-color;
+            .queries-submit-button{
+                position: absolute;
+                margin: 48px;
+                right: 0;
+                bottom: 0;
             }
         }
     }
-
 }

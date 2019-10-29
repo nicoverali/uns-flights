@@ -1,0 +1,35 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["eslint:recommended", "airbnb"],
+    "rules": { 
+            "padded-blocks": ["error", "always"],
+            "max-len": [1],
+            "object-curly-newline": ["error", { "multiline": true }],
+            "react/jsx-filename-extension": [0],
+            "react/jsx-indent": [2, "tab"],
+            "react/jsx-indent-props": [2, "tab"],
+            "react/destructuring-assignment": [0, "never"],
+            "indent": [2, "tab"],
+            "no-plusplus": [0, { "allowForLoopAfterthoughts": true }],
+            "react/prop-types": [2, {"skipUndeclared": true}],
+            "no-tabs": [0, { "allowIndentationTabs": true }],
+            "no-mixed-spaces-and-tabs": ["error", "smart-tabs"]
+    },
+    "settings": {
+        "import/resolver": {
+          "alias": {
+            "map": [
+              ["@Components", "./src/components"],
+              ["@Assets", "./src/assets"],
+              ["@Pages", "./src/pages"],
+              ["@Services", "./src/services"],
+              ["@Root", "./src"]
+            ]
+          }
+        }
+    },
+    "env": {
+        "browser": true
+    }
+
+}

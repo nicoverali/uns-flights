@@ -2,50 +2,51 @@ div.brand-logo-component{
     display: inline-block;
     text-align: center;
 
-    >img{
+    img{
+        vertical-align: middle;
+    }
+
+    h1{
+        display: block;
+        font-family: $brand-font;
+        color: #6E647C;
+        text-transform: uppercase;
+        
+        &.horizontal{
+            display: inline;
+            vertical-align: middle;
+            margin: 0 20px;
+        }
+    }
+
+    &.small img{
         width: 64px;
         height: 64px;
-        vertical-align: middle;
     }
 
-    >h1{
-        display: block;
+    &.small h1{
         margin: 20px auto 0 auto;
-        font-family: $brand-font;
         font-size: 20px;
-        color: #6E647C;
         letter-spacing: 4.4px;
-        text-transform: uppercase;
-    }
 
-    >h1.horizontal{
-        display: inline;
-        vertical-align: middle;
-        margin: 0 20px;
-    }
-
-    &.small{
-        >img{
-            width: 64px;
-            height: 64px;
+        &.horizontal{
+            margin: 0 20px;
         }
 
-        >h1{
-            font-size: 20px
-        }
     }
 
-    &.big{
-        >img{
-            width: 240px;
-            height: 240px;
-        }
-
-        >h1{
-            font-size: 36px;
-            margin: 36px auto 0 auto;
-            letter-spacing: 8px;
-        }
+    &.big img{
+        width: 200px;
+        height: 200px;
     }
 
+    &.big h1{
+        font-size: $h1-size;
+        margin: 32px auto 0 auto;
+        letter-spacing: 8px;
+
+        &.horizontal{
+            margin: 0 40px;
+        }
+    }
 }

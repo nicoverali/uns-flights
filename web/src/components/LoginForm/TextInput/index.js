@@ -1,17 +1,35 @@
 import './index.scss';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const TextInput = (props) => {
-    let type = 'text';
-    if(props.password){
-        type = 'password';
-    }
-    return (
-        <div {...props} className={`text-input-component ${props.className||''}`}>
-            <label>{props.label}</label>
-            <input type={type} value={props.value} onChange={props.onChange}/>
-        </div>
-    );
-}
+const TextInput = ({ className, label, value, isPassword, onChange }) => {
+
+	let type = 'text';
+	if (isPassword) {
+
+		type = 'password';
+
+	}
+	return (
+		<div className={`text-input-component ${className}`}>
+			<label htmlFor="text-input">{label}</label>
+			<input name="text-input" type={type} value={value} onChange={onChange} />
+		</div>
+	);
+
+};
+
+TextInput.defaultProps = {
+	className: '',
+	isPassword: false,
+};
+
+TextInput.propTypes = {
+	className: PropTypes.string,
+	isPassword: PropTypes.bool,
+	label: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired,
+	onChange: PropTypes.func.isRequired,
+};
 
 export default TextInput;

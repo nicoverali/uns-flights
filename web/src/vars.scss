@@ -1,7 +1,7 @@
 /** Color */
 $primary-color: #665EFF;
-$secondary-color: #454F63;
-$light-background: #F7F7F7;
+$secondary-color: #454f63;
+$light-background: #FAFAFA;
 $background-color: #F0F2F4;
 $dark-details-color: #78849E;
 $error-color: #ed462f;
@@ -41,4 +41,12 @@ $dashboard-components-shadow: 0px 3px 6px #0000001A;
         color: $secondary-color;
         margin-top: 0;
         margin-bottom: 40px;
+}
+
+/** Exports to JS */
+:export{
+        primaryColor: $primary-color;
+        secondaryColor: $secondary-color;
+        backgroundColor: $background-color;
+        lightBackgroundColor: $light-background;
 }

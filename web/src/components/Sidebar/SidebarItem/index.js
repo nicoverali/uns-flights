@@ -1,28 +1,31 @@
 import './index.scss';
 import React from 'react';
-import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const SidebarItem = ({linkTo, active, ...props}) => {
-    let className = `side-bar-item-component ${props.className || ''} ${active ? 'active' : ''}`;
-    let item;
+const SidebarItem = ({ className, linkTo, active, label, onClick }) => {
 
-    if(linkTo != null){
-        item =  (
-            <Link {...props} to={linkTo} className={className}>
-                {props.label}
-            </Link>
-        )
-    }
-    else{
-        item = (
-            <a {...props} className={className}>
-                {props.label}
-            </a>
-        )
-    }
+	const linkClasses = `side-bar-item-component ${className} ${active ? 'active' : ''}`;
+	return (
+		<Link onClick={onClick} to={linkTo} className={linkClasses}>
+			{label}
+		</Link>
+	);
 
-    return item;
+};
 
-}
+SidebarItem.defaultProps = {
+	className: '',
+	active: false,
+	onClick: () => {},
+};
+
+SidebarItem.propTypes = {
+	className: PropTypes.string,
+	linkTo: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired,
+	active: PropTypes.bool,
+	onClick: PropTypes.func,
+};
 
 export default SidebarItem;
