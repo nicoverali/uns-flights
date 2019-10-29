@@ -14,7 +14,7 @@ export default class FlightsList extends React.Component {
 
 	componentDidUpdate(prevProps) {
 
-		if (prevProps !== this.props) {
+		if (prevProps.flight !== this.props.flight) {
 
 			// eslint-disable-next-line react/no-did-update-set-state
 			this.setState({ openFlight: -1 });
@@ -25,29 +25,28 @@ export default class FlightsList extends React.Component {
 
 	handleShowClasses = (flightKey) => {
 
-		this.setState({ openFlight: flightKey });
+		this.setState(({ openFlight }) => ({ openFlight: openFlight === flightKey ? -1 : flightKey }));
 
 	};
 
 	render() {
 
-		const { className, flights } = this.props;
-		const reactFlights = [];
-		for (let i = 0; i < flights.length; i++) {
+		const { className, flights, onFlightSelected } = this.props;
+		const { openFlight } = this.state;
+		const reactFlights = flights.map((flight, index) => (
 
-			const flight = flights[i];
-			reactFlights[i] = (
-				<Flight
-					key={i}
-					className="flights-list-item"
-					flight={flight.flight}
-					classes={flight.classes}
-					onShowClasses={() => this.handleShowClasses(i)}
-					showClasses={i === this.state.openFlight}
-				/>
-			);
+			<Flight
+				// eslint-disable-next-line react/no-array-index-key
+				key={index}
+				className="flights-list-item"
+				flight={flight.flight}
+				classes={flight.classes}
+				onShowClasses={() => this.handleShowClasses(index)}
+				onSelected={onFlightSelected}
+				showClasses={index === openFlight}
+			/>
 
-		}
+		));
 
 		return <div className={`flights-list-component ${className}`}>{reactFlights}</div>;
 
@@ -55,10 +54,11 @@ export default class FlightsList extends React.Component {
 
 }
 
-FlightsList.defaultProps = { className: '' };
+FlightsList.defaultProps = { className: '', onFlightSelected: () => {} };
 
 FlightsList.propTypes = {
 	className: PropTypes.string,
+	onFlightSelected: PropTypes.func,
 	flights: PropTypes.arrayOf(
 		PropTypes.shape({
 			flight: PropTypes.shape({

@@ -12,311 +12,311 @@ import FlightSelector from '@Components/FlightSelector';
 import AirplaneOffIcon from '@Assets/icons/airplane-off.svg';
 
 // TODO delete this
-// const departureTest = [
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// ];
+const departureTest = [
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+];
 
-// const returnTest = [
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// 	{
-// 		flight: {
-// 			hora_sale: '8:00:00',
-// 			a1_codigo: 'BCN',
-// 			a1_nombre: 'Barcelona Airport',
-// 			hora_llega: '15:00:00',
-// 			a2_codigo: 'MIA',
-// 			a2_nombre: 'Miami Airport',
-// 			nro_vuelo: 'BC1',
-// 			modelo_avion: 'Boing 777',
-// 			tiempo_estimado: '6:00:00',
-// 		},
-// 		classes: [
-// 			{
-// 				clase: 'Turista',
-// 				asientos_disponibles: '5',
-// 				precio: '3500',
-// 			},
-// 			{
-// 				clase: 'Segunda',
-// 				asientos_disponibles: '54',
-// 				precio: '5000',
-// 			},
-// 			{
-// 				clase: 'Primera',
-// 				asientos_disponibles: '511',
-// 				precio: '8500',
-// 			},
-// 		],
-// 	},
-// ];
+const returnTest = [
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+	{
+		flight: {
+			hora_sale: '8:00:00',
+			a1_codigo: 'BCN',
+			a1_nombre: 'Barcelona Airport',
+			hora_llega: '15:00:00',
+			a2_codigo: 'MIA',
+			a2_nombre: 'Miami Airport',
+			nro_vuelo: 'BC1',
+			modelo_avion: 'Boing 777',
+			tiempo_estimado: '6:00:00',
+		},
+		classes: [
+			{
+				clase: 'Turista',
+				asientos_disponibles: '5',
+				precio: '3500',
+			},
+			{
+				clase: 'Segunda',
+				asientos_disponibles: '54',
+				precio: '5000',
+			},
+			{
+				clase: 'Primera',
+				asientos_disponibles: '511',
+				precio: '8500',
+			},
+		],
+	},
+];
 
 export default class AvailableFlights extends React.Component {
 
@@ -326,8 +326,7 @@ export default class AvailableFlights extends React.Component {
 		this.state = {
 			locations: [],
 			isRoundTrip: false,
-			availableFlights: undefined,
-			showingReturnFlights: false,
+			availableFlights: [departureTest, returnTest], // undefined,
 		};
 
 	}
@@ -358,11 +357,13 @@ export default class AvailableFlights extends React.Component {
 
 	};
 
-	handleArrowsClick = () => {
+	handleDepartureFlightSelected = (flight) => {
+		console.log("Se selecciono origen: ");console.log(JSON.stringify(flight))
+	}
 
-		this.setState((prevState) => ({ showingReturnFlights: !prevState.showingReturnFlights }));
-
-	};
+	handleReturnFlightSelected = (flight) => {
+		console.log("Se selecciono retorno: ");console.log(JSON.stringify(flight))
+	}
 
 	render() {
 
@@ -380,6 +381,8 @@ export default class AvailableFlights extends React.Component {
 				className="available-flights-selector"
 				departureFlights={availableFlights[0]}
 				returnFlights={availableFlights[1]}
+				onDepartureFlightSelected={this.handleDepartureFlightSelected}
+				onReturnFlightSelected={this.handleReturnFlightSelected}
 			/>
 		) : (
 			<div className="available-flights-not-found">
