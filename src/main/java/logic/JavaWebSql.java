@@ -530,4 +530,135 @@ public class JavaWebSql {
         }
         return toRet.toJSONString();
     }
+
+
+    public void disconnect(){
+        try {
+
+            if (cn != null)
+                cn.close();
+
+        }
+        catch (SQLException e){
+            System.out.println("ERROR AL DESCONECTARSE"+e.getMessage());
+        }
+            cn=null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String makeOneWayReservation(String num,String date,String clas,
+                                            String doc_tip,int doc_num,int legajo) {
+        JSONObject toRet = new JSONObject();
+        try {
+            if (cn.isValid(0)){
+                Statement st = cn.createStatement();
+                st.execute("use vuelos");
+                String callProce = "call p('"+num+"','"+clas+"',"+legajo+",'"+doc_tip+"',"+doc_num+",'"
+                        +date+"',@result);";
+                st.execute(callProce);
+                ResultSet result = st.executeQuery("select @result;");
+                int reservedState=111;
+                while(result.next())
+                    reservedState = result.getInt("@result");
+                JSONObject state = null;
+
+                if(reservedState==0)
+                    toRet.put("code",2);
+                else if(reservedState==1) {
+                    toRet.put("code", 1);
+                    state = new JSONObject();
+                    state.put("state",1);
+                }
+                else if(reservedState==2) {
+                    toRet.put("code", 1);
+                    state = new JSONObject();
+                    state.put("state",2);
+                }
+                else if(reservedState==3) {
+                    toRet.put("code", 1);
+                    state = new JSONObject();
+                    state.put("state",3);
+                }
+                toRet.put("Msg",null);
+                toRet.put("data",state);
+
+
+            }
+
+            else{
+                toRet.put("code",4);
+                toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
+                toRet.put("data",null);
+                return  toRet.toJSONString();
+            }
+        }
+        catch (SQLException e){
+            toRet.put("code",3);
+            toRet.put("msg",e.getMessage());
+            toRet.put("data",null);
+        }
+            return toRet.toJSONString();
+    }
+
+    @SuppressWarnings("unchecked")
+    public String makeTwoWayReservation(String num,String date,String clas,
+                                            String doc_tip,int doc_num,int legajo,
+                                                String num_2,String date_2,String clas_2){
+
+        JSONObject toRet = new JSONObject();
+        try {
+            if (cn.isValid(0)){
+                Statement st = cn.createStatement();
+                st.execute("use vuelos");
+                String callProce = "call pyv('"+num+"','"+clas+"',"+legajo+",'"+doc_tip+"',"+doc_num+",'"
+                        +date+"','"+num_2+"','"+clas_2+"','"+date_2+"',@result);";
+                st.execute(callProce);
+
+                ResultSet result = st.executeQuery("select @result;");
+                int reservedState=111;
+                while(result.next())
+                    reservedState = result.getInt("@result");
+                JSONObject state = null;
+
+                if(reservedState==0)
+                    toRet.put("code",2);
+                else if(reservedState==1) {
+                    toRet.put("code", 1);
+                    state = new JSONObject();
+                    state.put("state",1);
+                }
+                else if(reservedState==2) {
+                    toRet.put("code", 1);
+                    state = new JSONObject();
+                    state.put("state",2);
+                }
+                else if(reservedState==3) {
+                    toRet.put("code", 1);
+                    state = new JSONObject();
+                    state.put("state",3);
+                }
+                toRet.put("Msg",null);
+                toRet.put("data",state);
+
+            }
+
+            else{
+                toRet.put("code",4);
+                toRet.put("msg","Hubo un problema con la coneccion, recomendamos salir y loguearse nuevamente");
+                toRet.put("data",null);
+                return  toRet.toJSONString();
+            }
+        }
+        catch (SQLException e){
+            toRet.put("code",3);
+            toRet.put("msg",e.getMessage());
+            toRet.put("data",null);
+        }
+        return toRet.toJSONString();
+    }
+
 }
+
+
+
+

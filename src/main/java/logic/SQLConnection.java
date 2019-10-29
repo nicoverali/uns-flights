@@ -15,6 +15,8 @@ public class SQLConnection implements DBConnection {
         return yo;
     }
 
+
+
     /**
      *  OJO CON EL HECHO DE CHEQUEAR QUE EL URL == null capaz que debe ser con ""
      *

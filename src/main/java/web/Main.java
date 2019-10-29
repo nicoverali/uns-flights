@@ -11,10 +11,21 @@ public class Main {
 
 
 
-         String ret = base.connectToAdmin("admin");
-        String ret2= base.showTables();
+        String ret = base.connectToAdmin("admin");
+
+
+        String ret4 = base.makeTwoWayReservation("BC1","2020-01-02","Ejecutiva","DNI",
+                1,101,"CB2","2020-01-05","Turista");
+        System.out.println("El procedure es::"+ret4.toString());
+
+
         /**
-        System.out.println(ret2.toString());
+         String ret2= base.showTables();
+         String ret3 = base.makeOneWayReservation("BC1","2020-01-02","Ejecutiva","DNI",
+         1,101);
+         System.out.println("El procedure es::"+ret3.toString());
+
+         System.out.println(ret2.toString());
         String ret3 = base.describeTable("aeropuertos");
         System.out.println(ret3.toString());
         String ret4 = base.adminQuery("select * from reserva_vuelo_clase");
