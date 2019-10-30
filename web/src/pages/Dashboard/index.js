@@ -1,7 +1,6 @@
 import './index.scss';
 import React from 'react';
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import QueryString from 'query-string';
 import SideBar from '@Components/Sidebar';
 
 import AvailableFlights from '@Pages/AvailableFlights';
@@ -19,9 +18,14 @@ const getAdminLinks = (pathPrefix = '') => [
 	},
 ];
 
-const getEmployeeLinks = (pathPrefix = '') => [
+const getEmployeeLinks = (pathPrefix = '', empId) => [
 	{
-		to: `${pathPrefix}/available-flights`,
+		to: {
+			pathname: `${pathPrefix}/available-flights`,
+			state: {
+				empId,
+			}
+		},
 		label: 'Vuelos disponibles',
 	},
 ];
@@ -31,14 +35,9 @@ class Dashboard extends React.Component {
 	constructor(props) {
 
 		super(props);
-		const urlParams = QueryString.parse(props.location.search);
-		const links =			urlParams.isAdmin === 'true'
-			? getAdminLinks(props.location.pathname)
-			: getEmployeeLinks(props.location.pathname);
-		this.state = {
-			arrivePath: props.location.pathname,
-			links,
-		};
+		const { pathname, state } = props.location;
+		const links = state.isAdmin	? getAdminLinks(pathname) : getEmployeeLinks(pathname, state.empId);
+		this.state = { arrivePath: pathname, links };
 
 	}
 

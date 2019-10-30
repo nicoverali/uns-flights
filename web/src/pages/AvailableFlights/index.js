@@ -423,6 +423,33 @@ export default class AvailableFlights extends React.Component {
 
 	};
 
+	handleReservation = () => {
+
+		const { empId } = this.props.location.state;
+		const { departure, returnn } = this.state;
+		const redirectTo = {
+			pathname: '/reservation',
+			state: {
+				empId,
+				departure: {
+					date: departure.date,
+					location: departure.location,
+					flight: departure.selected.flight,
+					class: departure.selected.class,
+				},
+				returnn: {
+					date: returnn.date,
+					location: returnn.location,
+					flight: returnn.selected.flight,
+					class: returnn.selected.flight,
+				},
+			}
+		}
+
+		console.log(redirectTo);
+
+	}
+
 	render() {
 
 		const { locations, isRoundTrip, departure, returnn } = this.state;
@@ -463,6 +490,7 @@ export default class AvailableFlights extends React.Component {
 						returnLocation={returnn.location}
 						returnDate={returnn.date}
 						returnFlight={returnn.selected}
+						onReservateClick={this.handleReservation}
 					/>
 				)}
 			</div>

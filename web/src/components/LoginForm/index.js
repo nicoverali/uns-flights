@@ -100,27 +100,28 @@ export default class LoginForm extends React.Component {
 
 	render() {
 
-		const empIdInputClass = this.state.isAdmin ? 'hide' : '';
-		const submitButtonContent = LoginForm.getFormButtonContent(this.state.isLoading);
-
-		let redirection = '';
-		if (this.state.isLoggedIn) {
-
-			redirection = <Redirect to={`/dashboard?isAdmin=${this.state.isAdmin}`} />;
-
+		const { isLoggedIn, isAdmin, isLoading, empId } = this.state;
+		const redirectionTo = {
+			pathname: '/dashboard',
+			state: {
+				isAdmin,
+				empId,
+			}
 		}
+		
+		const redirection = isLoggedIn ? <Redirect to={redirectionTo}/>	: '';
 
 		return (
 			<div className={`login-form-component ${this.props.className}`}>
 				{redirection}
 				<UserIcon className="user-icon" />
 
-				<h3 className="user">{this.state.isAdmin ? 'Administrador' : 'Empleado'}</h3>
+				<h3 className="user">{isAdmin ? 'Administrador' : 'Empleado'}</h3>
 
 				<form onSubmit={this.handleLogin}>
 					<fieldset className="form-input-container">
 						<TextInput
-							className={empIdInputClass}
+							className={isAdmin ? 'hide' : ''}
 							label="Nº Legajo"
 							value={this.state.empId}
 							onChange={this.handleEmpIdChange}
@@ -134,7 +135,7 @@ export default class LoginForm extends React.Component {
 					</fieldset>
 
 					<PrimaryButton type="submit" className="submit-button">
-						{submitButtonContent}
+						{LoginForm.getFormButtonContent(isLoading)}
 					</PrimaryButton>
 				</form>
 
