@@ -8,6 +8,7 @@ import {
 
 import FlightsSearchForm from '@Components/FlightSearchForm';
 import FlightSelector from '@Components/FlightSelector';
+import FlightCheckoutSummary from '@Components/FlightCheckoutSummary';
 
 import AirplaneOffIcon from '@Assets/icons/airplane-off.svg';
 
@@ -320,13 +321,42 @@ const returnTest = [
 
 export default class AvailableFlights extends React.Component {
 
+	static areFlightsAvailable(isRoundTrip, departure, returnn) {
+
+		const depFlights = departure.availableFlights;
+		const retFlights = returnn.availableFlights;
+		if (isRoundTrip) {
+
+			return (
+				depFlights !== undefined
+				&& depFlights.length > 0
+				&& retFlights !== undefined
+				&& retFlights.length > 0
+			);
+
+		}
+		return depFlights !== undefined && depFlights.length > 0;
+
+	}
+
 	constructor(props) {
 
 		super(props);
 		this.state = {
 			locations: [],
-			isRoundTrip: false,
-			availableFlights: [departureTest, returnTest], // undefined,
+			isRoundTrip: true, // false,
+			departure: {
+				date: '02/01/2019', // undefined,
+				location: 'Barcelona', // undefined,
+				availableFlights: departureTest, // undefined,
+				selected: undefined,
+			},
+			returnn: {
+				date: '05/01/2020', // undefined,
+				location: 'Miami', // undefined,
+				availableFlights: returnTest, // undefined,
+				selected: undefined,
+			},
 		};
 
 	}
@@ -351,36 +381,58 @@ export default class AvailableFlights extends React.Component {
 
 		Promise.all([depRequest, retRequest]).then((availableFlights) => {
 
-			this.setState({ isRoundTrip, availableFlights });
+			this.setState({
+				isRoundTrip,
+				departure: {
+					date: departureDate,
+					location: departureLocation,
+					availableFlights: availableFlights[0],
+					selected: undefined,
+				},
+				returnn: {
+					date: returnDate,
+					location: returnLocation,
+					availableFlights: availableFlights[1],
+					selected: undefined,
+				},
+			});
 
 		});
 
 	};
 
 	handleDepartureFlightSelected = (flight) => {
-		console.log("Se selecciono origen: ");console.log(JSON.stringify(flight))
-	}
+
+		this.setState((prevState) => ({
+			departure: {
+				...prevState.departure,
+				selected: flight,
+			},
+		}));
+
+	};
 
 	handleReturnFlightSelected = (flight) => {
-		console.log("Se selecciono retorno: ");console.log(JSON.stringify(flight))
-	}
+
+		this.setState((prevState) => ({
+			returnn: {
+				...prevState.returnn,
+				selected: flight,
+			},
+		}));
+
+	};
 
 	render() {
 
-		const { locations, isRoundTrip, availableFlights } = this.state;
-
-		let availableFlightsExist =	availableFlights !== undefined && availableFlights[0].length > 0;
-		if (isRoundTrip) {
-
-			availableFlightsExist = availableFlights[1].length > 0;
-
-		}
+		const { locations, isRoundTrip, departure, returnn } = this.state;
+		const availableFlightsExist = AvailableFlights.areFlightsAvailable(isRoundTrip, departure, returnn);
 
 		const BottomElement = availableFlightsExist ? (
 			<FlightSelector
 				className="available-flights-selector"
-				departureFlights={availableFlights[0]}
-				returnFlights={availableFlights[1]}
+				departureFlights={departure.availableFlights}
+				returnFlights={returnn.availableFlights}
 				onDepartureFlightSelected={this.handleDepartureFlightSelected}
 				onReturnFlightSelected={this.handleReturnFlightSelected}
 			/>
@@ -400,7 +452,19 @@ export default class AvailableFlights extends React.Component {
 					onFlightsSearchSubmit={this.handleFlightsSearchSubmit}
 				/>
 
-				{this.state.availableFlights !== undefined && BottomElement}
+				{departure.availableFlights !== undefined && BottomElement}
+
+				{(departure.selected !== undefined || returnn.selected !== undefined) && (
+					<FlightCheckoutSummary
+						isRoundTrip={isRoundTrip}
+						departureLocation={departure.location}
+						departureDate={departure.date}
+						departureFlight={departure.selected}
+						returnLocation={returnn.location}
+						returnDate={returnn.date}
+						returnFlight={returnn.selected}
+					/>
+				)}
 			</div>
 		);
 

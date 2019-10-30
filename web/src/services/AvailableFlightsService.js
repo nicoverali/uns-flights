@@ -95,5 +95,18 @@ function formatDate(date) {
 
 }
 
+function formatTime(time) {
+
+	const seconds = time.lastIndexOf(':');
+	return time.substring(0, seconds);
+
+}
+
 // eslint-disable-next-line max-len
-export { getAllLocations, getAvailableClassesForFlight, getAvailableFlightsFor, formatDate };
+export {
+	getAllLocations,
+	getAvailableClassesForFlight,
+	getAvailableFlightsFor,
+	formatDate,
+	formatTime,
+};

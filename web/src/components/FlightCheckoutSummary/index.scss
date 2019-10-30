@@ -1,0 +1,124 @@
+.flight-checkout-summary-component{
+
+	position: fixed;
+	height: 112px;
+	max-width: calc(100% - 240px);
+	width: 85%;
+	padding: 24px 160px 24px 144px;
+	bottom: 0;
+	right: 0;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background: $primary-color;
+
+
+	.flight-checkout-summary-trip{
+
+		color: white;
+
+		p.flight-checkout-summary-dates{
+
+			font-family: $body-font;
+			font-size: $body-size;
+			font-weight: 400;
+			margin: 0;
+
+		}
+
+		h3 {
+
+			margin-top: 16px;
+			margin-bottom: 0;
+			font-family: $title-font;
+			font-size: $h3-size;
+			font-weight: 700;
+
+		}
+
+	}
+
+	.flight-checkout-separator{
+
+		width: 48px;
+		fill: scale-color(white, $alpha: -30%);
+		color: white;
+		margin: 0 48px;
+
+	}
+
+	.flight-checkout-select-msg{
+
+		font-family: $body-font;
+		font-size: $body-size;
+		font-weight: 500;
+		max-width: 160px;
+		color: white;
+
+	}
+
+	.flight-checkout-button{
+
+		position: relative;
+		color: white;
+		border-color: white;
+		outline: none;
+		overflow: hidden;
+		margin-left: auto;
+
+		&.disabled{
+			opacity: 0.5;
+			cursor: default;
+
+			&:hover{
+				background-color: initial;
+			}
+		}
+
+		&:hover:not(.disabled){
+
+			background-color: rgba(0,0,0,0.05);
+			color: white;
+
+			svg{
+				right: 8px;
+			}
+
+		}
+
+		p{
+			margin: 0 (24px + 4px);
+		}
+
+		svg{
+			position: absolute;
+			right: -24px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 16px;
+			fill: white;
+			color: white;
+			transition: right 0.2s ease-out;
+		}
+
+	}
+
+}
+
+
+@media (max-width: 1566px) {
+	.flight-checkout-summary-component{
+
+		padding-right: 112px;
+		padding-left: 112px;
+
+		& .flight-checkout-summary-trip, .flight-checkout-separator.first {
+
+			display: none;
+
+		}
+
+	}
+}

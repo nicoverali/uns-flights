@@ -14,7 +14,7 @@ export default class FlightsList extends React.Component {
 
 	componentDidUpdate(prevProps) {
 
-		if (prevProps.flight !== this.props.flight) {
+		if (prevProps.flights !== this.props.flights) {
 
 			// eslint-disable-next-line react/no-did-update-set-state
 			this.setState({ openFlight: -1 });
@@ -34,7 +34,6 @@ export default class FlightsList extends React.Component {
 		const { className, flights, onFlightSelected } = this.props;
 		const { openFlight } = this.state;
 		const reactFlights = flights.map((flight, index) => (
-
 			<Flight
 				// eslint-disable-next-line react/no-array-index-key
 				key={index}
@@ -45,7 +44,6 @@ export default class FlightsList extends React.Component {
 				onSelected={onFlightSelected}
 				showClasses={index === openFlight}
 			/>
-
 		));
 
 		return <div className={`flights-list-component ${className}`}>{reactFlights}</div>;

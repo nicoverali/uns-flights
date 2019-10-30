@@ -28,7 +28,6 @@ function handleClassSelected(flight, classes, className, callback) {
 const Flight = ({ flight, classes, showClasses, onShowClasses, onSelected, className }) => {
 
 	const reactClasses = classes.map((c) => (
-
 		<div key={c.clase} className="flight-class">
 			<section className="left">
 				<h5 className="flight-class-name">{c.clase}</h5>
@@ -44,7 +43,6 @@ const Flight = ({ flight, classes, showClasses, onShowClasses, onSelected, class
 				Seleccionar
 			</PrimaryButton>
 		</div>
-
 	));
 
 	return (
@@ -71,8 +69,16 @@ const Flight = ({ flight, classes, showClasses, onShowClasses, onSelected, class
 
 				<div className="flight-info-and-button">
 					<div className="flight-information">
-						<FlightInfoItem className="flight-info-item" label="Nro vuelo" value={flight.nro_vuelo} />
-						<FlightInfoItem className="flight-info-item" label="Modelo avion" value={flight.modelo_avion} />
+						<FlightInfoItem
+							className="flight-info-item"
+							label="Nro vuelo"
+							value={flight.nro_vuelo}
+						/>
+						<FlightInfoItem
+							className="flight-info-item"
+							label="Modelo avion"
+							value={flight.modelo_avion}
+						/>
 						<FlightInfoItem
 							className="flight-info-item"
 							label="Tiempo estimado"
@@ -80,7 +86,11 @@ const Flight = ({ flight, classes, showClasses, onShowClasses, onSelected, class
 						/>
 					</div>
 
-					<button type="button" className={`flight-button ${showClasses ? 'open' : ''}`} onClick={onShowClasses}>
+					<button
+						type="button"
+						className={`flight-button ${showClasses ? 'open' : ''}`}
+						onClick={onShowClasses}
+					>
 						<p>Ver clases</p>
 						<ArrowIcon />
 					</button>

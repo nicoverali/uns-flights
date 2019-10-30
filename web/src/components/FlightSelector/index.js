@@ -12,10 +12,10 @@ export default class FlightSelector extends React.Component {
 	constructor(props) {
 
 		super(props);
-		this.state = { 
+		this.state = {
 			showReturnFlights: false,
 			isDepartureFlightSelected: false,
-			isReturnFlightSelected: false, 
+			isReturnFlightSelected: false,
 		};
 
 	}
@@ -25,22 +25,22 @@ export default class FlightSelector extends React.Component {
 		const { returnFlights, onDepartureFlightSelected } = this.props;
 		const { isReturnFlightSelected } = this.state;
 
-		const showReturnFlights = returnFlights.length > 0 && !isReturnFlightSelected; 
+		const showReturnFlights = returnFlights.length > 0 && !isReturnFlightSelected;
 		this.setState({ showReturnFlights, isDepartureFlightSelected: true });
 		onDepartureFlightSelected(flight);
 
-	}
+	};
 
 	handleReturnFlightSelected = (flight) => {
 
 		const { onReturnFlightSelected } = this.props;
 		const { isDepartureFlightSelected } = this.state;
-		
-		const showReturnFlights = isDepartureFlightSelected; 
+
+		const showReturnFlights = isDepartureFlightSelected;
 		this.setState({ showReturnFlights, isReturnFlightSelected: true });
 		onReturnFlightSelected(flight);
 
-	}
+	};
 
 	handleShowDepartureList = () => {
 
@@ -56,7 +56,11 @@ export default class FlightSelector extends React.Component {
 
 	render() {
 
-		const { className, departureFlights, returnFlights, onDepartureFlightSelected, onReturnFlightSelected } = this.props;
+		const {
+			className,
+			departureFlights,
+			returnFlights,
+		} = this.props;
 		const { showReturnFlights } = this.state;
 		const thereAreReturnFLights = returnFlights.length > 0;
 
@@ -83,9 +87,17 @@ export default class FlightSelector extends React.Component {
 						showReturnFlights ? 'show-return' : ''
 					}`}
 				>
-					<FlightsList className="flight-selector-list" flights={departureFlights} onFlightSelected={this.handleDepartureFlightSelected} />
+					<FlightsList
+						className="flight-selector-list"
+						flights={departureFlights}
+						onFlightSelected={this.handleDepartureFlightSelected}
+					/>
 					{thereAreReturnFLights && (
-						<FlightsList className="flight-selector-list" flights={returnFlights} onFlightSelected={this.handleReturnFlightSelected} />
+						<FlightsList
+							className="flight-selector-list"
+							flights={returnFlights}
+							onFlightSelected={this.handleReturnFlightSelected}
+						/>
 					)}
 				</div>
 			</div>

@@ -37,9 +37,7 @@ function findMatchFor(value, locations) {
 
 	if (!isInputValid(value)) {
 
-		const possibleMatch = locations.find(
-			(loc) => loc.ciudad.toLowerCase().startsWith(value.toLowerCase().trim()),
-		);
+		const possibleMatch = locations.find((loc) => loc.ciudad.toLowerCase().startsWith(value.toLowerCase().trim()));
 
 		if (possibleMatch !== undefined) {
 
