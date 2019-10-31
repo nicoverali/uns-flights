@@ -10,6 +10,7 @@ import FlightSummary from './FlightSummary';
 
 const FlightCheckoutSummary = ({
 	isRoundTrip,
+	isOpen,
 	departureLocation,
 	departureDate,
 	returnLocation,
@@ -46,7 +47,7 @@ const FlightCheckoutSummary = ({
 		: departureFlight !== undefined;
 
 	return (
-		<div className="flight-checkout-summary-component">
+		<div className={`flight-checkout-summary-component ${isOpen ? 'open':''}`}>
 			<div className="flight-checkout-summary-trip">
 				<p className="flight-checkout-summary-dates">
 					{`${departureDate} ${
@@ -101,6 +102,7 @@ const flightClassPropShape = {
 };
 
 FlightCheckoutSummary.defaultProps = {
+	isOpen: false,
 	returnDate: undefined,
 	departureFlight: undefined,
 	returnFlight: undefined,
@@ -108,6 +110,7 @@ FlightCheckoutSummary.defaultProps = {
 };
 
 FlightCheckoutSummary.propTypes = {
+	isOpen: PropTypes.bool,
 	isRoundTrip: PropTypes.bool.isRequired,
 	departureLocation: PropTypes.string.isRequired,
 	returnLocation: PropTypes.string.isRequired,

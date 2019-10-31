@@ -81,6 +81,19 @@ ul{
     height: 100%;   
 }
 
+.ReactModal__Overlay{
+
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+
+    .ReactModal__Content {
+        top: 50% !important;
+        left: 50% !important;
+    }
+
+}
+
 .react-notification-root{
     font-family: $body-font;
     

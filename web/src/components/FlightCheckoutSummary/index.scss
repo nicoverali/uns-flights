@@ -5,8 +5,9 @@
 	max-width: calc(100% - 240px);
 	width: 85%;
 	padding: 24px 160px 24px 144px;
-	bottom: 0;
+	bottom: -112px;
 	right: 0;
+	transition: bottom 0.2s ease-out;
 
 	display: flex;
 	flex-direction: row;
@@ -14,6 +15,9 @@
 	align-items: center;
 	background: $primary-color;
 
+	&.open{
+		bottom: 0;
+	}
 
 	.flight-checkout-summary-trip{
 

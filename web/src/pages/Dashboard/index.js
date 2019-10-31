@@ -60,25 +60,22 @@ class Dashboard extends React.Component {
 
 	render() {
 
-		if (this.props.location.pathname === this.state.arrivePath) {
+		const { location } = this.props; 
+		const { links, arrivePath } = this.state
 
-			return <Redirect to={this.state.links[0].to} />;
+		if (location.pathname === arrivePath) {
+
+			return <Redirect to={links[0].to} />;
 
 		}
 
 		return (
 			<div id="dashboard-page">
-				<SideBar links={this.state.links} className="dashboard-sidebar" />
+				<SideBar links={links} className="dashboard-sidebar" />
 				<div className="dashboard-content">
-					<Route
-						path={`${this.state.arrivePath}/available-flights`}
-						component={AvailableFlights}
-					/>
-					<Route path={`${this.state.arrivePath}/queries`} component={Queries} />
-					<Route
-						path={`${this.state.arrivePath}/database-tables`}
-						component={DatabaseTables}
-					/>
+					<Route path={`${arrivePath}/available-flights`} component={AvailableFlights} />
+					<Route path={`${arrivePath}/queries`} component={Queries} />
+					<Route path={`${arrivePath}/database-tables`} component={DatabaseTables} />
 				</div>
 			</div>
 		);

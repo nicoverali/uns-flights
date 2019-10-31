@@ -1,5 +1,6 @@
 import './index.scss';
 import React from 'react';
+import Modal from 'react-modal';
 import {
 	getAvailableFlightsFor,
 	getAllLocations,
@@ -11,6 +12,7 @@ import FlightSelector from '@Components/FlightSelector';
 import FlightCheckoutSummary from '@Components/FlightCheckoutSummary';
 
 import AirplaneOffIcon from '@Assets/icons/airplane-off.svg';
+import FlightReservation from '@Components/FlightReservation';
 
 // TODO delete this
 const departureTest = [
@@ -319,6 +321,19 @@ const returnTest = [
 	},
 ];
 
+Modal.setAppElement(document.getElementById('app'));
+
+const modalCustomStyles = {
+	content : {
+	  transform             : 'translateX(-50%) translateY(-50%)',
+	  left                  : '50%',
+	  background			: 'transparent',
+	  border				: 'none',
+	  inset					: 'unset',
+	  padding				: '0',
+	}
+};
+
 export default class AvailableFlights extends React.Component {
 
 	static areFlightsAvailable(isRoundTrip, departure, returnn) {
@@ -344,6 +359,10 @@ export default class AvailableFlights extends React.Component {
 		super(props);
 		this.state = {
 			locations: [],
+			isModalOpen: false,
+			isSummaryOpen: false,
+			isReservationProcessing: false,
+			lastReservationResult: undefined,
 			isRoundTrip: true, // false,
 			departure: {
 				date: '02/01/2019', // undefined,
@@ -404,6 +423,7 @@ export default class AvailableFlights extends React.Component {
 	handleDepartureFlightSelected = (flight) => {
 
 		this.setState((prevState) => ({
+			isSummaryOpen: true,
 			departure: {
 				...prevState.departure,
 				selected: flight,
@@ -415,6 +435,7 @@ export default class AvailableFlights extends React.Component {
 	handleReturnFlightSelected = (flight) => {
 
 		this.setState((prevState) => ({
+			isSummaryOpen: true,
 			returnn: {
 				...prevState.returnn,
 				selected: flight,
@@ -447,14 +468,29 @@ export default class AvailableFlights extends React.Component {
 		}
 
 		console.log(redirectTo);
+		this.setState({ isModalOpen: true, isSummaryOpen: false })
+
+	}
+
+	handleModalClose = () => {
+
+		const { isReservationProcessing } = this.state;
+		if(!isReservationProcessing){
+			this.setState({ lastReservationResult: undefined, isModalOpen: false, isSummaryOpen: true });
+		}
+
+	}
+
+	handleReservationFinish = () => {
+
+		this.setState({isReservationProcessing: true});
 
 	}
 
 	render() {
 
-		const { locations, isRoundTrip, departure, returnn } = this.state;
+		const { locations, isModalOpen, isReservationProcessing, lastReservationResult, isSummaryOpen, isRoundTrip, departure, returnn } = this.state;
 		const availableFlightsExist = AvailableFlights.areFlightsAvailable(isRoundTrip, departure, returnn);
-		const isSelectionMade = departure.selected !== undefined || returnn.selected !== undefined;
 
 		const BottomElement = availableFlightsExist ? (
 			<FlightSelector
@@ -473,7 +509,7 @@ export default class AvailableFlights extends React.Component {
 		);
 
 		return (
-			<div id="available-flights-page" className={isSelectionMade ? 'extended' : ''}>
+			<div id="available-flights-page" className={isSummaryOpen ? 'extended' : ''}>
 				<h2 className="available-flights-main-title">Consulta los vuelos disponibles</h2>
 				<FlightsSearchForm
 					locations={locations}
@@ -482,18 +518,33 @@ export default class AvailableFlights extends React.Component {
 
 				{departure.availableFlights !== undefined && BottomElement}
 
-				{isSelectionMade && (
-					<FlightCheckoutSummary
+				<FlightCheckoutSummary
+					isOpen={isSummaryOpen}
+					isRoundTrip={isRoundTrip}
+					departureLocation={departure.location}
+					departureDate={departure.date}
+					departureFlight={departure.selected}
+					returnLocation={returnn.location}
+					returnDate={returnn.date}
+					returnFlight={returnn.selected}
+					onReservateClick={this.handleReservation}
+				/>
+
+				<Modal
+					isOpen={isModalOpen}
+					onRequestClose={this.handleModalClose}
+					style={modalCustomStyles}
+				>
+			
+					<FlightReservation 
 						isRoundTrip={isRoundTrip}
-						departureLocation={departure.location}
-						departureDate={departure.date}
-						departureFlight={departure.selected}
-						returnLocation={returnn.location}
-						returnDate={returnn.date}
-						returnFlight={returnn.selected}
-						onReservateClick={this.handleReservation}
+						isLoading={isReservationProcessing}
+						result={lastReservationResult}
+						departure={departure}
+						returnn={returnn}
+						onReservation={this.handleReservationFinish}
 					/>
-				)}
+				</Modal>
 			</div>
 		);
 
