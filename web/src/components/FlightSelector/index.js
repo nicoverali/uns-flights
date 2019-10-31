@@ -71,11 +71,11 @@ export default class FlightSelector extends React.Component {
 					{thereAreReturnFLights && (
 						<div className="flight-selector-arrow-container">
 							<ArrowLeft
-								className={!showReturnFlights && 'hide'}
+								className={!showReturnFlights ? 'hide' : undefined}
 								onClick={this.handleShowDepartureList}
 							/>
 							<ArrowRight
-								className={showReturnFlights && 'hide'}
+								className={showReturnFlights ? 'hide' : undefined}
 								onClick={this.handleShowReturnList}
 							/>
 						</div>

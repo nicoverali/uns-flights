@@ -15,10 +15,7 @@ const FlightSummary = ({
 	return (
 		<div className={`flight-summary-component ${className}`}>
 			<p className="flight-summary-title">
-				<span>{titleType}</span>
-				{' '}
--
-				<span>{flightClass}</span>
+				<span>{titleType}</span> - <span>{flightClass}</span>
 			</p>
 			<h3 className="flight-summary-time">{`${departureTime} - ${returnTime}`}</h3>
 		</div>

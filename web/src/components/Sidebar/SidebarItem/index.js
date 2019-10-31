@@ -22,10 +22,16 @@ SidebarItem.defaultProps = {
 
 SidebarItem.propTypes = {
 	className: PropTypes.string,
-	linkTo: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	active: PropTypes.bool,
 	onClick: PropTypes.func,
+	linkTo: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.shape({
+			pathname: PropTypes.string.isRequired,
+			state: PropTypes.object
+		})
+	]).isRequired,
 };
 
 export default SidebarItem;

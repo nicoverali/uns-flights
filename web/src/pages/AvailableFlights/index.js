@@ -454,6 +454,7 @@ export default class AvailableFlights extends React.Component {
 
 		const { locations, isRoundTrip, departure, returnn } = this.state;
 		const availableFlightsExist = AvailableFlights.areFlightsAvailable(isRoundTrip, departure, returnn);
+		const isSelectionMade = departure.selected !== undefined || returnn.selected !== undefined;
 
 		const BottomElement = availableFlightsExist ? (
 			<FlightSelector
@@ -472,7 +473,7 @@ export default class AvailableFlights extends React.Component {
 		);
 
 		return (
-			<div id="available-flights-page">
+			<div id="available-flights-page" className={isSelectionMade ? 'extended' : ''}>
 				<h2 className="available-flights-main-title">Consulta los vuelos disponibles</h2>
 				<FlightsSearchForm
 					locations={locations}
@@ -481,7 +482,7 @@ export default class AvailableFlights extends React.Component {
 
 				{departure.availableFlights !== undefined && BottomElement}
 
-				{(departure.selected !== undefined || returnn.selected !== undefined) && (
+				{isSelectionMade && (
 					<FlightCheckoutSummary
 						isRoundTrip={isRoundTrip}
 						departureLocation={departure.location}
