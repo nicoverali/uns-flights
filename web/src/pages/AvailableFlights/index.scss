@@ -5,6 +5,10 @@ div#available-flights-page{
     min-height: 100%;
     padding-bottom: 48px;
 
+    &.extended{
+        padding-bottom: 48px + 112px;
+    }
+
     h2.available-flights-main-title{
         @include dashboard-title;
     }

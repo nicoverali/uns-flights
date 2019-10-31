@@ -1,7 +1,6 @@
 import './index.scss';
 import React from 'react';
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import QueryString from 'query-string';
 import SideBar from '@Components/Sidebar';
 
 import AvailableFlights from '@Pages/AvailableFlights';
@@ -19,9 +18,14 @@ const getAdminLinks = (pathPrefix = '') => [
 	},
 ];
 
-const getEmployeeLinks = (pathPrefix = '') => [
+const getEmployeeLinks = (pathPrefix = '', empId) => [
 	{
-		to: `${pathPrefix}/available-flights`,
+		to: {
+			pathname: `${pathPrefix}/available-flights`,
+			state: {
+				empId,
+			}
+		},
 		label: 'Vuelos disponibles',
 	},
 ];
@@ -31,14 +35,9 @@ class Dashboard extends React.Component {
 	constructor(props) {
 
 		super(props);
-		const urlParams = QueryString.parse(props.location.search);
-		const links =			urlParams.isAdmin === 'true'
-			? getAdminLinks(props.location.pathname)
-			: getEmployeeLinks(props.location.pathname);
-		this.state = {
-			arrivePath: props.location.pathname,
-			links,
-		};
+		const { pathname, state } = props.location;
+		const links = state.isAdmin	? getAdminLinks(pathname) : getEmployeeLinks(pathname, state.empId);
+		this.state = { arrivePath: pathname, links };
 
 	}
 
@@ -61,25 +60,22 @@ class Dashboard extends React.Component {
 
 	render() {
 
-		if (this.props.location.pathname === this.state.arrivePath) {
+		const { location } = this.props; 
+		const { links, arrivePath } = this.state
 
-			return <Redirect to={this.state.links[0].to} />;
+		if (location.pathname === arrivePath) {
+
+			return <Redirect to={links[0].to} />;
 
 		}
 
 		return (
 			<div id="dashboard-page">
-				<SideBar links={this.state.links} className="dashboard-sidebar" />
+				<SideBar links={links} className="dashboard-sidebar" />
 				<div className="dashboard-content">
-					<Route
-						path={`${this.state.arrivePath}/available-flights`}
-						component={AvailableFlights}
-					/>
-					<Route path={`${this.state.arrivePath}/queries`} component={Queries} />
-					<Route
-						path={`${this.state.arrivePath}/database-tables`}
-						component={DatabaseTables}
-					/>
+					<Route path={`${arrivePath}/available-flights`} component={AvailableFlights} />
+					<Route path={`${arrivePath}/queries`} component={Queries} />
+					<Route path={`${arrivePath}/database-tables`} component={DatabaseTables} />
 				</div>
 			</div>
 		);

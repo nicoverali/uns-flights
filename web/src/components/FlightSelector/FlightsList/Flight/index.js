@@ -3,9 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import AirplaneIcon from '@Assets/icons/airplane.svg';
+import ArrowIcon from '@Assets/icons/chevron-right.svg';
 import PrimaryButton from '@Components/PrimaryButton';
 import FlightEndPoint from './FlightEndPoint';
-import FlightClass from './FlightClass';
 import FlightInfoItem from './FlightInfoItem';
 
 function formatTime(time) {
@@ -15,24 +15,35 @@ function formatTime(time) {
 
 }
 
-const Flight = ({ flight, classes, showClasses, onShowClasses, className }) => {
+function handleClassSelected(flight, classes, className, callback) {
 
-	const reactClasses = [];
-	for (let i = 0; i < classes.length; i++) {
+	const selected = {
+		flight,
+		class: classes.find((c) => c.clase === className),
+	};
+	callback(selected);
 
-		// eslint-disable-next-line camelcase
-		const { clase, asientos_disponibles, precio } = classes[i];
-		reactClasses[i] = (
-			<FlightClass
-				key={clase}
-				name={clase}
-				// eslint-disable-next-line camelcase
-				availableSeats={asientos_disponibles}
-				price={precio}
-			/>
-		);
+}
 
-	}
+const Flight = ({ flight, classes, showClasses, onShowClasses, onSelected, className }) => {
+
+	const reactClasses = classes.map((c) => (
+		<div key={c.clase} className="flight-class">
+			<section className="left">
+				<h5 className="flight-class-name">{c.clase}</h5>
+				<p className="flight-class-available-seats">
+					{`${c.asientos_disponibles} asientos disponibles`}
+				</p>
+			</section>
+			<p className="flight-class-price">{`$ ${c.precio}`}</p>
+			<PrimaryButton
+				className="flight-class-select-button"
+				onClick={() => handleClassSelected(flight, classes, c.clase, onSelected)}
+			>
+				Seleccionar
+			</PrimaryButton>
+		</div>
+	));
 
 	return (
 		<div className={`flight-component ${className}`}>
@@ -58,17 +69,31 @@ const Flight = ({ flight, classes, showClasses, onShowClasses, className }) => {
 
 				<div className="flight-info-and-button">
 					<div className="flight-information">
-						<FlightInfoItem label="Nro vuelo" value={flight.nro_vuelo} />
-						<FlightInfoItem label="Modelo avion" value={flight.modelo_avion} />
 						<FlightInfoItem
+							className="flight-info-item"
+							label="Nro vuelo"
+							value={flight.nro_vuelo}
+						/>
+						<FlightInfoItem
+							className="flight-info-item"
+							label="Modelo avion"
+							value={flight.modelo_avion}
+						/>
+						<FlightInfoItem
+							className="flight-info-item"
 							label="Tiempo estimado"
 							value={formatTime(flight.tiempo_estimado)}
 						/>
 					</div>
 
-					<PrimaryButton className="flight-button" outline onClick={onShowClasses}>
-						Ver clases
-					</PrimaryButton>
+					<button
+						type="button"
+						className={`flight-button ${showClasses ? 'open' : ''}`}
+						onClick={onShowClasses}
+					>
+						<p>Ver clases</p>
+						<ArrowIcon />
+					</button>
 				</div>
 			</div>
 
@@ -82,6 +107,7 @@ Flight.defaultProps = {
 	className: '',
 	showClasses: false,
 	onShowClasses: () => {},
+	onSelected: () => {},
 };
 
 Flight.propTypes = {
@@ -108,6 +134,7 @@ Flight.propTypes = {
 
 	showClasses: PropTypes.bool,
 	onShowClasses: PropTypes.func,
+	onSelected: PropTypes.func,
 };
 
 export default Flight;

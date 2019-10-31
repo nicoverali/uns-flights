@@ -62,7 +62,13 @@ SideBar.propTypes = {
 	links: PropTypes.arrayOf(
 		PropTypes.shape({
 			label: PropTypes.string,
-			to: PropTypes.string,
+			to: PropTypes.oneOfType([
+					PropTypes.string,
+					PropTypes.shape({
+						pathname: PropTypes.string.isRequired,
+						state: PropTypes.object
+					})
+			]),
 		}),
 	),
 };

@@ -12,9 +12,35 @@ export default class FlightSelector extends React.Component {
 	constructor(props) {
 
 		super(props);
-		this.state = { showReturnFlights: false };
+		this.state = {
+			showReturnFlights: false,
+			isDepartureFlightSelected: false,
+			isReturnFlightSelected: false,
+		};
 
 	}
+
+	handleDepartureFlightSelected = (flight) => {
+
+		const { returnFlights, onDepartureFlightSelected } = this.props;
+		const { isReturnFlightSelected } = this.state;
+
+		const showReturnFlights = returnFlights.length > 0 && !isReturnFlightSelected;
+		this.setState({ showReturnFlights, isDepartureFlightSelected: true });
+		onDepartureFlightSelected(flight);
+
+	};
+
+	handleReturnFlightSelected = (flight) => {
+
+		const { onReturnFlightSelected } = this.props;
+		const { isDepartureFlightSelected } = this.state;
+
+		const showReturnFlights = isDepartureFlightSelected;
+		this.setState({ showReturnFlights, isReturnFlightSelected: true });
+		onReturnFlightSelected(flight);
+
+	};
 
 	handleShowDepartureList = () => {
 
@@ -30,7 +56,11 @@ export default class FlightSelector extends React.Component {
 
 	render() {
 
-		const { className, departureFlights, returnFlights } = this.props;
+		const {
+			className,
+			departureFlights,
+			returnFlights,
+		} = this.props;
 		const { showReturnFlights } = this.state;
 		const thereAreReturnFLights = returnFlights.length > 0;
 
@@ -41,11 +71,11 @@ export default class FlightSelector extends React.Component {
 					{thereAreReturnFLights && (
 						<div className="flight-selector-arrow-container">
 							<ArrowLeft
-								className={!showReturnFlights && 'hide'}
+								className={!showReturnFlights ? 'hide' : undefined}
 								onClick={this.handleShowDepartureList}
 							/>
 							<ArrowRight
-								className={showReturnFlights && 'hide'}
+								className={showReturnFlights ? 'hide' : undefined}
 								onClick={this.handleShowReturnList}
 							/>
 						</div>
@@ -57,9 +87,17 @@ export default class FlightSelector extends React.Component {
 						showReturnFlights ? 'show-return' : ''
 					}`}
 				>
-					<FlightsList className="flight-selector-list" flights={departureFlights} />
+					<FlightsList
+						className="flight-selector-list"
+						flights={departureFlights}
+						onFlightSelected={this.handleDepartureFlightSelected}
+					/>
 					{thereAreReturnFLights && (
-						<FlightsList className="flight-selector-list" flights={returnFlights} />
+						<FlightsList
+							className="flight-selector-list"
+							flights={returnFlights}
+							onFlightSelected={this.handleReturnFlightSelected}
+						/>
 					)}
 				</div>
 			</div>
@@ -72,6 +110,8 @@ export default class FlightSelector extends React.Component {
 FlightSelector.defaultProps = {
 	className: '',
 	returnFlights: [],
+	onDepartureFlightSelected: () => {},
+	onReturnFlightSelected: () => {},
 };
 
 FlightSelector.propTypes = {
@@ -80,4 +120,6 @@ FlightSelector.propTypes = {
 	departureFlights: PropTypes.array.isRequired,
 	// eslint-disable-next-line react/forbid-prop-types
 	returnFlights: PropTypes.array,
+	onDepartureFlightSelected: PropTypes.func,
+	onReturnFlightSelected: PropTypes.func,
 };

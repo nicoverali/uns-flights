@@ -1,0 +1,215 @@
+.flight-reservation-component{
+
+    width: 400px;
+    background: lighten($primary-color, 10);
+    color: white;
+    border-radius: 24px;
+
+
+
+    .header {
+
+        border-radius: 24px;
+        padding: 16px 24px;
+
+        svg{
+            width: 24px;
+            margin-bottom: 16px;
+            fill: white;
+            display: block;
+        }
+
+        .trip{
+            display: flex;
+            justify-content: space-between;
+
+            svg {
+                transform: rotate(90deg);
+            }
+
+            .left{
+                text-align: left;
+                float: left;
+            }
+    
+            .right{
+                text-align: right;
+                float: right;
+            }
+    
+            .location-name{
+    
+                font-family: $title-font;
+                font-size: $subtitle-size;
+                margin: 0 0 0 0;
+    
+            }
+    
+            .flight-reservation-title{
+    
+                display: inline-block;
+                margin: 0;
+                font-family: $title-font;
+                font-size: $h2-size;                
+        
+            }        
+        }
+    }
+
+    .content{
+
+        background: lighten($primary-color, 5);
+        border-radius: 24px 0 0 0;
+        padding: 24px 24px;
+
+        .flight-time{
+            display: flex;
+            position: relative;
+            top: 8px;
+    
+            .flight-route{
+                flex-grow: 1;
+                margin: 4px 24px 0 24px;
+    
+                .flight-route-line{
+                    box-sizing: border-box;
+                    display: inline-block;
+                    position: relative;
+                    margin: 0;
+                    border: 1px solid rgba(white, 0.75);
+                    width: 100%;
+                    //width: calc(100% - #{16px} - 16px);
+                    vertical-align: middle;
+    
+                    &::after{
+                        content: '';
+                        position: absolute;
+                        text-align: center;
+                        width: 4px;
+                        height: 4px;
+                        top: 50%;
+                        left: 50%;
+                        transform: translateX(-50%) translateY(-50%);
+                        background-color: white;
+                        border: 8px solid lighten($primary-color, 5);
+                        border-radius: 100%;
+                    }
+                }
+    
+                svg{
+                    float: right;
+                    width: 16px;
+                    vertical-align: middle;
+                    fill: white;
+                    transform: rotate(90deg);
+                }
+            }
+    
+            .flight-graph-end-point{
+                
+                font-family: $body-font;
+                color: white;
+                margin: 0;
+                padding: 0;
+
+                &:last-child p:first-child{
+                    float: right;
+                }
+
+                p:first-child{
+                    margin: 0;
+                    font-size: $caption-size;
+                    font-weight: 400;
+                }
+
+                p:last-child{
+                    margin: 0;
+                    font-size: $h3-size;
+                    font-weight: 500;
+                }
+            }
+    
+        }
+
+        .info{
+
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-evenly;
+
+            .info-item>*{
+                color: white
+            }
+        }
+    }
+    
+
+    .passenger{
+
+        position: relative;
+        background: lighten($primary-color, 5);
+        border-radius: 0 0 24px 24px;
+        
+        .background{
+            padding: 16px 24px;
+            border-radius: 24px 0 24px 24px;
+            background: $primary-color
+        }
+        
+        h3{
+            font-family: $title-font;
+            font-size: $h3-size;
+            margin: 0 0 16px 0;
+        }
+
+        .input{
+
+            display: block;
+
+            &.last{
+                margin-top: 16px;
+                margin-bottom: 48px;
+            }
+            
+
+            label{
+                color: white;
+            }
+        }
+
+        .button-section{
+            border-top: 1px dashed rgba(white, 0.75);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 160px;
+        }
+
+        .reservation-button{
+
+            background-color: rgba(white, 0.95);
+            color: $primary-color;
+            width: 100%;
+
+            &:hover{
+                background-color: white;
+            }
+        }
+
+
+    }
+
+    .reservation-flight-details{
+        margin-top: 24px;
+        padding-top: 24px;
+
+        &:first-child{
+            margin-top: 0;
+            padding-top: 0;
+        }
+    }
+
+
+}

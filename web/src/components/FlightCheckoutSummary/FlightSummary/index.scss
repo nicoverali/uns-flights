@@ -1,0 +1,53 @@
+.flight-summary-component {
+
+    .flight-summary-title{
+
+        font-family: $body-font;
+        font-size: $body-size;
+        color: white;
+        font-weight: 400;
+        margin: 0;
+
+        span:first-child{
+            text-transform: uppercase;
+        }
+
+        span:last-child{
+            font-weight: 600;
+        }
+
+    }
+
+    .flight-summary-time{
+
+        font-family: $title-font;
+        font-size: $h3-size;
+        margin-top: 16px;
+        margin-bottom: 0;
+        color: white;
+
+    }
+
+    .flight-summary-price{
+
+        .flight-summary-price-icon{
+            display: inline-block;
+            vertical-align: middle;
+            width: 24px;
+            margin: 0;
+            fill: white;
+        }
+
+        p {
+            display: inline-block;
+            vertical-align: middle;
+            font-family: $body-font;
+            font-size: $subtitle-size;
+            font-weight: 500;
+            margin: 0 0 0 8px;
+            color: white;
+        }
+
+    }
+
+}
