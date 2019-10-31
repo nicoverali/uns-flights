@@ -44,7 +44,7 @@ export default class FlightReservation extends React.Component {
         }
 
         if(isValid){
-            this.props.onReservation();
+            this.props.onReservation(idTypeValue, idNumberValue);
         }
     }
 

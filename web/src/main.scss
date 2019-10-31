@@ -90,6 +90,20 @@ ul{
     .ReactModal__Content {
         top: 50% !important;
         left: 50% !important;
+
+        .reservation-result-title{
+            font-family: $title-font;
+            font-size: $subtitle-size;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+    
+        .reservation-result-body{
+            margin: 0;
+            font-family: $body-font;
+            font-size: $body-size;
+        }
+    
     }
 
 }

@@ -5,18 +5,18 @@ public class Main {
 
     public static void main(String[] args){
 
-        //HelloFX.main(args);
+        WebViewCreator.init(args);
 
-        JavaWebSql base = new JavaWebSql();
-
-
-
-        String ret = base.connectToAdmin("admin");
-
-
-        String ret4 = base.makeTwoWayReservation("BC1","2020-01-02","Ejecutiva","DNI",
-                1,101,"CB2","2020-01-05","Turista");
-        System.out.println("El procedure es::"+ret4.toString());
+//        JavaWebSql base = new JavaWebSql();
+//
+//
+//
+//        String ret = base.connectToAdmin("admin");
+//
+//
+//        String ret4 = base.makeTwoWayReservation("BC1","2020-01-02","Ejecutiva","DNI",
+//                1,101,"CB2","2020-01-05","Turista");
+//        System.out.println("El procedure es::"+ret4.toString());
 
 
         /**

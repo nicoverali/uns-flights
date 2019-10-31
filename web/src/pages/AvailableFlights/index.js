@@ -6,6 +6,7 @@ import {
 	getAllLocations,
 	formatDate,
 } from '@Services/AvailableFlightsService';
+import { reserveOneWayTrip, reserveRoundTrip } from '@Services/ReservationService';
 
 import FlightsSearchForm from '@Components/FlightSearchForm';
 import FlightSelector from '@Components/FlightSelector';
@@ -354,6 +355,33 @@ export default class AvailableFlights extends React.Component {
 
 	}
 
+	static createResultMessage(reservationState) {
+		if(reservationState < 3){
+			return (
+				<>
+					<p className="reservation-result-title">¡ Se realizó la reseva !</p>
+					<p className="reservation-result-body">El estado de tu reserva es: <b>{reservationState == 1 ? 'Confirmado' : 'En espera'}</b></p>
+				</>
+			);
+		} else {
+			return (
+				<>
+					<p className="reservation-result-title">No se pudo realizar la reserva</p>
+					<p className="reservation-result-body">No hay más asientos disponibles para el vuelo seleccionado</p>
+				</>
+			)
+		}
+	}
+
+	static createReservationErrorMessage(){
+		return (
+			<>
+				<p className="reservation-result-title">¡ Lo sentimos !</p>
+				<p className="reservation-result-body">Ocurrió un error, por favor vuelva a intentarlo más tarde</p>
+			</>
+		) 
+	}
+
 	constructor(props) {
 
 		super(props);
@@ -363,20 +391,76 @@ export default class AvailableFlights extends React.Component {
 			isSummaryOpen: false,
 			isReservationProcessing: false,
 			lastReservationResult: undefined,
-			isRoundTrip: true, // false,
+			isRoundTrip: false, // true,
 			departure: {
-				date: '02/01/2019', // undefined,
-				location: 'Barcelona', // undefined,
-				availableFlights: departureTest, // undefined,
+				date: undefined, // '02/01/2019',
+				location: undefined, // 'Barcelona',
+				availableFlights: undefined, // departureTest,
 				selected: undefined,
 			},
 			returnn: {
-				date: '05/01/2020', // undefined,
-				location: 'Miami', // undefined,
-				availableFlights: returnTest, // undefined,
+				date: undefined, // '05/01/2020',
+				location: undefined, // 'Miami',
+				availableFlights: undefined, // returnTest,
 				selected: undefined,
 			},
 		};
+		/* this.state = {
+			locations: [],
+			isModalOpen: true,
+			isSummaryOpen: false,
+			isReservationProcessing: false,
+			lastReservationResult: AvailableFlights.createReservationErrorMessage(),
+			isRoundTrip: false, // true,
+			departure: {
+				date: undefined, // '02/01/2019',
+				location: undefined, // 'Barcelona',
+				availableFlights: undefined, // departureTest,
+				selected: {
+					flight: {
+						hora_sale: '8:00:00',
+						a1_codigo: 'BCN',
+						a1_nombre: 'Barcelona Airport',
+						hora_llega: '15:00:00',
+						a2_codigo: 'MIA',
+						a2_nombre: 'Miami Airport',
+						nro_vuelo: 'BC1',
+						modelo_avion: 'Boing 777',
+						tiempo_estimado: '6:00:00',
+					},
+					class: {
+							clase: 'Turista',
+							asientos_disponibles: '5',
+							precio: '3500',
+					},
+		
+				},
+			},
+			returnn: {
+				date: undefined, // '05/01/2020',
+				location: undefined, // 'Miami',
+				availableFlights: undefined, // returnTest,
+				selected: {
+					flight: {
+						hora_sale: '8:00:00',
+						a1_codigo: 'BCN',
+						a1_nombre: 'Barcelona Airport',
+						hora_llega: '15:00:00',
+						a2_codigo: 'MIA',
+						a2_nombre: 'Miami Airport',
+						nro_vuelo: 'BC1',
+						modelo_avion: 'Boing 777',
+						tiempo_estimado: '6:00:00',
+					},
+					class: {
+							clase: 'Turista',
+							asientos_disponibles: '5',
+							precio: '3500',
+					},
+		
+				},
+			},
+		}; */
 
 	}
 
@@ -446,28 +530,6 @@ export default class AvailableFlights extends React.Component {
 
 	handleReservation = () => {
 
-		const { empId } = this.props.location.state;
-		const { departure, returnn } = this.state;
-		const redirectTo = {
-			pathname: '/reservation',
-			state: {
-				empId,
-				departure: {
-					date: departure.date,
-					location: departure.location,
-					flight: departure.selected.flight,
-					class: departure.selected.class,
-				},
-				returnn: {
-					date: returnn.date,
-					location: returnn.location,
-					flight: returnn.selected.flight,
-					class: returnn.selected.flight,
-				},
-			}
-		}
-
-		console.log(redirectTo);
 		this.setState({ isModalOpen: true, isSummaryOpen: false })
 
 	}
@@ -481,9 +543,43 @@ export default class AvailableFlights extends React.Component {
 
 	}
 
-	handleReservationFinish = () => {
+	handleReservationFinish = (idType, idNumber) => {
 
 		this.setState({isReservationProcessing: true});
+		
+		const { isRoundTrip, departure, returnn } = this.state;
+		const { empId } = this.props.location.state; 
+		let reservationPromise;
+		const departureFlight = {
+			number: departure.selected.flight.nro_vuelo,
+			date: departure.date,
+			class: departure.selected.class.clase,
+		}
+		const passenger = {
+			type: idType,
+			id: idNumber,
+		}
+		
+		if(isRoundTrip){
+			const returnFlight = {
+				number: returnn.selected.flight.nro_vuelo,
+				date: returnn.date,
+				class: returnn.selected.class.clase,
+			}
+			reservationPromise = reserveRoundTrip(departureFlight, returnFlight, passenger, empId);
+		} else {
+			reservationPromise = reserveOneWayTrip(departureFlight, passenger, empId);
+		}
+
+		reservationPromise.then((result) => {
+			const resultMsg = AvailableFlights.createResultMessage(result.state);
+			this.setState({ isReservationProcessing: false, lastReservationResult: resultMsg });
+			this.handleFlightsSearchSubmit(isRoundTrip, departure.location, departure.date, returnn.location, returnn.date);		
+		})
+		.catch(() => {
+			const errorMsg = AvailableFlights.createReservationErrorMessage();
+			this.setState({ isReservationProcessing: false, lastReservationResult: errorMsg });		
+		})
 
 	}
 

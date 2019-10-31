@@ -38,7 +38,6 @@ export default class FlightSearchForm extends React.Component {
 
 		const isRoundTrip = event.target.value !== 'one-way';
 		this.setState({ isRoundTrip });
-		this.props.onIsRoundTripChange(isRoundTrip);
 
 	};
 
