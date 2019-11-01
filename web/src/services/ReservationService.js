@@ -11,7 +11,6 @@ function reserveOneWayTrip(departureFlight, passenger, employeeId){
         );
 
         const parsedResult = JSON.parse(result);
-        console.log(JSON.stringify(parsedResult));
 
         if(parsedResult.code === 1){
             resolve(parsedResult.data);
@@ -36,7 +35,6 @@ function reserveRoundTrip(departureFlight, returnFlight, passenger, employeeId){
         );
 
         const parsedResult = JSON.parse(result);
-        console.log(JSON.stringify(parsedResult));
 
         if(parsedResult.code === 1){
             resolve(parsedResult.data);

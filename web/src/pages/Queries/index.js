@@ -77,7 +77,6 @@ export default class Queries extends React.Component {
 				}
 
 			})
-			.catch((err, info) => console.log(err + info));
 
 	};
 

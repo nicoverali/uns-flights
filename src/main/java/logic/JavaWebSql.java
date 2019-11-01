@@ -553,7 +553,7 @@ public class JavaWebSql {
             if (cn.isValid(0)){
                 Statement st = cn.createStatement();
                 st.execute("use vuelos");
-                String callProce = "call p('"+num+"','"+clas+"',"+legajo+",'"+doc_tip+"',"+doc_num+",'"
+                String callProce = "call make_one_way_reservation('"+num+"','"+clas+"',"+legajo+",'"+doc_tip+"',"+doc_num+",'"
                         +date+"',@result);";
                 st.execute(callProce);
                 ResultSet result = st.executeQuery("select @result;");
@@ -610,7 +610,7 @@ public class JavaWebSql {
             if (cn.isValid(0)){
                 Statement st = cn.createStatement();
                 st.execute("use vuelos");
-                String callProce = "call pyv('"+num+"','"+clas+"',"+legajo+",'"+doc_tip+"',"+doc_num+",'"
+                String callProce = "call make_round_trip_reservation('"+num+"','"+clas+"',"+legajo+",'"+doc_tip+"',"+doc_num+",'"
                         +date+"','"+num_2+"','"+clas_2+"','"+date_2+"',@result);";
                 st.execute(callProce);
 

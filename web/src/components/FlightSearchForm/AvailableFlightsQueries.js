@@ -63,10 +63,8 @@ function getAvailableFlightsFor(fromLocation, toLocation, date) {
 					return availablesFlights;
 
 				})
-				.catch((err) => console.log(`Fallo en pedir las clases${err}`));
 
 		})
-		.catch(() => console.log('Fallo en pedir los vuelos'));
 
 }
 
