@@ -1,6 +1,6 @@
 import './index.scss';
 import React from 'react';
-import Modal from 'react-modal';
+import Modal from 'react-responsive-modal';
 import {
 	getAvailableFlightsFor,
 	getAllLocations,
@@ -322,19 +322,6 @@ const returnTest = [
 	},
 ];
 
-Modal.setAppElement(document.getElementById('app'));
-
-const modalCustomStyles = {
-	content : {
-	  transform             : 'translateX(-50%) translateY(-50%)',
-	  left                  : '50%',
-	  background			: 'transparent',
-	  border				: 'none',
-	  inset					: 'unset',
-	  padding				: '0',
-	}
-};
-
 export default class AvailableFlights extends React.Component {
 
 	static areFlightsAvailable(isRoundTrip, departure, returnn) {
@@ -391,76 +378,20 @@ export default class AvailableFlights extends React.Component {
 			isSummaryOpen: false,
 			isReservationProcessing: false,
 			lastReservationResult: undefined,
-			isRoundTrip: false, // true,
+			isRoundTrip: false,
 			departure: {
-				date: undefined, // '02/01/2019',
-				location: undefined, // 'Barcelona',
-				availableFlights: undefined, // departureTest,
+				date: undefined,
+				location: undefined,
+				availableFlights: undefined,
 				selected: undefined,
 			},
 			returnn: {
-				date: undefined, // '05/01/2020',
-				location: undefined, // 'Miami',
-				availableFlights: undefined, // returnTest,
+				date: undefined,
+				location: undefined,
+				availableFlights: undefined,
 				selected: undefined,
 			},
 		};
-		/* this.state = {
-			locations: [],
-			isModalOpen: true,
-			isSummaryOpen: false,
-			isReservationProcessing: false,
-			lastReservationResult: AvailableFlights.createReservationErrorMessage(),
-			isRoundTrip: false, // true,
-			departure: {
-				date: undefined, // '02/01/2019',
-				location: undefined, // 'Barcelona',
-				availableFlights: undefined, // departureTest,
-				selected: {
-					flight: {
-						hora_sale: '8:00:00',
-						a1_codigo: 'BCN',
-						a1_nombre: 'Barcelona Airport',
-						hora_llega: '15:00:00',
-						a2_codigo: 'MIA',
-						a2_nombre: 'Miami Airport',
-						nro_vuelo: 'BC1',
-						modelo_avion: 'Boing 777',
-						tiempo_estimado: '6:00:00',
-					},
-					class: {
-							clase: 'Turista',
-							asientos_disponibles: '5',
-							precio: '3500',
-					},
-		
-				},
-			},
-			returnn: {
-				date: undefined, // '05/01/2020',
-				location: undefined, // 'Miami',
-				availableFlights: undefined, // returnTest,
-				selected: {
-					flight: {
-						hora_sale: '8:00:00',
-						a1_codigo: 'BCN',
-						a1_nombre: 'Barcelona Airport',
-						hora_llega: '15:00:00',
-						a2_codigo: 'MIA',
-						a2_nombre: 'Miami Airport',
-						nro_vuelo: 'BC1',
-						modelo_avion: 'Boing 777',
-						tiempo_estimado: '6:00:00',
-					},
-					class: {
-							clase: 'Turista',
-							asientos_disponibles: '5',
-							precio: '3500',
-					},
-		
-				},
-			},
-		}; */
 
 	}
 
@@ -574,11 +505,31 @@ export default class AvailableFlights extends React.Component {
 		reservationPromise.then((result) => {
 			const resultMsg = AvailableFlights.createResultMessage(result.state);
 			this.setState({ isReservationProcessing: false, lastReservationResult: resultMsg });
-			this.handleFlightsSearchSubmit(isRoundTrip, departure.location, departure.date, returnn.location, returnn.date);		
 		})
 		.catch(() => {
 			const errorMsg = AvailableFlights.createReservationErrorMessage();
 			this.setState({ isReservationProcessing: false, lastReservationResult: errorMsg });		
+		})
+		.then(() => {
+			const depRequest = getAvailableFlightsFor(departure.location, returnn.location, departure.date);
+			const retRequest = isRoundTrip
+				? getAvailableFlightsFor(returnn.location, departure.location, returnn.date)
+				: Promise.resolve([]);
+
+			Promise.all([depRequest, retRequest]).then((availableFlights) => {
+
+				this.setState((prevState) => ({
+					departure: {
+						...prevState.departure,
+						availableFlights: availableFlights[0],
+					},
+					returnn: {
+						...prevState.returnn,
+						availableFlights: availableFlights[1],
+					},
+				}));
+
+			});		
 		})
 
 	}
@@ -626,12 +577,14 @@ export default class AvailableFlights extends React.Component {
 					onReservateClick={this.handleReservation}
 				/>
 
-				<Modal
-					isOpen={isModalOpen}
-					onRequestClose={this.handleModalClose}
-					style={modalCustomStyles}
+				<Modal 
+					open={isModalOpen} 
+					onClose={this.handleModalClose} 
+					showCloseIcon={false}
+					overlayId="modal-overlay"
+					modalId="modal-content"
+					center
 				>
-			
 					<FlightReservation 
 						isRoundTrip={isRoundTrip}
 						isLoading={isReservationProcessing}

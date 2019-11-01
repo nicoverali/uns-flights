@@ -4,6 +4,7 @@
     background: lighten($primary-color, 10);
     color: white;
     border-radius: 24px;
+    overflow: hidden;
 
 
 
@@ -21,20 +22,21 @@
 
         .trip{
             display: flex;
+            flex-direction: row;
+            align-items: center;
             justify-content: space-between;
 
             svg {
                 transform: rotate(90deg);
+                margin: auto;
             }
 
             .left{
                 text-align: left;
-                float: left;
             }
     
             .right{
                 text-align: right;
-                float: right;
             }
     
             .location-name{
@@ -59,7 +61,6 @@
     .content{
 
         background: lighten($primary-color, 5);
-        border-radius: 24px 0 0 0;
         padding: 24px 24px;
 
         .flight-time{
@@ -78,7 +79,6 @@
                     margin: 0;
                     border: 1px solid rgba(white, 0.75);
                     width: 100%;
-                    //width: calc(100% - #{16px} - 16px);
                     vertical-align: middle;
     
                     &::after{
@@ -148,11 +148,9 @@
 
         position: relative;
         background: lighten($primary-color, 5);
-        border-radius: 0 0 24px 24px;
         
         .background{
             padding: 16px 24px;
-            border-radius: 24px 0 24px 24px;
             background: $primary-color
         }
         
