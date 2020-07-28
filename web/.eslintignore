@@ -1,5 +1,5 @@
 # Config files
-webpack.config.js
+webpack*.js
 postcss.config.js
 
 # Dependencies
