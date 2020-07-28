@@ -1,0 +1,11 @@
+task install(group: 'npm', type: Exec){
+    outputs.dir("$project.projectDir\\node_modules")
+    commandLine 'cmd', '/c', 'npm install'
+}
+
+task buildWeb(group: 'npm', type: Exec, dependsOn: install){
+    ext.buildDir = "$project.projectDir\\dist"
+
+    outputs.dir(ext.buildDir)
+    commandLine 'cmd', '/c', 'npm run build'
+}

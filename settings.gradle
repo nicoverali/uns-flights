@@ -1,2 +1,3 @@
 rootProject.name = 'uns-flights'
 
+include 'web'

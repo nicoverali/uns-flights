@@ -5,8 +5,11 @@
 build/*
 .gradle/*
 
+# Web Dist
+src/main/resources/web/*
+
 # Idea
-.idea
+.idea/*
 *.iws
 *.iml
 *.ipr

@@ -29,7 +29,7 @@ public class WebViewCreator extends Application {
 
     public void start(Stage primaryStage) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        URL url = this.getClass().getClassLoader().getResource("index.html");
+        URL url = this.getClass().getResource("/web/index.html");
         WebView webView = new WebView();
 
         webView.setPrefHeight(screenBounds.getHeight());
