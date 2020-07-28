@@ -10,6 +10,7 @@ src/main/resources/web/*
 
 # Idea
 .idea/*
+.idea
 *.iws
 *.iml
 *.ipr

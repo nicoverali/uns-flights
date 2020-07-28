@@ -1,0 +1,26 @@
+repositories {
+    mavenCentral()
+}
+
+def oss = [[name: 'Windows', javafxName: 'win'], [name: 'Linux', javafxName: 'linux'], [name: 'Mac', javafxName: 'mac']]
+
+oss.each {
+    configurations.register("export$it.name")
+    configurations.getByName("export$it.name").extendsFrom configurations.implementation.copy()
+
+    dependencies.add("export$it.name", "org.openjfx:javafx-web:$javafx.version:$it.javafxName")
+
+    def localOS = it
+    tasks.create("jar$localOS.name", Jar) {
+        group 'export'
+
+        archiveAppendix.set localOS.javafxName
+        manifest {
+            attributes 'Main-Class': 'web.Main'
+        }
+        from configurations.getByName("export$localOS.name").collect { zipTree it }
+        with jar
+    }
+}
+
+jar.enabled false

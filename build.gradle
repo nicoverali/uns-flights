@@ -42,4 +42,6 @@ task getWebFiles(group: 'build', type: Copy, dependsOn: ':web:buildWeb'){
 // Make sure web files are available before running
 processResources.dependsOn getWebFiles
 
+apply from: 'export.gradle'
+
 
