@@ -26,6 +26,13 @@ To make this process easier, **we add new tasks to Gradle that will take care of
 
 [![Gradle export tasks](https://i.postimg.cc/Twn193Nj/Annotation-2020-08-01-210920.png)](https://postimg.cc/ftTMWDNk)
 
-## Status
+## Demo
 
-To run the app you'll need to have installed MySQL, but also a database filled with information about users, flights, and reservations. **We are currently working to upload this data to an Amazon remote database**.
+To run the app you'll need to have installed MySQL, but also a database filled with information about users, flights, and reservations.
+I separate the frontend from this project and uploaded to **Vercel** so you can test it with fake information. To do this I've also had to re-implement the Java backend in Node so it can also be hosted in Vercel. **Note that there might be some bugs because of this re-implementation as it was done quickly**.
+
+Also, since I'm using **PlanetScale** to host the database, **store procedures are not allowed**, so reservation will fail.
+
+Link to demo: [UNS Flights](https://uns-flights-nicoverali.vercel.app/)
+
+
