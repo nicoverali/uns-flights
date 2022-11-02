@@ -35,4 +35,7 @@ Also, since I'm using **PlanetScale** to host the database, **store procedures a
 
 Link to demo: [UNS Flights](https://uns-flights-nicoverali.vercel.app/)
 
+_**User: 1234
+Password: secret**_
+
 
